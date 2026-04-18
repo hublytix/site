@@ -1,34 +1,23 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const categories = [
-  { name: "Data Quality", icon: "🔍", score: 72, issues: 4, desc: "Duplicates, missing fields, orphaned properties, naming inconsistencies", color: "from-blue-500/10 to-blue-600/5", border: "border-blue-500/20", accent: "text-blue-400" },
-  { name: "Workflow Health", icon: "⚡", score: 58, issues: 3, desc: "Broken automations, zero-enrollment flows, circular triggers", color: "from-amber-500/10 to-amber-600/5", border: "border-amber-500/20", accent: "text-amber-400" },
-  { name: "Email Deliverability", icon: "📧", score: 45, issues: 3, desc: "Bounce rates, SPF/DKIM/DMARC, spam complaints, image ratios", color: "from-red-500/10 to-red-600/5", border: "border-red-500/20", accent: "text-red-400" },
-  { name: "Pipeline & Deals", icon: "📊", score: 68, issues: 2, desc: "Stale deals, missing associations, stage-skipping detection", color: "from-purple-500/10 to-purple-600/5", border: "border-purple-500/20", accent: "text-purple-400" },
-  { name: "Integrations", icon: "🔗", score: 81, issues: 2, desc: "Sync errors, disconnected apps, field mapping issues", color: "from-teal-500/10 to-teal-600/5", border: "border-teal-500/20", accent: "text-teal-400" },
-  { name: "Users & Security", icon: "🛡️", score: 91, issues: 1, desc: "2FA enforcement, inactive admins, overprivileged access", color: "from-green-500/10 to-green-600/5", border: "border-green-500/20", accent: "text-green-400" },
+// ═══════════════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════════════
+const CATS = [
+  { icon: "🔍", score: 72, g: "y" as const, name: "Data Quality", desc: "Duplicates, missing fields, orphaned properties, naming inconsistencies", issues: 4 },
+  { icon: "⚡", score: 58, g: "r" as const, name: "Workflow Health", desc: "Broken automations, zero-enrollment flows, circular triggers", issues: 3 },
+  { icon: "📧", score: 45, g: "r" as const, name: "Email Deliverability", desc: "Bounce rates, SPF/DKIM/DMARC, spam complaints, image ratios", issues: 3 },
+  { icon: "📊", score: 68, g: "y" as const, name: "Pipeline & Deals", desc: "Stale deals, missing associations, stage-skipping detection", issues: 2 },
+  { icon: "🔗", score: 81, g: "g" as const, name: "Integrations", desc: "Sync errors, disconnected apps, field mapping issues", issues: 2 },
+  { icon: "🛡️", score: 91, g: "g" as const, name: "Users & Security", desc: "2FA enforcement, inactive admins, overprivileged access", issues: 1 },
 ];
+const CAT_COLORS = { g: "#10b981", y: "#f59e0b", r: "#ef4444" };
 
-const steps = [
-  { num: "01", title: "Connect your HubSpot", desc: "One-click OAuth connection. No passwords shared, no data stored. Read-only access to scan your portal.", time: "10 seconds" },
-  { num: "02", title: "Get your health score", desc: "50+ automated checks run across 6 categories. Your portal gets a 0-100 score with category breakdowns.", time: "2 minutes" },
-  { num: "03", title: "Fix what matters", desc: "Prioritized issues with step-by-step fix instructions. Watch your score improve with every fix you make.", time: "Ongoing" },
-];
-
-const plans = [
-  { name: "Starter", price: 49, desc: "For small HubSpot teams", features: ["1 HubSpot portal", "Weekly automated scans", "Top 10 issues with fixes", "Email alerts on score drops", "12-scan score history"], cta: "Start Free Scan", popular: false },
-  { name: "Professional", price: 99, desc: "For serious RevOps teams", features: ["1 HubSpot portal", "Daily automated scans", "All 50+ checks with fixes", "Email + Slack alerts", "PDF audit reports", "Full score history + trends", "Priority support"], cta: "Start Free Scan", popular: true },
-  { name: "Agency", price: 249, desc: "For HubSpot agencies", features: ["Up to 10 portals", "Daily automated scans", "Everything in Professional", "White-label PDF reports", "Multi-portal dashboard", "Client-facing read-only view", "20% partner revenue share"], cta: "Contact Sales", popular: false },
-];
-
-const testimonials = [
-  { name: "Sarah Chen", role: "RevOps Lead", company: "TechFlow", quote: "We discovered 2,800 duplicate contacts and 3 broken workflows that had been silently failing for months. Hublytix paid for itself in the first week.", score: { before: 47, after: 82 } },
-  { name: "Marcus Webb", role: "HubSpot Admin", company: "DataScale", quote: "The daily scans caught a DMARC misconfiguration that was sending 15% of our emails to spam. We would never have found that manually.", score: { before: 54, after: 89 } },
-];
-
-const faqs = [
+const FAQS = [
   { q: "Is my HubSpot data safe?", a: "Absolutely. Hublytix uses read-only OAuth access. We never store your CRM data — we only analyze metadata and configurations to produce your health score." },
   { q: "How is this different from a manual audit?", a: "Manual audits are one-time snapshots that cost $2,000-$6,000 and take weeks. Hublytix runs continuously, catching issues as they happen with daily or weekly scans." },
   { q: "What if I'm on HubSpot's free CRM?", a: "Hublytix works with all HubSpot tiers — Free, Starter, Professional, and Enterprise. Some checks are only relevant to paid tiers, but core data quality and workflow checks work on all." },
@@ -36,252 +25,590 @@ const faqs = [
   { q: "Do you support Salesforce or other CRMs?", a: "Currently Hublytix is HubSpot-only. We're exploring Salesforce and Zoho CRM support for 2027 based on customer demand." },
 ];
 
-function ScorePreview() {
-  const score = 62;
-  const radius = 50;
-  const circ = 2 * Math.PI * radius;
-  const offset = circ - (score / 100) * circ;
+// ═══════════════════════════════════════════════════════════════════════════
+// HOOKS
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Generic "reveal on enter" hook — adds `.in` class via the observer pattern
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          obs.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, inView] as const;
+}
+
+// Count-up animation (cubic ease-out)
+function useCountUp(target: number, trigger: boolean, duration = 1200) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!trigger) return;
+    const start = performance.now();
+    let raf = 0;
+    const step = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setValue(Math.round(target * eased));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [target, trigger, duration]);
+  return value;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIXED OVERLAYS (scroll progress + cursor spotlight)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const range = h.scrollHeight - h.clientHeight;
+      setPct(range > 0 ? (h.scrollTop / range) * 100 : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return <div className="scroll-progress" style={{ width: `${pct}%` }} />;
+}
+
+function Spotlight() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      el.style.left = `${e.clientX}px`;
+      el.style.top = `${e.clientY}px`;
+    };
+    document.addEventListener("mousemove", onMove);
+    return () => document.removeEventListener("mousemove", onMove);
+  }, []);
+  return <div ref={ref} className="spotlight" />;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HERO DASHBOARD — score ring + count-ups + parallax tilt
+// ═══════════════════════════════════════════════════════════════════════════
+
+function HeroDash() {
+  const dashRef = useRef<HTMLDivElement>(null);
+  const [animate, setAnimate] = useState(false);
+  const [heroNum, setHeroNum] = useState(0);
+
+  // Start animation after hero fade-in (matches HTML's 900ms delay)
+  useEffect(() => {
+    const t = setTimeout(() => setAnimate(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Count 0 → 62 (1-per-frame, matches original)
+  useEffect(() => {
+    if (!animate) return;
+    let cur = 0;
+    let raf = 0;
+    const tick = () => {
+      cur += 1;
+      if (cur <= 62) {
+        setHeroNum(cur);
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [animate]);
+
+  // Count-ups for the 3 dash stats (17, 3, 14) — fires at same time as score
+  const totalIssues = useCountUp(17, animate);
+  const critical = useCountUp(3, animate);
+  const fixed = useCountUp(14, animate);
+
+  // Parallax tilt on mouse move
+  useEffect(() => {
+    const el = dashRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLDivElement>(".dash-card");
+    if (!card) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `rotateY(${-4 + x * 6}deg) rotateX(${4 - y * 6}deg)`;
+    };
+    const onLeave = () => {
+      card.style.transform = "rotateY(-4deg) rotateX(4deg)";
+    };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
+  const circ = 2 * Math.PI * 58;
+  const targetOffset = circ - (62 / 100) * circ;
+
   return (
-    <div className="relative w-[280px] h-[280px] md:w-[340px] md:h-[340px]">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 to-transparent rounded-3xl" />
-      <div className="absolute inset-4 bg-surface-900/90 backdrop-blur-sm rounded-2xl border border-white/5 p-6 flex flex-col items-center justify-center">
-        <svg width="120" height="120" viewBox="0 0 120 120" className="mb-3">
-          <circle cx="60" cy="60" r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" />
-          <circle cx="60" cy="60" r={radius} fill="none" stroke="url(#scoreGrad)" strokeWidth="8" strokeLinecap="round"
-            strokeDasharray={circ} strokeDashoffset={offset}
-            transform="rotate(-90 60 60)" className="score-circle" style={{ strokeDashoffset: offset } as any} />
-          <defs><linearGradient id="scoreGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#F59E0B" /><stop offset="100%" stopColor="#22C55E" /></linearGradient></defs>
-          <text x="60" y="56" textAnchor="middle" className="fill-white font-display text-3xl font-bold">{score}</text>
-          <text x="60" y="74" textAnchor="middle" className="fill-slate-500 text-xs font-medium">/100</text>
-        </svg>
-        <span className="text-amber-400 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">Needs Attention</span>
-        <div className="mt-4 grid grid-cols-3 gap-2 w-full">
-          {[{ l: "Issues", v: "17", c: "text-red-400" }, { l: "Critical", v: "3", c: "text-amber-400" }, { l: "Fixed", v: "14", c: "text-green-400" }].map(s => (
-            <div key={s.l} className="text-center">
-              <div className={`text-lg font-bold ${s.c}`}>{s.v}</div>
-              <div className="text-[10px] text-slate-500">{s.l}</div>
+    <div className="dash" ref={dashRef}>
+      <div className="float-card f1">
+        <div className="icon">⚠️</div>
+        <div><strong>3 Critical</strong><small>Fix ASAP</small></div>
+      </div>
+      <div className="float-card f2">
+        <div className="icon">✓</div>
+        <div><strong>14 Fixed</strong><small>This week</small></div>
+      </div>
+      <div className="float-card f3">
+        <div className="icon">📊</div>
+        <div><strong>Live scan</strong><small>Every 24h</small></div>
+      </div>
+
+      <div className="dash-card">
+        <div className="dash-head">
+          <div className="title">Portal Health Monitor</div>
+          <div className="menu"><span /><span /><span /></div>
+        </div>
+
+        <div className="score-ring-wrap">
+          <div className="score-ring">
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#059669" />
+                </linearGradient>
+              </defs>
+              <circle className="bg-ring" cx="70" cy="70" r="58" />
+              <circle
+                className="fg-ring"
+                cx="70"
+                cy="70"
+                r="58"
+                strokeDasharray={circ}
+                strokeDashoffset={animate ? targetOffset : circ}
+              />
+            </svg>
+            <div className="label">
+              <b>{heroNum}</b>
+              <span>/ 100</span>
             </div>
-          ))}
+          </div>
+          <div className="score-text">
+            <div className="status">⚠ Needs Attention</div>
+            <h3>17 Issues Detected</h3>
+            <p>Across 6 diagnostic categories in your portal</p>
+          </div>
+        </div>
+
+        <div className="dash-stats">
+          <div className="dash-stat"><div className="n">{totalIssues}</div><div className="k">Total Issues</div></div>
+          <div className="dash-stat crit"><div className="n">{critical}</div><div className="k">Critical</div></div>
+          <div className="dash-stat ok"><div className="n">{fixed}</div><div className="k">Fixed</div></div>
         </div>
       </div>
     </div>
   );
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// PROBLEM CARD
+// ═══════════════════════════════════════════════════════════════════════════
+
+function ProbCard({ emoji, count, prefix, suffix, head, desc }: { emoji: string; count: number; prefix?: string; suffix?: string; head: string; desc: string }) {
+  const [ref, inView] = useReveal<HTMLDivElement>();
+  const val = useCountUp(count, inView);
+  return (
+    <div ref={ref} className={`prob-card${inView ? " in" : ""}`}>
+      <div className="prob-emoji">{emoji}</div>
+      <div className="prob-num">{prefix ?? ""}{val}{suffix ?? ""}</div>
+      <div className="prob-head">{head}</div>
+      <div className="prob-desc">{desc}</div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CATEGORY CARD
+// ═══════════════════════════════════════════════════════════════════════════
+
+function CatCard({ cat, delay }: { cat: typeof CATS[number]; delay: number }) {
+  const [ref, inView] = useReveal<HTMLDivElement>();
+  const color = CAT_COLORS[cat.g];
+  const circ = 2 * Math.PI * 22;
+  const offset = circ - (cat.score / 100) * circ;
+
+  // Matching the HTML: ring fills 200ms after card enters
+  const [ringFilled, setRingFilled] = useState(false);
+  useEffect(() => {
+    if (inView) {
+      const t = setTimeout(() => setRingFilled(true), 200 + delay);
+      return () => clearTimeout(t);
+    }
+  }, [inView, delay]);
+
+  return (
+    <div
+      ref={ref}
+      className={`cat-card${inView ? " in" : ""}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <div className="cat-top">
+        <div className="cat-icon">{cat.icon}</div>
+        <div className="cat-score-ring">
+          <svg width="56" height="56" viewBox="0 0 56 56">
+            <circle className="bg" cx="28" cy="28" r="22" />
+            <circle
+              className="fg"
+              cx="28"
+              cy="28"
+              r="22"
+              stroke={color}
+              strokeDasharray={circ}
+              strokeDashoffset={ringFilled ? offset : circ}
+            />
+          </svg>
+          <div className="num" style={{ color }}>{cat.score}</div>
+        </div>
+      </div>
+      <h3>{cat.name}</h3>
+      <p>{cat.desc}</p>
+      <div className="cat-foot">
+        <span className="cat-issues">{cat.issues} issues found</span>
+        <span className="arrow">→</span>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STEP / PLAN / TESTI wrappers (add `.in` on reveal)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function RevealWrap({ children, className, delay = 0 }: { children: React.ReactNode; className: string; delay?: number }) {
+  const [ref, inView] = useReveal<HTMLDivElement>();
+  return (
+    <div ref={ref} className={`${className}${inView ? " in" : ""}`} style={{ transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+// Testimonial with count-up meter
+function Testi({ initials, name, role, quote, before, after, delta }: { initials: string; name: string; role: string; quote: string; before: number; after: number; delta: number }) {
+  const [ref, inView] = useReveal<HTMLDivElement>();
+  const b = useCountUp(before, inView);
+  const a = useCountUp(after, inView);
+  return (
+    <div ref={ref} className={`testi${inView ? " in" : ""}`}>
+      <div className="qm">&ldquo;</div>
+      <div className="testi-person">
+        <div className="avatar">{initials}</div>
+        <div>
+          <div className="n">{name}</div>
+          <div className="r">{role}</div>
+        </div>
+      </div>
+      <q>{quote}</q>
+      <div className="testi-meter">
+        <div className="meter-val before"><b>{b}</b><span>Before</span></div>
+        <span className="meter-arrow">→</span>
+        <div className="meter-val after"><b>{a}</b><span>After</span></div>
+        <div className="meter-delta">+{delta} pts</div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FAQ ITEM
+// ═══════════════════════════════════════════════════════════════════════════
+
+function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(!!defaultOpen);
+  return (
+    <div className={`faq-item${open ? " open" : ""}`} onClick={() => setOpen((o) => !o)}>
+      <div className="faq-q">
+        <h4>{q}</h4>
+        <div className="faq-plus" />
+      </div>
+      <div className="faq-a">{a}</div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION HEADER (reveal on enter)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function SectionHead({ tag, h, sub }: { tag: string; h: string; sub?: string }) {
+  return (
+    <div className="section-head-center">
+      <div className="section-tag"><span className="dot" />{tag}</div>
+      <h2 className="section-h">{h}</h2>
+      {sub && <p className="section-sub">{sub}</p>}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE
+// ═══════════════════════════════════════════════════════════════════════════
+
 export default function Home() {
   return (
-    <main>
+    <>
+      <ScrollProgress />
+      <Spotlight />
       <Navbar />
 
-      {/* ═══ HERO ═══ */}
-      <section className="relative min-h-screen flex items-center pt-16 grid-bg overflow-hidden">
-        <div className="glow-orb w-[600px] h-[600px] bg-brand-500 -top-40 -left-40 absolute" />
-        <div className="glow-orb w-[400px] h-[400px] bg-blue-500 bottom-20 right-10 absolute" />
-        <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center relative z-10">
-          <div className="animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
+      {/* HERO */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="hero-grid-bg" />
+        <div className="wrap">
+          <div>
+            <div className="hero-pill">
+              <span className="badge"><span className="dot" />Live</span>
               Now monitoring 50+ health checks
             </div>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
-              Your HubSpot portal&apos;s
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-300"> intelligence engine</span>
+            <h1>
+              Your{" "}
+              <span className="hero-underline">
+                HubSpot portal&apos;s
+                <svg viewBox="0 0 300 14">
+                  <path d="M2 8 Q75 2, 150 8 T 298 6" />
+                </svg>
+              </span>
+              <br />
+              <span className="gradient">intelligence engine</span>
             </h1>
-            <p className="text-lg text-slate-400 leading-relaxed mb-8 max-w-lg">
+            <p className="lede">
               Automated health monitoring for HubSpot. 50+ diagnostic checks across 6 categories. A single score that tells you exactly what&apos;s broken and how to fix it.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="#cta" className="btn-primary">
-                Start Free Scan
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-              </Link>
-              <Link href="#how-it-works" className="btn-secondary">See How It Works</Link>
+            <div className="hero-actions">
+              <a href="#cta" className="btn btn-primary">Start Free Scan <span className="arrow">→</span></a>
+              <a href="#how-it-works" className="btn btn-ghost">See How It Works</a>
             </div>
-            <div className="flex items-center gap-6 mt-8 text-sm text-slate-500">
-              <span className="flex items-center gap-1.5"><svg className="w-4 h-4 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>Free score — no credit card</span>
-              <span className="flex items-center gap-1.5"><svg className="w-4 h-4 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>Read-only access</span>
-              <span className="flex items-center gap-1.5"><svg className="w-4 h-4 text-brand-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>2-min setup</span>
+            <div className="hero-meta">
+              <span><span className="check">✓</span>Free score — no credit card</span>
+              <span><span className="check">✓</span>Read-only access</span>
+              <span><span className="check">✓</span>2-min setup</span>
             </div>
           </div>
-          <div className="flex justify-center animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <div className="animate-float"><ScorePreview /></div>
+
+          <HeroDash />
+        </div>
+
+        <div className="wrap">
+          <div className="logos">
+            <div className="label">Trusted by HubSpot teams worldwide</div>
+            <div className="logos-row">
+              <div className="logo-item">⬡ TechFlow</div>
+              <div className="logo-item">◆ DataScale</div>
+              <div className="logo-item">◇ Apexly</div>
+              <div className="logo-item">⬢ Northwind</div>
+              <div className="logo-item">◈ Orbital</div>
+              <div className="logo-item">⬟ Lumen</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ PROBLEM ═══ */}
-      <section className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Your HubSpot portal is quietly breaking</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">Every new campaign, every imported list, every process change leaves artifacts. Over time, your CRM becomes a liability instead of an asset.</p>
+      {/* PROBLEM */}
+      <section className="problem">
+        <div className="wrap">
+          <SectionHead
+            tag="The silent cost"
+            h="Your HubSpot portal is quietly breaking"
+            sub="Every new campaign, every imported list, every process change leaves artifacts. Over time, your CRM becomes a liability instead of an asset."
+          />
+          <div className="problem-grid">
+            <ProbCard emoji="💸" count={10} prefix="$" suffix="K+" head="wasted annually" desc="on duplicate contacts inflating your HubSpot tier" />
+            <ProbCard emoji="📭" count={23} suffix="%" head="emails to spam" desc="from misconfigured SPF, DKIM, or DMARC records" />
+            <ProbCard emoji="⏳" count={34} suffix="%" head="pipeline is stale" desc="deals stuck in the same stage for 60+ days" />
           </div>
-          <div className="grid md:grid-cols-3 gap-6 stagger">
-            {[
-              { stat: "$10K+", label: "wasted annually", desc: "on duplicate contacts inflating your HubSpot tier", icon: "💸" },
-              { stat: "23%", label: "emails to spam", desc: "from misconfigured SPF, DKIM, or DMARC records", icon: "📭" },
-              { stat: "34%", label: "pipeline is stale", desc: "deals stuck in the same stage for 60+ days", icon: "⏳" },
-            ].map(s => (
-              <div key={s.label} className="card-glow p-8 text-center">
-                <span className="text-3xl mb-4 block">{s.icon}</span>
-                <div className="font-display text-3xl font-bold text-white mb-1">{s.stat}</div>
-                <div className="text-brand-400 font-semibold text-sm mb-2">{s.label}</div>
-                <p className="text-slate-500 text-sm">{s.desc}</p>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section id="features">
+        <div className="wrap">
+          <SectionHead
+            tag="6 diagnostic categories"
+            h="50+ checks. 6 categories. One score."
+            sub="Every corner of your HubSpot portal, continuously monitored."
+          />
+          <div className="cats-grid">
+            {CATS.map((c, i) => <CatCard key={c.name} cat={c} delay={i * 100} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section id="how-it-works" className="problem">
+        <div className="wrap">
+          <SectionHead tag="Simple process" h="Three steps to a healthier portal" />
+          <div className="steps">
+            <RevealWrap className="step">
+              <div className="step-num">01</div>
+              <h3>Connect your HubSpot</h3>
+              <p>One-click OAuth connection. No passwords shared, no data stored. Read-only access to scan your portal.</p>
+              <div className="step-time">⏱ 10 seconds</div>
+            </RevealWrap>
+            <RevealWrap className="step" delay={100}>
+              <div className="step-num">02</div>
+              <h3>Get your health score</h3>
+              <p>50+ automated checks run across 6 categories. Your portal gets a 0-100 score with category breakdowns.</p>
+              <div className="step-time">⏱ 2 minutes</div>
+            </RevealWrap>
+            <RevealWrap className="step" delay={200}>
+              <div className="step-num">03</div>
+              <h3>Fix what matters</h3>
+              <p>Prioritized issues with step-by-step fix instructions. Watch your score improve with every fix you make.</p>
+              <div className="step-time">⏱ Ongoing</div>
+            </RevealWrap>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing" className="pricing">
+        <div className="wrap">
+          <SectionHead
+            tag="Pricing"
+            h="Simple, transparent pricing"
+            sub="Start free. Upgrade when you see the value."
+          />
+          <div className="pricing-grid">
+            <RevealWrap className="plan">
+              <div>
+                <h3>Starter</h3>
+                <div className="plan-sub">For small HubSpot teams</div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="price"><span className="p">$49</span><span className="per">/month</span></div>
+              <ul>
+                <li><span className="check">✓</span>1 HubSpot portal</li>
+                <li><span className="check">✓</span>Weekly automated scans</li>
+                <li><span className="check">✓</span>Top 10 issues with fixes</li>
+                <li><span className="check">✓</span>Email alerts on score drops</li>
+                <li><span className="check">✓</span>12-scan score history</li>
+              </ul>
+              <a href="#cta" className="btn">Start Free Scan</a>
+            </RevealWrap>
 
-      {/* ═══ FEATURES ═══ */}
-      <section id="features" className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold mb-4">6 diagnostic categories</div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">50+ checks. 6 categories. One score.</h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">Every corner of your HubSpot portal, continuously monitored.</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
-            {categories.map(c => (
-              <div key={c.name} className={`card-glow p-6 bg-gradient-to-br ${c.color}`}>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl">{c.icon}</span>
-                  <div className="flex items-center gap-2">
-                    <span className={`text-2xl font-display font-bold ${c.score >= 80 ? 'text-green-400' : c.score >= 60 ? 'text-amber-400' : 'text-red-400'}`}>{c.score}</span>
-                    <span className="text-slate-600 text-sm">/100</span>
-                  </div>
-                </div>
-                <h3 className="font-display font-bold text-white text-lg mb-2">{c.name}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-3">{c.desc}</p>
-                <div className={`text-xs font-semibold ${c.accent}`}>{c.issues} issues found →</div>
+            <RevealWrap className="plan featured" delay={100}>
+              <div>
+                <h3>Professional</h3>
+                <div className="plan-sub">For serious RevOps teams</div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="price"><span className="p">$99</span><span className="per">/month</span></div>
+              <ul>
+                <li><span className="check">✓</span>1 HubSpot portal</li>
+                <li><span className="check">✓</span>Daily automated scans</li>
+                <li><span className="check">✓</span>All 50+ checks with fixes</li>
+                <li><span className="check">✓</span>Email + Slack alerts</li>
+                <li><span className="check">✓</span>PDF audit reports</li>
+                <li><span className="check">✓</span>Full score history + trends</li>
+                <li><span className="check">✓</span>Priority support</li>
+              </ul>
+              <a href="#cta" className="btn btn-primary">Start Free Scan <span className="arrow">→</span></a>
+            </RevealWrap>
 
-      {/* ═══ HOW IT WORKS ═══ */}
-      <section id="how-it-works" className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Three steps to a healthier portal</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 stagger">
-            {steps.map(s => (
-              <div key={s.num} className="relative">
-                <div className="font-display text-6xl font-extrabold text-white/5 mb-4">{s.num}</div>
-                <h3 className="font-display text-xl font-bold text-white mb-2 -mt-8">{s.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-3">{s.desc}</p>
-                <span className="text-xs font-semibold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full">{s.time}</span>
+            <RevealWrap className="plan" delay={200}>
+              <div>
+                <h3>Agency</h3>
+                <div className="plan-sub">For HubSpot agencies</div>
               </div>
-            ))}
+              <div className="price"><span className="p">$249</span><span className="per">/month</span></div>
+              <ul>
+                <li><span className="check">✓</span>Up to 10 portals</li>
+                <li><span className="check">✓</span>Daily automated scans</li>
+                <li><span className="check">✓</span>Everything in Professional</li>
+                <li><span className="check">✓</span>White-label PDF reports</li>
+                <li><span className="check">✓</span>Multi-portal dashboard</li>
+                <li><span className="check">✓</span>Client-facing read-only view</li>
+                <li><span className="check">✓</span>20% partner revenue share</li>
+              </ul>
+              <a href="mailto:hello@hublytix.ai" className="btn">Contact Sales</a>
+            </RevealWrap>
           </div>
         </div>
       </section>
 
-      {/* ═══ PRICING ═══ */}
-      <section id="pricing" className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Simple, transparent pricing</h2>
-            <p className="text-slate-400">Start free. Upgrade when you see the value.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6 stagger max-w-4xl mx-auto">
-            {plans.map(p => (
-              <div key={p.name} className={`card-glow p-8 flex flex-col ${p.popular ? 'border-brand-500/30 ring-1 ring-brand-500/20' : ''}`}>
-                {p.popular && <div className="popular-badge self-start mb-4">Most Popular</div>}
-                <h3 className="font-display text-xl font-bold text-white">{p.name}</h3>
-                <p className="text-slate-500 text-sm mb-4">{p.desc}</p>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="font-display text-4xl font-extrabold text-white">${p.price}</span>
-                  <span className="text-slate-500 text-sm">/month</span>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {p.features.map(f => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-slate-300">
-                      <svg className="w-4 h-4 text-brand-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="#cta" className={p.popular ? 'btn-primary w-full justify-center' : 'btn-secondary w-full justify-center'}>{p.cta}</Link>
-              </div>
-            ))}
+      {/* TESTIMONIALS */}
+      <section id="testimonials">
+        <div className="wrap">
+          <SectionHead tag="Social proof" h="Trusted by HubSpot teams" />
+          <div className="testi-grid">
+            <Testi
+              initials="SC"
+              name="Sarah Chen"
+              role="RevOps Lead at TechFlow"
+              quote="We discovered 2,800 duplicate contacts and 3 broken workflows that had been silently failing for months. Hublytix paid for itself in the first week."
+              before={47}
+              after={82}
+              delta={35}
+            />
+            <Testi
+              initials="MW"
+              name="Marcus Webb"
+              role="HubSpot Admin at DataScale"
+              quote="The daily scans caught a DMARC misconfiguration that was sending 15% of our emails to spam. We would never have found that manually."
+              before={54}
+              after={89}
+              delta={35}
+            />
           </div>
         </div>
       </section>
 
-      {/* ═══ TESTIMONIALS ═══ */}
-      <section id="testimonials" className="py-20 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">Trusted by HubSpot teams</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 stagger">
-            {testimonials.map(t => (
-              <div key={t.name} className="card-glow p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white text-sm font-bold">{t.name.split(' ').map(n => n[0]).join('')}</div>
-                  <div>
-                    <div className="text-white font-semibold text-sm">{t.name}</div>
-                    <div className="text-slate-500 text-xs">{t.role} at {t.company}</div>
-                  </div>
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed mb-5">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-4 pt-4 border-t border-white/5">
-                  <div className="text-center">
-                    <div className="text-red-400 font-display font-bold text-lg">{t.score.before}</div>
-                    <div className="text-slate-600 text-[10px]">Before</div>
-                  </div>
-                  <svg className="w-5 h-5 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                  <div className="text-center">
-                    <div className="text-green-400 font-display font-bold text-lg">{t.score.after}</div>
-                    <div className="text-slate-600 text-[10px]">After</div>
-                  </div>
-                  <div className="ml-auto px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20">
-                    <span className="text-brand-400 text-xs font-bold">+{t.score.after - t.score.before} pts</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* FAQ */}
+      <section className="problem">
+        <div className="wrap">
+          <SectionHead tag="FAQ" h="Frequently asked questions" />
+          <div className="faq-list">
+            {FAQS.map((f, i) => <FaqItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />)}
           </div>
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ */}
-      <section className="py-20 relative">
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="font-display text-3xl font-bold text-white text-center mb-14">Frequently asked questions</h2>
-          <div className="space-y-4">
-            {faqs.map(f => (
-              <details key={f.q} className="group card-glow">
-                <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
-                  <span className="text-white font-medium text-sm">{f.q}</span>
-                  <svg className="w-5 h-5 text-slate-500 group-open:rotate-45 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
-                </summary>
-                <div className="px-5 pb-5 -mt-1"><p className="text-slate-400 text-sm leading-relaxed">{f.a}</p></div>
-              </details>
-            ))}
+      {/* CTA */}
+      <section id="cta" className="cta">
+        <div className="wrap">
+          <div className="cta-card">
+            <div className="cta-orb o1" />
+            <div className="cta-orb o2" />
+            <div className="cta-orb o3" />
+            <h2>Ready to see your portal&apos;s health score?</h2>
+            <p>Connect your HubSpot in 10 seconds. Get your score in 2 minutes. No credit card required.</p>
+            <div className="hero-actions">
+              <a href="#" className="btn btn-primary">Start Free Scan <span className="arrow">→</span></a>
+              <a href="#how-it-works" className="btn btn-ghost">Learn more</a>
+            </div>
+            <p className="cta-foot">Free forever plan available. Upgrade anytime.</p>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ CTA ═══ */}
-      <section id="cta" className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-500/5 to-transparent" />
-        <div className="glow-orb w-[500px] h-[500px] bg-brand-500 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute" />
-        <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold text-white mb-4">Ready to see your portal&apos;s health score?</h2>
-          <p className="text-slate-400 text-lg mb-8">Connect your HubSpot in 10 seconds. Get your score in 2 minutes. No credit card required.</p>
-          <Link href="#" className="btn-primary text-lg !px-10 !py-4">
-            Start Free Scan
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-          </Link>
-          <p className="text-slate-600 text-xs mt-4">Free forever plan available. Upgrade anytime.</p>
         </div>
       </section>
 
       <Footer />
-    </main>
+    </>
   );
 }

@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap');
+
+:root {
+  --glow-green: rgba(34, 197, 94, 0.15);
+  --glow-green-strong: rgba(34, 197, 94, 0.3);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0A0F1A;
+  color: #E2E8F0;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+  color: #fff;
+}
+
+/* Glow effects */
+.glow-green {
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.06), transparent 60%);
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Score ring animation */
+.score-circle {
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  animation: scoreRing 2s ease-out 0.5s both;
+}
+
+/* Staggered fade-up for children */
+.stagger > * { animation: fadeUp 0.6s ease-out both; }
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* Grid pattern background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Gradient border card */
+.card-glow {
+  position: relative;
+  background: #111827;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+.card-glow:hover {
+  border-color: rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.08);
+}
+
+/* CTA button */
+.btn-primary {
+  background: linear-gradient(135deg, #22C55E, #16A34A);
+  color: #fff;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(34, 197, 94, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #94A3B8;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 15px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* Pricing popular badge */
+.popular-badge {
+  background: linear-gradient(135deg, #22C55E, #16A34A);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Smooth section transitions */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+}
