@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* v2: site is dark-only (glass design). Force dark base to prevent any light flash. */
+html, body { background:#0a0e1a; }
+
+
 /* ═══════════════════════════════════════════════════════════════════════
    HUBLYTIX — ported verbatim from Hublytix-standalone.html
    ═══════════════════════════════════════════════════════════════════════ */
