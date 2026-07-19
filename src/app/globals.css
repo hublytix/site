@@ -14,22 +14,22 @@ html, body { background:#F8F7F4 !important; color:#10203C; }
 :root{
   --bg:#F8F7F4;
   --surface:#ffffff;
-  --surface-2:#f1f5f9;
+  --surface-2:#EFEDE8;
   --card:#ffffff;
   --ink:#10203C;
-  --ink-2:#24365A;
-  --muted:#4C5F82;
+  --ink-2:#24365A; --ink-3:#3C5077;
+  --muted:#4C5F82; --muted-3:#44577C;
   --muted-2:#5F6E8C;
   --line:rgba(16,42,92,.10);
   --line-2:rgba(16,42,92,.16);
   --brand:#0057FF;
   --brand-2:#2E77FF;
-  --brand-dark:#0046CC;
+  --brand-dark:#0041BD;
   --brand-rgb:0,87,255;
   --accent:#2563eb;
   --green:#0057FF;
-  --amber:#f59e0b;
-  --red:#ef4444;
+  --amber:#FBBF24; --orange:#FB923C;
+  --red:#F87171;
   --nav-bg:rgba(255,255,255,.8);
   --cta-card-bg:linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
   --shadow-sm: 0 1px 2px rgba(16,42,92,.06);
@@ -640,6 +640,18 @@ html[data-theme="__disabled_dark"] .theme-toggle .moon{transform:rotate(0) scale
   .steps::before{display:none}
   .float-card{display:none}
 }
+
+
+
+/* ═══ V3 BLUE DESIGN (Claude design file, 2026-07-19) — authoritative layer ═══ */
+
+html{background:#F8F7F4}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:#F8F7F4;color:#24365A;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:#0057FF;text-decoration:none}
+a:hover{color:#2E77FF}
+::selection{background:rgba(0,87,255,.35);color:#10203C}
+@keyframes hbPulse{0%{box-shadow:0 0 0 0 rgba(0,87,255,.55)}100%{box-shadow:0 0 0 20px rgba(0,87,255,0)}}
 
 
 /* ═══ LIGHT RESKIN — FINAL OVERRIDES (2026-07-19) ═══════════════════
