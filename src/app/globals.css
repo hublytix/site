@@ -640,3 +640,24 @@ html[data-theme="__disabled_dark"] .theme-toggle .moon{transform:rotate(0) scale
   .steps::before{display:none}
   .float-card{display:none}
 }
+
+
+/* ═══ LIGHT RESKIN — FINAL OVERRIDES (2026-07-19) ═══════════════════
+   1. Entrance/reveal animations were sticking at opacity:0 on the light
+      build, ghosting every headline and card title. Force-complete them:
+      content visibility must never depend on an animation finishing.
+   2. The nav bar picked up a navy background from the shadow remap.
+      Pin it to white glass. */
+.hero h1, .hero p, .hero-actions, .hero-meta, .hero-eyebrow,
+.reveal, [class*="reveal"], [class*="fade-up"], [data-reveal],
+.prob-card, .step-card, .cat-card, .why-card, .plan, .sec-head,
+h1, h2, h3 {
+  opacity: 1 !important;
+  transform: none !important;
+}
+nav, header, .nav, .navbar {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(16, 42, 92, 0.08);
+}
+nav a, header a { color: var(--ink-2); }
