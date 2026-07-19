@@ -9,8 +9,8 @@ export function LogoIcon() {
       <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="lmG" x1="0" y1="0" x2="120" y2="120">
-            <stop offset="0%" stopColor="#22c55e" />
-            <stop offset="100%" stopColor="#16a34a" />
+            <stop offset="0%" stopColor="#2E77FF" />
+            <stop offset="100%" stopColor="#0057FF" />
           </linearGradient>
         </defs>
         <rect className="lm-bg" width="120" height="120" rx="28" fill="url(#lmG)" />
@@ -41,7 +41,7 @@ export function LogoIcon() {
           <path
             className="lm-check"
             d="M81 88 L86 93 L96 83"
-            stroke="#16a34a"
+            stroke="#0057FF"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"

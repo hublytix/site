@@ -3,6 +3,6 @@
   <path d="M60 18 L95 36 L95 65 Q95 90 60 106 Q25 90 25 65 L25 36 Z" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="2"></path>
   <text x="60" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="40" font-weight="800">H</text>
   <circle cx="88" cy="88" r="16" fill="#fff"></circle>
-  <path d="M81 88 L86 93 L96 83" stroke="#16A34A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-  <defs><linearGradient id="g3" x1="0" y1="0" x2="120" y2="120"><stop stop-color="#22C55E"></stop><stop offset="1" stop-color="#16A34A"></stop></linearGradient></defs>
+  <path d="M81 88 L86 93 L96 83" stroke="#0057FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  <defs><linearGradient id="g3" x1="0" y1="0" x2="120" y2="120"><stop stop-color="#2E77FF"></stop><stop offset="1" stop-color="#0057FF"></stop></linearGradient></defs>
 </svg>

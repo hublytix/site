@@ -3,7 +3,7 @@
   <path d="M30 10 L48 18 L48 32 Q48 44 30 52 Q12 44 12 32 L12 18 Z" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.25)" stroke-width="1"></path>
   <text x="30" y="36" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="800">H</text>
   <circle cx="44" cy="44" r="8" fill="#fff"></circle>
-  <path d="M40.5 44 L43 46.5 L48 41.5" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M40.5 44 L43 46.5 L48 41.5" stroke="#0057FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
   <text x="72" y="39" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">Hublytix</text>
-  <defs><linearGradient id="wg" x1="2" y1="2" x2="58" y2="58"><stop stop-color="#22C55E"></stop><stop offset="1" stop-color="#16A34A"></stop></linearGradient></defs>
+  <defs><linearGradient id="wg" x1="2" y1="2" x2="58" y2="58"><stop stop-color="#2E77FF"></stop><stop offset="1" stop-color="#0057FF"></stop></linearGradient></defs>
 </svg>
