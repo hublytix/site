@@ -21,8 +21,8 @@ export default function BlogPage() {
       <section className="pt-32 pb-20 grid-bg">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h1 className="font-display text-4xl font-extrabold text-white mb-4">Hublytix Blog</h1>
-            <p className="text-slate-400 text-lg">HubSpot tips, audit guides, and CRM health best practices</p>
+            <h1 className="font-display text-4xl font-extrabold text-[var(--ink)] mb-4">Hublytix Blog</h1>
+            <p className="text-[var(--muted)] text-lg">HubSpot tips, audit guides, and CRM health best practices</p>
           </div>
           <div className="space-y-6 stagger">
             {posts.map(p => (
@@ -31,15 +31,15 @@ export default function BlogPage() {
                   <span className="text-xs font-semibold text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-full">{p.tag}</span>
                   <span className="text-xs text-slate-600">{p.date}</span>
                 </div>
-                <h2 className="font-display text-xl font-bold text-white group-hover:text-brand-400 transition-colors mb-2">{p.title}</h2>
-                <p className="text-slate-400 text-sm leading-relaxed">{p.desc}</p>
+                <h2 className="font-display text-xl font-bold text-[var(--ink)] group-hover:text-brand-400 transition-colors mb-2">{p.title}</h2>
+                <p className="text-[var(--muted)] text-sm leading-relaxed">{p.desc}</p>
               </Link>
             ))}
           </div>
           <div className="text-center mt-12">
             <p className="text-slate-600 text-sm">More posts coming soon. Subscribe to get notified.</p>
             <div className="flex gap-3 justify-center mt-4 max-w-md mx-auto">
-              <input type="email" placeholder="your@email.com" className="flex-1 px-4 py-3 rounded-lg bg-surface-800 border border-white/10 text-white text-sm placeholder:text-slate-600 focus:outline-none focus:border-brand-500/50" />
+              <input type="email" placeholder="your@email.com" className="flex-1 px-4 py-3 rounded-lg bg-surface-800 border border-[var(--line)] text-[var(--ink)] text-sm placeholder:text-slate-600 focus:outline-none focus:border-brand-500/50" />
               <button className="btn-primary !py-3 !px-6 !text-sm">Subscribe</button>
             </div>
           </div>
