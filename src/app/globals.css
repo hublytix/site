@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -92,13 +92,13 @@ html[data-theme="__disabled_dark"] .plan:not(.featured) .btn:hover{animation:non
 html{transition:background .4s}
 body,nav.top,.prob-card,.cat-card,.plan,.testi,.faq-item,.dash-card,.float-card,.hero-pill,.step-num,.dash-stat,.cat-icon,.cat-foot .arrow,.section-tag,.faq-plus,footer,.btn-ghost{transition:background .4s, color .3s, border-color .3s}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4,h5,h6,p,li,span,div,a,button,blockquote,q{color:inherit}
 .section-h,.hero h1,.score-text h3,.cat-card h3,.step h3,.plan h3,.faq-q h4,.prob-head,.testi-person .n,.foot-col h5{color:var(--ink)}
 .hero h1 .gradient{color:transparent}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;border:0;background:0;cursor:pointer}
-.mono{font-family:'JetBrains Mono',monospace}
+.mono{font-family:'IBM Plex Mono',monospace}
 ::selection{background:var(--brand);color:#fff}
 
 /* Animated gradient cursor spotlight */
@@ -419,7 +419,7 @@ section{padding:110px 0;position:relative}
 .cat-score-ring .fg{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.5,0,.2,1)}
 .cat-score-ring .num{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
 }
 
 .cat-card h3{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:4px}
@@ -454,7 +454,7 @@ section{padding:110px 0;position:relative}
   width:72px;height:72px;border-radius:50%;
   background:#fff;border:2px solid var(--line);
   display:flex;align-items:center;justify-content:center;
-  font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:700;color:var(--ink);
   margin:0 auto 24px;position:relative;
   transition:all .4s;
 }
@@ -653,6 +653,18 @@ a:hover{color:#2E77FF}
 ::selection{background:rgba(0,87,255,.35);color:#10203C}
 @keyframes hbPulse{0%{box-shadow:0 0 0 0 rgba(0,87,255,.55)}100%{box-shadow:0 0 0 20px rgba(0,87,255,0)}}
 
+
+
+/* ═══ V3 DESIGN LAYER — typography + card recipe from the design file ═══ */
+body{font-family:'Space Grotesk',system-ui,sans-serif;color:#24365A;}
+h1,h2,h3{color:#10203C;font-family:'Space Grotesk',system-ui,sans-serif;}
+.prob-card,.step-card,.cat-card,.why-card,.plan,.faq-item,[class*="-card"]{
+  border-radius:16px;
+  box-shadow:0 14px 38px rgba(16,42,92,0.12), inset 0 1px 2px rgba(255,255,255,0.9);
+  border:1px solid rgba(16,42,92,0.08);
+  background:#FFFFFF;
+}
+.btn-primary{border-radius:11px;box-shadow:0 8px 24px rgba(0,87,255,.28);}
 
 /* ═══ LIGHT RESKIN — FINAL OVERRIDES (2026-07-19) ═══════════════════
    1. Entrance/reveal animations were sticking at opacity:0 on the light
