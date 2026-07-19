@@ -3,8 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* v2: site is dark-only (glass design). Force dark base to prevent any light flash. */
-html, body { background:#0a0e1a; }
+/* v3 (blue reskin): site matches the app's light pastel canvas. */
+html, body { background:#F8F7F4; }
 
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -12,16 +12,16 @@ html, body { background:#0a0e1a; }
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root{
-  --bg:#ffffff;
-  --surface:#f8fafc;
+  --bg:#F8F7F4;
+  --surface:#ffffff;
   --surface-2:#f1f5f9;
   --card:#ffffff;
-  --ink:#0f172a;
-  --ink-2:#1e293b;
-  --muted:#64748b;
-  --muted-2:#94a3b8;
-  --line:#e2e8f0;
-  --line-2:#cbd5e1;
+  --ink:#10203C;
+  --ink-2:#24365A;
+  --muted:#4C5F82;
+  --muted-2:#5F6E8C;
+  --line:rgba(16,42,92,.10);
+  --line-2:rgba(16,42,92,.16);
   --brand:#0057FF;
   --brand-2:#2E77FF;
   --brand-dark:#0046CC;
@@ -32,9 +32,9 @@ html, body { background:#0a0e1a; }
   --red:#ef4444;
   --nav-bg:rgba(255,255,255,.8);
   --cta-card-bg:linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
-  --shadow: 0 4px 14px rgba(15,23,42,.08);
-  --shadow-lg: 0 20px 50px -15px rgba(15,23,42,.18);
+  --shadow-sm: 0 1px 2px rgba(16,42,92,.06);
+  --shadow: 0 4px 14px rgba(16,42,92,.08);
+  --shadow-lg: 0 20px 50px -15px rgba(16,42,92,.14);
   --shadow-brand: 0 20px 50px -15px rgba(var(--brand-rgb),.5);
 }
 html[data-theme="dark"]{

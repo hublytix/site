@@ -10,7 +10,7 @@ export default function Navbar() {
   // Theme init — default to light, honor stored preference, fall back to system
   useEffect(() => {
     // Site is dark-only (v2 glass design).
-    document.documentElement.setAttribute("data-theme", "dark");
+    document.documentElement.setAttribute("data-theme", "light");
   }, []);
 
   // Scroll shadow state
