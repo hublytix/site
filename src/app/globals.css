@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 /* v3 (blue reskin): site matches the app's light pastel canvas. */
-html, body { background:#F8F7F4; }
+html, body { background:#F8F7F4 !important; color:#10203C; }
 
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -37,7 +37,7 @@ html, body { background:#F8F7F4; }
   --shadow-lg: 0 20px 50px -15px rgba(16,42,92,.14);
   --shadow-brand: 0 20px 50px -15px rgba(var(--brand-rgb),.5);
 }
-html[data-theme="dark"]{
+html[data-theme="__disabled_dark"]{
   --bg:#0a0e1a;
   --surface:#111827;
   --surface-2:#1f2937;
@@ -48,43 +48,43 @@ html[data-theme="dark"]{
   --muted-2:#64748b;
   --line:#1f2937;
   --line-2:#334155;
-  --nav-bg:rgba(10,14,26,.8);
+  --nav-bg:rgba(248,247,244,.8);
   --cta-card-bg:linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
   --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
   --shadow: 0 4px 14px rgba(0,0,0,.4);
   --shadow-lg: 0 20px 50px -15px rgba(0,0,0,.6);
 }
-html[data-theme="dark"] .dash-card,
-html[data-theme="dark"] .prob-card,
-html[data-theme="dark"] .cat-card,
-html[data-theme="dark"] .plan,
-html[data-theme="dark"] .testi,
-html[data-theme="dark"] .faq-item,
-html[data-theme="dark"] .float-card,
-html[data-theme="dark"] .hero-pill{
+html[data-theme="__disabled_dark"] .dash-card,
+html[data-theme="__disabled_dark"] .prob-card,
+html[data-theme="__disabled_dark"] .cat-card,
+html[data-theme="__disabled_dark"] .plan,
+html[data-theme="__disabled_dark"] .testi,
+html[data-theme="__disabled_dark"] .faq-item,
+html[data-theme="__disabled_dark"] .float-card,
+html[data-theme="__disabled_dark"] .hero-pill{
   background:var(--card);
 }
-html[data-theme="dark"] .plan.featured{
+html[data-theme="__disabled_dark"] .plan.featured{
   background:linear-gradient(180deg, var(--card), rgba(var(--brand-rgb),.08));
 }
-html[data-theme="dark"] .btn-ghost{background:var(--card);color:var(--ink);border-color:var(--line-2)}
-html[data-theme="dark"] .hero-grid-bg{opacity:.2}
-html[data-theme="dark"] .logos-row .logo-item{color:var(--ink-2)}
-html[data-theme="dark"] .hero-pill .badge{background:rgba(var(--brand-rgb),.15)}
-html[data-theme="dark"] nav.top.scrolled{border-bottom-color:var(--line)}
-html[data-theme="dark"] .step-num{background:var(--card)}
-html[data-theme="dark"] .dash-stat{background:var(--surface-2)}
-html[data-theme="dark"] .dash-stat:hover{background:var(--surface)}
-html[data-theme="dark"] .cat-icon{background:var(--surface-2)}
-html[data-theme="dark"] .cat-foot .arrow{background:var(--surface-2)}
-html[data-theme="dark"] .section-tag{background:rgba(var(--brand-rgb),.12);border-color:rgba(var(--brand-rgb),.25)}
-html[data-theme="dark"] .faq-plus{background:var(--surface-2)}
-html[data-theme="dark"] .faq-plus::before,
-html[data-theme="dark"] .faq-plus::after{background:var(--ink)}
-html[data-theme="dark"] footer{background:var(--surface)}
-html[data-theme="dark"] .plan{border-color:var(--line-2)}
-html[data-theme="dark"] .plan:not(.featured) .btn{background:var(--surface-2);color:var(--ink);border-color:var(--line-2);animation:ctaBlink 1.8s ease-in-out infinite}
-html[data-theme="dark"] .plan:not(.featured) .btn:hover{animation:none;border-color:var(--brand);color:var(--brand);background:var(--card);box-shadow:0 0 0 3px rgba(0,87,255,.25)}
+html[data-theme="__disabled_dark"] .btn-ghost{background:var(--card);color:var(--ink);border-color:var(--line-2)}
+html[data-theme="__disabled_dark"] .hero-grid-bg{opacity:.2}
+html[data-theme="__disabled_dark"] .logos-row .logo-item{color:var(--ink-2)}
+html[data-theme="__disabled_dark"] .hero-pill .badge{background:rgba(var(--brand-rgb),.15)}
+html[data-theme="__disabled_dark"] nav.top.scrolled{border-bottom-color:var(--line)}
+html[data-theme="__disabled_dark"] .step-num{background:var(--card)}
+html[data-theme="__disabled_dark"] .dash-stat{background:var(--surface-2)}
+html[data-theme="__disabled_dark"] .dash-stat:hover{background:var(--surface)}
+html[data-theme="__disabled_dark"] .cat-icon{background:var(--surface-2)}
+html[data-theme="__disabled_dark"] .cat-foot .arrow{background:var(--surface-2)}
+html[data-theme="__disabled_dark"] .section-tag{background:rgba(var(--brand-rgb),.12);border-color:rgba(var(--brand-rgb),.25)}
+html[data-theme="__disabled_dark"] .faq-plus{background:var(--surface-2)}
+html[data-theme="__disabled_dark"] .faq-plus::before,
+html[data-theme="__disabled_dark"] .faq-plus::after{background:var(--ink)}
+html[data-theme="__disabled_dark"] footer{background:var(--surface)}
+html[data-theme="__disabled_dark"] .plan{border-color:var(--line-2)}
+html[data-theme="__disabled_dark"] .plan:not(.featured) .btn{background:var(--surface-2);color:var(--ink);border-color:var(--line-2);animation:ctaBlink 1.8s ease-in-out infinite}
+html[data-theme="__disabled_dark"] .plan:not(.featured) .btn:hover{animation:none;border-color:var(--brand);color:var(--brand);background:var(--card);box-shadow:0 0 0 3px rgba(0,87,255,.25)}
 @keyframes ctaBlink{
   0%,100%{border-color:var(--line-2);box-shadow:0 0 0 0 rgba(0,87,255,0);color:var(--ink)}
   50%{border-color:var(--brand);box-shadow:0 0 0 4px rgba(0,87,255,.18), 0 0 18px rgba(0,87,255,.35);color:var(--brand)}
@@ -629,8 +629,8 @@ footer{padding:60px 0 40px;border-top:1px solid var(--line);background:var(--sur
 .theme-toggle svg{position:absolute;transition:transform .5s cubic-bezier(.68,-.55,.27,1.55), opacity .3s}
 .theme-toggle .sun{transform:rotate(0) scale(1);opacity:1}
 .theme-toggle .moon{transform:rotate(-90deg) scale(0);opacity:0}
-html[data-theme="dark"] .theme-toggle .sun{transform:rotate(90deg) scale(0);opacity:0}
-html[data-theme="dark"] .theme-toggle .moon{transform:rotate(0) scale(1);opacity:1}
+html[data-theme="__disabled_dark"] .theme-toggle .sun{transform:rotate(90deg) scale(0);opacity:0}
+html[data-theme="__disabled_dark"] .theme-toggle .moon{transform:rotate(0) scale(1);opacity:1}
 
 @media (max-width:960px){
   .hero .wrap{grid-template-columns:1fr}
