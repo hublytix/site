@@ -31,6 +31,7 @@ a:hover{color:#2E77FF}
 html.hx-launch-locked,html.hx-launch-locked body{overflow:hidden}
 #hx-launch-gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(248,247,244,.42);backdrop-filter:blur(20px) saturate(1.25);-webkit-backdrop-filter:blur(20px) saturate(1.25)}
 #hx-launch-gate .hx-card{position:relative;max-width:520px;width:100%;text-align:center;padding:clamp(32px,6vw,48px) clamp(24px,5vw,40px);border-radius:22px;background:linear-gradient(155deg,rgba(255,255,255,.90),rgba(255,255,255,.64));border:1px solid rgba(16,42,92,.14);box-shadow:0 28px 64px rgba(16,42,92,.18),inset 0 1px 2px rgba(255,255,255,.95);animation:hxFloatIn .75s cubic-bezier(.22,1,.36,1) both}
+#hx-launch-gate .hx-logo{width:72px;height:72px;border-radius:18px;display:block;margin:0 auto 18px;box-shadow:0 12px 28px rgba(0,87,255,.28);animation:hxFloatIn .85s cubic-bezier(.22,1,.36,1) both}
 #hx-launch-gate .hx-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#0057FF;margin-bottom:18px}
 #hx-launch-gate .hx-badge i{width:8px;height:8px;border-radius:50%;background:#0057FF;display:inline-block;animation:hxPulseGlow 2s ease-in-out infinite}
 #hx-launch-gate h1{margin:0 0 14px;font-size:clamp(32px,5.5vw,46px);line-height:1.12;font-weight:700;letter-spacing:-.03em;color:#10203C}
@@ -47,6 +48,7 @@ html.hx-launch-locked,html.hx-launch-locked body{overflow:hidden}
 <!-- ================= LAUNCHING SOON GATE ================= -->
 <div id="hx-launch-gate" role="dialog" aria-modal="true" aria-label="Launching soon">
   <div class="hx-card">
+    <img class="hx-logo" src="assets/favicon-blue-512.png" width="72" height="72" alt="Hublytix" />
     <div class="hx-badge"><i aria-hidden="true"></i> Hublytix</div>
     <h1><span>Launching soon</span></h1>
     <p>Your HubSpot portal, honestly measured — health score, prioritised findings, and savings you can prove.</p>
