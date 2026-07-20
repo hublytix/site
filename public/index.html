@@ -22,7 +22,39 @@ a{color:#0057FF;text-decoration:none}
 a:hover{color:#2E77FF}
 ::selection{background:rgba(0,87,255,.35);color:#10203C}
 @keyframes hbPulse{0%{box-shadow:0 0 0 0 rgba(0,87,255,.55)}100%{box-shadow:0 0 0 20px rgba(0,87,255,0)}}
+
+/* Launching-soon gate */
+@keyframes hxFloatIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes hxPulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,87,255,.35)}50%{box-shadow:0 0 0 14px rgba(0,87,255,0)}}
+@keyframes hxShimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes hxDot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+html.hx-launch-locked,html.hx-launch-locked body{overflow:hidden}
+#hx-launch-gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(248,247,244,.42);backdrop-filter:blur(20px) saturate(1.25);-webkit-backdrop-filter:blur(20px) saturate(1.25)}
+#hx-launch-gate .hx-card{position:relative;max-width:520px;width:100%;text-align:center;padding:clamp(32px,6vw,48px) clamp(24px,5vw,40px);border-radius:22px;background:linear-gradient(155deg,rgba(255,255,255,.90),rgba(255,255,255,.64));border:1px solid rgba(16,42,92,.14);box-shadow:0 28px 64px rgba(16,42,92,.18),inset 0 1px 2px rgba(255,255,255,.95);animation:hxFloatIn .75s cubic-bezier(.22,1,.36,1) both}
+#hx-launch-gate .hx-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#0057FF;margin-bottom:18px}
+#hx-launch-gate .hx-badge i{width:8px;height:8px;border-radius:50%;background:#0057FF;display:inline-block;animation:hxPulseGlow 2s ease-in-out infinite}
+#hx-launch-gate h1{margin:0 0 14px;font-size:clamp(32px,5.5vw,46px);line-height:1.12;font-weight:700;letter-spacing:-.03em;color:#10203C}
+#hx-launch-gate h1 span{background:linear-gradient(105deg,#0057FF 0%,#2E77FF 40%,#0057FF 80%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:hxShimmer 3.5s linear infinite}
+#hx-launch-gate p{margin:0 auto 22px;max-width:38ch;font-size:clamp(15px,2vw,17px);line-height:1.65;color:#44577C}
+#hx-launch-gate .hx-dots{display:inline-flex;gap:6px;margin-top:4px}
+#hx-launch-gate .hx-dots span{width:6px;height:6px;border-radius:50%;background:#0057FF;animation:hxDot 1.2s ease-in-out infinite}
+#hx-launch-gate .hx-dots span:nth-child(2){animation-delay:.15s}
+#hx-launch-gate .hx-dots span:nth-child(3){animation-delay:.3s}
+@media (prefers-reduced-motion:reduce){#hx-launch-gate .hx-card,#hx-launch-gate h1 span,#hx-launch-gate .hx-badge i,#hx-launch-gate .hx-dots span{animation:none}}
+
 </style>
+
+<!-- ================= LAUNCHING SOON GATE ================= -->
+<div id="hx-launch-gate" role="dialog" aria-modal="true" aria-label="Launching soon">
+  <div class="hx-card">
+    <div class="hx-badge"><i aria-hidden="true"></i> Hublytix</div>
+    <h1><span>Launching soon</span></h1>
+    <p>Your HubSpot portal, honestly measured — health score, prioritised findings, and savings you can prove.</p>
+    <div class="hx-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+  </div>
+</div>
+<script>document.documentElement.classList.add("hx-launch-locked");</script>
+
 <!-- Ambient light layer: 3 static orbs, fixed behind content. Never animated. -->
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden">
   <span style="position:absolute;top:-16%;right:-12%;width:min(58vw,820px);height:min(58vw,820px);border-radius:50%;background:radial-gradient(circle,rgba(0,87,255,0.15),transparent 62%)"></span>
@@ -36,7 +68,7 @@ a:hover{color:#2E77FF}
 <header data-screen-label="Nav" data-glass="nav" style="position:sticky;top:0;z-index:60;background:rgba(255,255,255,0.6);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-bottom:1px solid rgba(16,42,92,0.10)">
   <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px;padding:13px clamp(18px,4vw,28px)">
     <a href="#top" style="display:flex;align-items:center;flex:none">
-      <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:38px;width:auto;display:block">
+      <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:30px;width:auto;display:block">
     </a>
     <nav aria-label="Main" style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center">
       <a href="#how-it-works" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">How it works</a>
@@ -439,7 +471,7 @@ a:hover{color:#2E77FF}
 <footer data-screen-label="Footer" style="border-top:1px solid rgba(16,42,92,0.10);padding:32px clamp(18px,4vw,28px) 40px">
   <div style="max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center">
     <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 260px">
-      <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:32px;width:auto;display:block;align-self:flex-start">
+      <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:26px;width:auto;display:block;align-self:flex-start">
       <span style="font-size:12.5px;color:#5F6E8C">HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</span>
     </div>
     <nav aria-label="Footer" style="display:flex;flex-wrap:wrap;gap:8px 22px;margin-left:auto;align-items:center">
