@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-16PXYCNETK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-16PXYCNETK');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>HubSpot Portal Health Blog | Hublytix</title>
+<meta name="description" content="Practical writing on HubSpot portal cost, data quality, and honest recoverable spend — for RevOps and Marketing Ops who own the bill.">
+<link rel="canonical" href="https://hublytix.ai/blog/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="HubSpot Portal Health Blog | Hublytix">
+<meta property="og:description" content="Practical writing on HubSpot portal cost, data quality, and honest recoverable spend — for RevOps and Marketing Ops who own the bill.">
+<meta property="og:url" content="https://hublytix.ai/blog/">
+<meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-blue.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
+
+<style>
+  html{background:#F8F7F4}
+  @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+  body{margin:0;background:#F8F7F4;color:#24365A;font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.7}
+  a{color:#0057FF;text-decoration:none}
+  a:hover{color:#2E77FF}
+  ::selection{background:rgba(0,87,255,.35);color:#10203C}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,255,255,0.72);
+    backdrop-filter:blur(20px) saturate(1.8);
+    -webkit-backdrop-filter:blur(20px) saturate(1.8);
+    border-bottom:1px solid rgba(16,42,92,0.10)
+  }
+  .nav-inner{
+    max-width:1160px;margin:0 auto;
+    padding:12px clamp(16px,4vw,28px);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap
+  }
+  .nav-links{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center}
+  .nav-links a{
+    color:#3C5077;font-size:14.5px;font-weight:500;
+    padding:7px 11px;border-radius:8px;transition:color .16s ease
+  }
+  .nav-links a:hover{color:#0057FF}
+  .nav-links a.is-active{color:#0057FF;font-weight:600}
+  .nav-cta{
+    background:#0057FF!important;color:#fff!important;
+    font-weight:700!important;padding:9px 16px!important;border-radius:10px!important;
+    box-shadow:0 6px 18px rgba(0,87,255,.25)
+  }
+  .nav-cta:hover{background:#0046D1!important;color:#fff!important}
+
+  .wrap{max-width:800px;margin:0 auto;padding:48px 20px 80px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#0057FF;margin:0 0 12px}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.03em;color:#10203C;margin:0 0 14px;font-weight:700}
+  .lede{font-size:18px;color:#44577C;margin:0 0 36px;line-height:1.65;max-width:58ch}
+
+  /* Post cards */
+  .post-list{display:flex;flex-direction:column;gap:16px;margin:0 0 48px}
+  .post-card{
+    display:block;
+    background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(255,255,255,.78));
+    border:1px solid rgba(16,42,92,.12);
+    border-radius:16px;
+    padding:22px 24px;
+    box-shadow:0 8px 28px rgba(16,42,92,.05);
+    transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease
+  }
+  .post-card:hover{
+    border-color:rgba(0,87,255,.28);
+    box-shadow:0 12px 32px rgba(16,42,92,.08);
+    transform:translateY(-1px);
+    color:inherit
+  }
+  .post-card .tag{
+    font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:#0057FF;margin:0 0 8px
+  }
+  .post-card h2{
+    font-size:20px;line-height:1.3;letter-spacing:-.02em;
+    color:#10203C;margin:0 0 8px;font-weight:700
+  }
+  .post-card:hover h2{color:#0057FF}
+  .post-card .excerpt{font-size:15.5px;color:#44577C;margin:0 0 12px;line-height:1.6}
+  .post-card .meta{font-size:13px;color:#5F6E8C;margin:0}
+  .post-card .read{
+    display:inline-block;margin-top:12px;font-size:14.5px;font-weight:600;color:#0057FF
+  }
+
+  .post-card.is-coming{
+    opacity:.72;
+    pointer-events:none;
+    box-shadow:none
+  }
+  .post-card.is-coming .tag{color:#5F6E8C}
+  .post-card.is-coming h2{color:#3C5077}
+
+  .cta-block{
+    background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(255,255,255,.75));
+    border:1px solid rgba(16,42,92,.12);
+    border-radius:16px;
+    padding:28px 26px;
+    box-shadow:0 8px 28px rgba(16,42,92,.05);
+    margin-top:8px
+  }
+  .cta-block h2{font-size:20px;color:#10203C;margin:0 0 8px;font-weight:700}
+  .cta-block p{font-size:15.5px;color:#44577C;margin:0 0 16px;max-width:52ch}
+  .cta{
+    display:inline-block;
+    background:#0057FF;
+    color:#fff!important;
+    font-weight:700;
+    font-size:15.5px;
+    padding:13px 22px;
+    border-radius:11px;
+    box-shadow:0 8px 24px rgba(0,87,255,.28);
+    transition:background .18s ease, box-shadow .18s ease
+  }
+  .cta:hover{background:#0046D1;color:#fff!important}
+
+  footer{
+    border-top:1px solid rgba(16,42,92,0.10);
+    padding:32px clamp(18px,4vw,28px) 40px;
+    background:#F8F7F4
+  }
+  .footer-inner{
+    max-width:1160px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center
+  }
+  .footer-nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin-left:auto;align-items:center}
+  .footer-nav a{color:#4C5F82;font-size:13.5px;transition:color .16s ease}
+  .footer-nav a:hover{color:#0057FF}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="/" style="display:flex;align-items:center;flex:none" aria-label="Hublytix home">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="140" height="32" style="height:32px;width:auto;display:block">
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#how-it-works">How it works</a>
+      <a href="/#what-it-checks">What it checks</a>
+      <a href="/#pricing">Pricing</a>
+      <a class="is-active" href="/blog/">Blog</a>
+      <a class="nav-cta" href="https://app.hublytix.ai/scan">Free scan</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="eyebrow">HubSpot portal health</p>
+  <h1>Practical writing on portal cost and data quality</h1>
+  <p class="lede">For RevOps, Marketing Ops, and anyone who owns the HubSpot bill. We write about what mess actually costs, what to measure first, and how to treat “savings” honestly — only after a fix is verified.</p>
+
+  <section class="post-list" aria-label="Articles">
+
+    <!-- Published: Spoke 1 -->
+    <a class="post-card" href="/blog/cost-of-messy-hubspot-portal/">
+      <p class="tag">Commercial · Portal cost</p>
+      <h2>The real cost of a messy HubSpot portal</h2>
+      <p class="excerpt">Most teams know the portal is messy. Fewer can say what that mess is costing them — in billable contacts, reporting trust, and team time. A practical way to see where cost hides before you clean anything.</p>
+      <p class="meta">~6 min read · For RevOps &amp; Marketing Ops</p>
+      <span class="read">Read article →</span>
+    </a>
+
+    <!-- Coming: cluster spokes (not thin stubs — listed so ownership is clear) -->
+    <div class="post-card is-coming" aria-disabled="true">
+      <p class="tag">Coming next · Audit</p>
+      <h2>How to audit HubSpot portal health</h2>
+      <p class="excerpt">A checklist of what to measure before a cleanup sprint — engagement, duplicates, lifecycle rules, and which issues change the bill if fixed and verified.</p>
+      <p class="meta">Checklist · Drafted</p>
+    </div>
+
+    <div class="post-card is-coming" aria-disabled="true">
+      <p class="tag">Coming next · Duplicates</p>
+      <h2>HubSpot duplicate contacts: why they cost more than you think</h2>
+      <p class="excerpt">Duplicates split history, inflate counts, and break personalisation. Why merging alone is not enough — and how they connect to billable contact cost.</p>
+      <p class="meta">Explainer · Drafted</p>
+    </div>
+
+  </section>
+
+  <section class="cta-block">
+    <h2>See it in your portal</h2>
+    <p>Hublytix runs a read-only scan: health score, prioritised findings, and a clear view of what to fix first. No inflated savings claims on detection alone.</p>
+    <a class="cta" href="https://app.hublytix.ai/scan">Scan your portal free →</a>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 260px">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:28px;width:auto;display:block;align-self:flex-start">
+      <span style="font-size:12.5px;color:#5F6E8C">HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="https://app.hublytix.ai/scan">Scan your portal free</a>
+      <a href="https://app.hublytix.ai/auth/signin">Log in</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="mailto:hello@hublytix.ai">Contact</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
