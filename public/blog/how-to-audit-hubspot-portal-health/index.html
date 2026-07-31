@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-16PXYCNETK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-16PXYCNETK');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>How to Audit HubSpot Portal Health (Practical Checklist) | Hublytix</title>
+<meta name="description" content="A practical checklist to audit HubSpot portal health: index the real problems, prioritise what to fix, and verify cleanup — without boiling the ocean.">
+<link rel="canonical" href="https://hublytix.ai/blog/how-to-audit-hubspot-portal-health/">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Audit HubSpot Portal Health (Practical Checklist) | Hublytix">
+<meta property="og:description" content="A practical checklist to audit HubSpot portal health: index the real problems, prioritise what to fix, and verify cleanup — without boiling the ocean.">
+<meta property="og:url" content="https://hublytix.ai/blog/how-to-audit-hubspot-portal-health/">
+<meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to Audit HubSpot Portal Health (Practical Checklist) | Hublytix">
+<meta name="twitter:description" content="A practical checklist to audit HubSpot portal health: index the real problems, prioritise what to fix, and verify cleanup — without boiling the ocean.">
+
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-blue.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
+
+<style>
+  html{background:#F8F7F4}
+  @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+  body{margin:0;background:#F8F7F4;color:#24365A;font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.7}
+  a{color:#0057FF;text-decoration:none}
+  a:hover{color:#2E77FF}
+  ::selection{background:rgba(0,87,255,.35);color:#10203C}
+
+  .wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#0057FF;margin:0 0 12px}
+  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.03em;color:#10203C;margin:0 0 14px;font-weight:700}
+  .lede{font-size:18px;color:#44577C;margin:0 0 28px;line-height:1.65}
+  .meta{font-size:13.5px;color:#5F6E8C;margin:0 0 28px}
+  h2{font-size:22px;color:#10203C;margin:40px 0 12px;letter-spacing:-.02em;font-weight:700}
+  h3{font-size:17px;color:#10203C;margin:28px 0 8px;font-weight:700}
+  p,li{font-size:16.5px;color:#44577C}
+  ul,ol{padding-left:1.25em;margin:12px 0 20px}
+  li{margin:7px 0}
+  strong{color:#24365A;font-weight:600}
+
+  .callout{
+    background:linear-gradient(155deg,rgba(255,255,255,.92),rgba(255,255,255,.7));
+    border:1px solid rgba(16,42,92,.12);
+    border-radius:14px;
+    padding:20px 22px;
+    margin:28px 0;
+    box-shadow:0 8px 28px rgba(16,42,92,.06)
+  }
+  .callout p{margin:0}
+
+  .cta{
+    display:inline-block;
+    background:#0057FF;
+    color:#fff!important;
+    font-weight:700;
+    font-size:16px;
+    padding:14px 24px;
+    border-radius:11px;
+    margin-top:10px;
+    box-shadow:0 8px 24px rgba(0,87,255,.28);
+    transition:background .18s ease, box-shadow .18s ease
+  }
+  .cta:hover{background:#0046D1;color:#fff!important;box-shadow:0 10px 28px rgba(0,87,255,.34)}
+
+  hr{border:none;border-top:1px solid rgba(16,42,92,.1);margin:40px 0}
+  .related{font-size:14.5px;color:#5F6E8C}
+
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
+  th,td{text-align:left;padding:10px 12px;border:1px solid rgba(16,42,92,.12)}
+  th{background:rgba(0,87,255,.06);color:#10203C;font-weight:600}
+  td{color:#44577C;background:rgba(255,255,255,.55)}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,255,255,0.72);
+    backdrop-filter:blur(20px) saturate(1.8);
+    -webkit-backdrop-filter:blur(20px) saturate(1.8);
+    border-bottom:1px solid rgba(16,42,92,0.10)
+  }
+  .nav-inner{
+    max-width:1160px;margin:0 auto;
+    padding:12px clamp(16px,4vw,28px);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap
+  }
+  .nav-links{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center}
+  .nav-links a{
+    color:#3C5077;font-size:14.5px;font-weight:500;
+    padding:7px 11px;border-radius:8px;transition:color .16s ease
+  }
+  .nav-links a:hover{color:#0057FF}
+  .nav-cta{
+    background:#0057FF!important;color:#fff!important;
+    font-weight:700!important;padding:9px 16px!important;border-radius:10px!important;
+    box-shadow:0 6px 18px rgba(0,87,255,.25)
+  }
+  .nav-cta:hover{background:#0046D1!important;color:#fff!important}
+
+  /* Footer */
+  footer{
+    border-top:1px solid rgba(16,42,92,0.10);
+    padding:32px clamp(18px,4vw,28px) 40px;
+    background:#F8F7F4
+  }
+  .footer-inner{
+    max-width:1160px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center
+  }
+  .footer-nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin-left:auto;align-items:center}
+  .footer-nav a{color:#4C5F82;font-size:13.5px;transition:color .16s ease}
+  .footer-nav a:hover{color:#0057FF}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="/" style="display:flex;align-items:center;flex:none" aria-label="Hublytix home">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="140" height="32" style="height:32px;width:auto;display:block">
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#how-it-works">How it works</a>
+      <a href="/#what-it-checks">What it checks</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a class="nav-cta" href="https://app.hublytix.ai/scan">Free scan</a>
+    </nav>
+  </div>
+</header>
+
+<article class="wrap">
+  <p class="eyebrow">Checklist</p>
+  <h1>How to audit HubSpot portal health</h1>
+  <p class="meta">A practical sequence for RevOps and HubSpot admins — not a 40-page theory doc · ~7 min read</p>
+  <p class="lede">Most “HubSpot audits” jump straight into cleaning. A useful audit does the opposite: it builds a prioritised map of what’s broken, what it costs you, and what to fix first — before anyone merges a single contact.</p>
+
+  <h2>What “portal health” should mean</h2>
+  <p>Portal health is not a vanity score. It’s whether your HubSpot instance can support marketing, sales, and reporting without constant manual exception-handling.</p>
+  <p>A healthy portal is one where:</p>
+  <ul>
+    <li>Contact and company data is trustworthy enough for automation</li>
+    <li>Marketing contact counts are defensible</li>
+    <li>Lifecycle and pipeline fields mean the same thing across teams</li>
+    <li>Workflows and lists don’t silently recreate bad data</li>
+  </ul>
+
+  <h2>The audit sequence (use this order)</h2>
+
+  <h3>Step 1 — Baseline, read-only</h3>
+  <p>Before changing anything, capture a snapshot you can compare against later:</p>
+  <ul>
+    <li>Total contacts vs marketing contacts</li>
+    <li>Rough duplicate exposure (known duplicate groups or tools)</li>
+    <li>Engagement bands (e.g. no opens/clicks in 6–12 months among marketing contacts)</li>
+    <li>Critical property fill rates (email, lifecycle stage, owner, country — whatever you actually use)</li>
+    <li>Active workflows and lists that enrol broadly</li>
+  </ul>
+  <p>If you can’t measure it before and after, you can’t prove the fix worked.</p>
+
+  <h3>Step 2 — Find the high-cost problems first</h3>
+  <p>Not every data issue is equal. Prioritise problems that affect:</p>
+  <ol>
+    <li><strong>Billing</strong> — marketing contacts who should be non-marketing</li>
+    <li><strong>Trust</strong> — duplicates and lifecycle chaos that break reports</li>
+    <li><strong>Automation risk</strong> — workflows acting on bad segments</li>
+  </ol>
+
+  <h3>Step 3 — Separate “detect” from “done”</h3>
+  <p>Finding 10,000 unengaged contacts is not the same as recovering cost. Recovery requires:</p>
+  <ul>
+    <li>A clear rule for non-marketing / suppression</li>
+    <li>Execution of that rule</li>
+    <li>A follow-up check that the count actually moved</li>
+  </ul>
+  <div class="callout">
+    <p><strong>Important:</strong> Hublytix is built around that loop: detect → fix in HubSpot → verify → only then treat savings as real. Detection alone never books a dollar.</p>
+  </div>
+
+  <h3>Step 4 — Check the machines that recreate the mess</h3>
+  <p>While you review contacts, also ask:</p>
+  <ul>
+    <li>Which forms still create duplicates?</li>
+    <li>Which imports skip deduplication?</li>
+    <li>Which workflows re-enrol suppressed or invalid records?</li>
+    <li>Which lists are still built on outdated filters?</li>
+  </ul>
+  <p>Contact cleanup without process cleanup is temporary.</p>
+
+  <h2>Portal health checklist (copy this)</h2>
+  <table>
+    <thead>
+      <tr><th>Area</th><th>What to check</th><th>Priority signal</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Marketing contacts</td><td>Unengaged, invalid, should-be non-marketing</td><td>Direct cost</td></tr>
+      <tr><td>Duplicates</td><td>Email/domain groups, split history</td><td>Reporting + UX</td></tr>
+      <tr><td>Lifecycle / deal stages</td><td>Inconsistent definitions, stuck records</td><td>Pipeline trust</td></tr>
+      <tr><td>Properties</td><td>Critical fields empty or contradictory</td><td>Automation</td></tr>
+      <tr><td>Workflows</td><td>Broad enrolments, legacy logic</td><td>Recurrence</td></tr>
+      <tr><td>Lists</td><td>Static lists gone stale; filters too wide</td><td>Campaign waste</td></tr>
+      <tr><td>Integrations / imports</td><td>Sources creating duplicates or junk</td><td>Root cause</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How long should this take?</h2>
+  <p>A focused first-pass audit for a mid-sized portal is measured in hours, not months — if you stay in prioritisation mode. The months-long projects are usually “clean everything” programmes without a ranked backlog.</p>
+  <p>Ship a v1 health picture. Fix the top issues. Re-measure. Repeat.</p>
+
+  <h2>Faster path: automated read-only scan</h2>
+  <p>If you want the baseline without building every report by hand, Hublytix scans your HubSpot portal read-only and returns a health score plus prioritised findings — so you know what to fix first.</p>
+  <p>No account required for the first scan. Results in about two minutes. Detection is free; verified savings only appear after you fix and re-scan.</p>
+
+  <p><a class="cta" href="https://app.hublytix.ai/scan">Run a free portal scan →</a></p>
+
+  <hr>
+  <p class="related">Related: <a href="/blog/cost-of-messy-hubspot-portal/">The real cost of a messy HubSpot portal</a> · <a href="/blog/hubspot-duplicate-contacts/">HubSpot duplicate contacts</a> <span style="opacity:.7">(coming next)</span></p>
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 260px">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:28px;width:auto;display:block;align-self:flex-start">
+      <span style="font-size:12.5px;color:#5F6E8C">HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="https://app.hublytix.ai/scan">Scan your portal free</a>
+      <a href="https://app.hublytix.ai/auth/signin">Log in</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/blog/">Blog</a>
+      <a href="mailto:hello@hublytix.ai">Contact</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
