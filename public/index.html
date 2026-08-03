@@ -33,6 +33,75 @@ a:hover{color:#2E77FF}
 @keyframes hbPulse{0%{box-shadow:0 0 0 0 rgba(0,87,255,.55)}100%{box-shadow:0 0 0 20px rgba(0,87,255,0)}}
 }
 
+
+
+.nav-login-mobile{display:none !important}
+.nav-toggle{
+  display:none;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:12px;
+  border:1px solid rgba(16,42,92,0.12);
+  background:rgba(255,255,255,0.88);
+  box-shadow:0 4px 14px rgba(16,42,92,0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  cursor:pointer;flex:none;padding:0;
+  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.nav-toggle:hover{background:#fff;border-color:rgba(0,87,255,0.28)}
+.nav-toggle:focus-visible{outline:2px solid rgba(0,87,255,0.45);outline-offset:2px}
+.nav-toggle-lines{position:relative;width:18px;height:14px;display:block}
+.nav-toggle-lines span{
+  position:absolute;left:0;right:0;height:2px;border-radius:2px;
+  background:#24365A;
+  transition:transform .28s cubic-bezier(.4,0,.2,1), opacity .2s ease, top .28s cubic-bezier(.4,0,.2,1);
+}
+.nav-toggle-lines span:nth-child(1){top:0}
+.nav-toggle-lines span:nth-child(2){top:6px}
+.nav-toggle-lines span:nth-child(3){top:12px}
+header.nav-open .nav-toggle{
+  border-color:rgba(0,87,255,0.35);
+  background:rgba(0,87,255,0.08);
+  box-shadow:0 4px 16px rgba(0,87,255,0.12);
+}
+header.nav-open .nav-toggle-lines span{background:#0057FF}
+header.nav-open .nav-toggle-lines span:nth-child(1){top:6px;transform:rotate(45deg)}
+header.nav-open .nav-toggle-lines span:nth-child(2){opacity:0;transform:scaleX(0)}
+header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45deg)}
+@media (max-width:768px){
+  .nav-inner{flex-wrap:nowrap !important;gap:10px !important;padding:10px 16px !important}
+  .nav-toggle{display:inline-flex}
+  .nav-links{
+    display:flex;
+    position:absolute;left:12px;right:12px;top:calc(100% + 8px);
+    flex-direction:column;align-items:stretch;
+    margin:0 !important;padding:10px;
+    background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
+    border:1px solid rgba(16,42,92,0.12);
+    border-radius:16px;
+    box-shadow:0 18px 40px rgba(16,42,92,0.14), inset 0 1px 0 rgba(255,255,255,0.95);
+    gap:4px;
+    opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(-8px) scale(0.98);
+    transform-origin:top center;
+    transition:opacity .22s ease, transform .22s cubic-bezier(.4,0,.2,1), visibility .22s;
+  }
+  header.nav-open .nav-links{
+    opacity:1;visibility:visible;pointer-events:auto;
+    transform:translateY(0) scale(1);
+  }
+  .nav-links a{
+    padding:13px 14px !important;font-size:15px !important;font-weight:500 !important;
+    border-radius:12px;width:100%;box-sizing:border-box;color:#24365A !important;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-links a:hover,.nav-links a:active{background:rgba(0,87,255,0.08);color:#0057FF !important}
+  .nav-links a.nav-login-mobile{
+    margin-top:4px;border-top:1px solid rgba(16,42,92,0.08);border-radius:0 0 12px 12px;
+    padding-top:14px !important;color:#5F6E8C !important;font-weight:500 !important;
+  }
+  .nav-login{display:none !important}
+  .nav-login-mobile{display:block !important}
+  .nav-scan{padding:9px 14px !important;font-size:14px !important;white-space:nowrap}
+}
 </style>
 
 
@@ -46,21 +115,25 @@ a:hover{color:#2E77FF}
 <div style="position:relative;z-index:1">
 
 <!-- ================= NAV (glass chip variant) ================= -->
-<header data-screen-label="Nav" data-glass="nav" style="position:sticky;top:0;z-index:60;background:rgba(255,255,255,0.6);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-bottom:1px solid rgba(16,42,92,0.10)">
-  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px;padding:13px clamp(18px,4vw,28px)">
+<header data-screen-label="Nav" data-glass="nav" class="site-header" style="position:sticky;top:0;z-index:60;background:rgba(255,255,255,0.6);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-bottom:1px solid rgba(16,42,92,0.10)">
+  <div class="nav-inner" style="max-width:1160px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:14px 22px;padding:13px clamp(18px,4vw,28px);position:relative">
     <a href="#top" style="display:flex;align-items:center;flex:none">
       <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:40px;width:auto;display:block">
     </a>
-    <nav aria-label="Main" style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center">
+    <nav class="nav-links" aria-label="Main" id="nav-links" style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center">
       <a href="#how-it-works" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">How it works</a>
       <a href="#what-it-checks" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">What it checks</a>
       <a href="#pricing" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">Pricing</a>
       <a href="#faq" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">FAQ</a>
       <a href="/blog/" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">Blog</a>
+      <a class="nav-login-mobile" href="https://app.hublytix.ai/auth/signin" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px">Log in</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:14px;flex:none">
-      <a href="https://app.hublytix.ai/auth/signin" style="color:#3C5077;font-size:14.5px;font-weight:500;transition:color .16s ease">Log in</a>
-      <a href="https://app.hublytix.ai/scan" style="background:#0057FF;color:#FFFFFF;font-size:14.5px;font-weight:700;padding:9px 16px;border-radius:9px;box-shadow:0 4px 14px rgba(0,87,255,.22);transition:background .18s ease, box-shadow .18s ease">Scan free →</a>
+    <div class="nav-actions" style="display:flex;align-items:center;gap:10px;flex:none">
+      <a class="nav-login" href="https://app.hublytix.ai/auth/signin" style="color:#3C5077;font-size:14.5px;font-weight:500;transition:color .16s ease">Log in</a>
+      <a class="nav-scan" href="https://app.hublytix.ai/scan" style="background:#0057FF;color:#FFFFFF;font-size:14.5px;font-weight:700;padding:9px 16px;border-radius:9px;box-shadow:0 4px 14px rgba(0,87,255,.22);transition:background .18s ease, box-shadow .18s ease">Scan free →</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -529,6 +602,27 @@ a:hover{color:#2E77FF}
       el.style.transform = "none";
     });
   }
+})();
+</script>
+
+
+<script>
+(function(){
+  var header=document.querySelector('header.site-header');
+  var btn=document.getElementById('nav-toggle');
+  var links=document.getElementById('nav-links');
+  if(!header||!btn||!links) return;
+  function setOpen(open){
+    header.classList.toggle('nav-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  function close(){ setOpen(false); }
+  function toggle(){ setOpen(!header.classList.contains('nav-open')); }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
+  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+  document.addEventListener('click', function(e){ if(!header.contains(e.target)) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
 })();
 </script>
 
