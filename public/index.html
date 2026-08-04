@@ -35,6 +35,7 @@ a:hover{color:#2E77FF}
 
 
 
+
 .nav-login-mobile{display:none !important}
 .nav-toggle{
   display:none;align-items:center;justify-content:center;
@@ -65,15 +66,53 @@ header.nav-open .nav-toggle-lines span{background:#0057FF}
 header.nav-open .nav-toggle-lines span:nth-child(1){top:6px;transform:rotate(45deg)}
 header.nav-open .nav-toggle-lines span:nth-child(2){opacity:0;transform:scaleX(0)}
 header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45deg)}
+
 @media (max-width:768px){
-  .nav-inner{flex-wrap:nowrap !important;gap:10px !important;padding:10px 16px !important}
-  .nav-toggle{display:inline-flex}
+  /* Header: logo left, actions flush right */
+  header.site-header{background:rgba(255,255,255,0.92) !important}
+  .nav-inner{
+    flex-wrap:nowrap !important;
+    gap:8px !important;
+    padding:10px 14px !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+  }
+  .nav-inner > a[href="#top"]{
+    flex:0 1 auto !important;
+    min-width:0 !important;
+    max-width:42% !important;
+  }
+  .nav-inner > a[href="#top"] img{
+    height:28px !important;
+    width:auto !important;
+    max-width:100% !important;
+  }
+  .nav-links{ margin-left:0 !important; }
+  .nav-toggle{display:inline-flex; width:40px; height:40px; border-radius:11px}
+  .nav-actions{
+    margin-left:auto !important;
+    flex:0 0 auto !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:8px !important;
+  }
+  .nav-login{display:none !important}
+  .nav-login-mobile{display:block !important}
+  .nav-scan{
+    padding:8px 12px !important;
+    font-size:13px !important;
+    white-space:nowrap !important;
+    border-radius:9px !important;
+    box-shadow:0 3px 10px rgba(0,87,255,.2) !important;
+  }
+
+  /* Dropdown panel */
   .nav-links{
     display:flex;
     position:absolute;left:12px;right:12px;top:calc(100% + 8px);
     flex-direction:column;align-items:stretch;
     margin:0 !important;padding:10px;
-    background:rgba(255,255,255,0.94);
+    background:rgba(255,255,255,0.96);
     backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);
     border:1px solid rgba(16,42,92,0.12);
     border-radius:16px;
@@ -83,6 +122,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     transform:translateY(-8px) scale(0.98);
     transform-origin:top center;
     transition:opacity .22s ease, transform .22s cubic-bezier(.4,0,.2,1), visibility .22s;
+    z-index:70;
   }
   header.nav-open .nav-links{
     opacity:1;visibility:visible;pointer-events:auto;
@@ -95,12 +135,56 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
   }
   .nav-links a:hover,.nav-links a:active{background:rgba(0,87,255,0.08);color:#0057FF !important}
   .nav-links a.nav-login-mobile{
-    margin-top:4px;border-top:1px solid rgba(16,42,92,0.08);border-radius:0 0 12px 12px;
-    padding-top:14px !important;color:#5F6E8C !important;font-weight:500 !important;
+    margin-top:4px;border-top:1px solid rgba(16,42,92,0.08);
+    padding-top:14px !important;color:#5F6E8C !important;
   }
-  .nav-login{display:none !important}
-  .nav-login-mobile{display:block !important}
-  .nav-scan{padding:9px 14px !important;font-size:14px !important;white-space:nowrap}
+
+  /* Hero: stack cleanly, product card full width */
+  section[data-screen-label="Hero"]{
+    padding:24px 16px 40px !important;
+  }
+  section[data-screen-label="Hero"] > div{
+    flex-direction:column !important;
+    gap:28px !important;
+    align-items:stretch !important;
+  }
+  section[data-screen-label="Hero"] > div > div:first-child{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+    max-width:100% !important;
+  }
+  .hero-product-card{
+    max-width:100% !important;
+    min-width:0 !important;
+    width:100% !important;
+    flex:1 1 auto !important;
+  }
+  .hero-product-inner{
+    padding:18px 16px !important;
+    gap:16px !important;
+    border-radius:16px !important;
+  }
+  .hero-score-row{
+    flex-direction:column !important;
+    align-items:center !important;
+    text-align:center !important;
+    gap:16px !important;
+  }
+  .hero-score-row > div:last-child{
+    width:100% !important;
+    max-width:100% !important;
+  }
+  /* Trust chips under CTAs wrap tighter */
+  section[data-screen-label="Hero"] .hero-trust,
+  section[data-screen-label="Hero"] div[style*="flex-wrap:wrap"][style*="gap:8px 20px"]{
+    gap:8px 14px !important;
+    font-size:12.5px !important;
+  }
+}
+
+@media (max-width:380px){
+  .nav-scan{padding:8px 10px !important;font-size:12.5px !important}
+  .nav-inner > a[href="#top"] img{height:24px !important}
 }
 </style>
 
@@ -120,7 +204,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     <a href="#top" style="display:flex;align-items:center;flex:none">
       <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:40px;width:auto;display:block">
     </a>
-    <nav class="nav-links" aria-label="Main" id="nav-links" style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center">
+    <nav class="nav-links" aria-label="Main" id="nav-links" style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center;flex:1;justify-content:flex-end">
       <a href="#how-it-works" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">How it works</a>
       <a href="#what-it-checks" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">What it checks</a>
       <a href="#pricing" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">Pricing</a>
@@ -139,7 +223,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
 </header>
 
 <!-- ================= HERO ================= -->
-<section data-screen-label="Hero" id="top" style="padding:clamp(28px,4vw,48px) clamp(18px,4vw,28px) clamp(48px,6vw,72px)">
+<section data-screen-label="Hero" id="top" style="padding:clamp(36px,5vw,48px) clamp(18px,4vw,28px) clamp(48px,6vw,72px)">
   <div style="max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,64px);align-items:center">
     <div data-reveal="0" style="flex:1 1 460px;min-width:min(100%,460px);display:flex;flex-direction:column;gap:22px;align-items:flex-start">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.18em;color:#0057FF">HUBSPOT PORTAL HEALTH · SCORED, PRICED, VERIFIED</div>
@@ -158,8 +242,8 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     </div>
 
     <!-- Hero product composite: premium glass panel; money card = emerald fill, NO nested blur -->
-    <div data-reveal="1" style="flex:1 1 380px;min-width:min(100%,380px);max-width:530px;display:flex;flex-direction:column;gap:10px">
-      <div data-glass="premium" style="background:linear-gradient(155deg,rgba(255,255,255,0.72),rgba(255,255,255,0.42));backdrop-filter:blur(36px) saturate(1.85);-webkit-backdrop-filter:blur(36px) saturate(1.85);border:1px solid rgba(16,42,92,0.14);border-radius:18px;box-shadow:0 24px 56px rgba(16,42,92,0.16), inset 0 1px 2px rgba(255,255,255,0.9), inset 0 0 0 1px rgba(255,255,255,0.55);padding:22px 24px;display:flex;flex-direction:column;gap:20px">
+    <div data-reveal="1" class="hero-product-card" style="flex:1 1 380px;min-width:min(100%,380px);max-width:530px;display:flex;flex-direction:column;gap:10px">
+      <div data-glass="premium" class="hero-product-inner" style="background:linear-gradient(155deg,rgba(255,255,255,0.72),rgba(255,255,255,0.42));backdrop-filter:blur(36px) saturate(1.85);-webkit-backdrop-filter:blur(36px) saturate(1.85);border:1px solid rgba(16,42,92,0.14);border-radius:18px;box-shadow:0 24px 56px rgba(16,42,92,0.16), inset 0 1px 2px rgba(255,255,255,0.9), inset 0 0 0 1px rgba(255,255,255,0.55);padding:22px 24px;display:flex;flex-direction:column;gap:20px">
         <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap">
           <div style="display:flex;align-items:center;gap:9px">
             <span style="width:8px;height:8px;border-radius:50%;background:#0057FF;flex:none"></span>
@@ -167,7 +251,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
           </div>
           <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6E8C">app.hublytix.ai</span>
         </div>
-        <div style="display:flex;gap:clamp(16px,2.6vw,24px);align-items:center;flex-wrap:wrap">
+        <div class="hero-score-row" style="display:flex;gap:clamp(16px,2.6vw,24px);align-items:center;flex-wrap:wrap">
           <div style="position:relative;width:150px;height:150px;flex:none">
             <svg viewBox="0 0 160 160" width="150" height="150" role="img" aria-label="Portal health score">
               <circle cx="80" cy="80" r="66" fill="none" stroke="rgba(76,95,130,.14)" stroke-width="11"/>
@@ -178,7 +262,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
               <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6E8C">/100</span>
             </div>
           </div>
-          <div style="flex:1 1 210px;background:linear-gradient(155deg,rgba(0,87,255,0.16),rgba(0,87,255,0.04));border:1px solid rgba(0,87,255,0.3);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:9px">
+          <div class="hero-spend-card" style="flex:1 1 210px;background:linear-gradient(155deg,rgba(0,87,255,0.16),rgba(0,87,255,0.04));border:1px solid rgba(0,87,255,0.3);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:9px">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4C5F82">RECOVERABLE SPEND</span>
             <div style="display:flex;align-items:baseline;gap:5px">
               <span id="hb-spend" style="font-size:34px;font-weight:700;letter-spacing:-.02em;color:#10203C;line-height:1">$1,240</span>
