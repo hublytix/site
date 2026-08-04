@@ -80,12 +80,12 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
   .nav-inner > a[href="#top"]{
     flex:0 1 auto !important;
     min-width:0 !important;
-    max-width:42% !important;
+    max-width:50% !important;
   }
   .nav-inner > a[href="#top"] img{
-    height:28px !important;
+    height:34px !important;
     width:auto !important;
-    max-width:100% !important;
+    max-width:min(160px,48vw) !important;
   }
   .nav-links{ margin-left:0 !important; }
   .nav-toggle{display:inline-flex; width:40px; height:40px; border-radius:11px}
@@ -158,22 +158,57 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     min-width:0 !important;
     width:100% !important;
     flex:1 1 auto !important;
+    margin:0 !important;
   }
   .hero-product-inner{
-    padding:18px 16px !important;
-    gap:16px !important;
+    padding:16px 14px !important;
+    gap:14px !important;
     border-radius:16px !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
   }
   .hero-score-row{
     flex-direction:column !important;
     align-items:center !important;
     text-align:center !important;
-    gap:16px !important;
+    gap:14px !important;
+    width:100% !important;
+  }
+  .hero-score-row > div{
+    max-width:100% !important;
+    box-sizing:border-box !important;
   }
   .hero-score-row > div:last-child{
     width:100% !important;
     max-width:100% !important;
   }
+  /* Recoverable spend tile: no overflow, tighter padding */
+  .hero-spend-card,
+  .hero-spend-tile{
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+    padding:14px 14px !important;
+    border-radius:12px !important;
+  }
+  /* Score ring slightly smaller on mobile */
+  .hero-score-row > div:first-child{
+    width:120px !important;
+    height:120px !important;
+  }
+  .hero-score-row > div:first-child svg{
+    width:120px !important;
+    height:120px !important;
+  }
+  .hero-spend-card{
+    width:100% !important;
+    max-width:100% !important;
+    flex:1 1 auto !important;
+    box-sizing:border-box !important;
+    padding:14px 14px !important;
+    gap:6px !important;
+  }
+
   /* Trust chips under CTAs wrap tighter */
   section[data-screen-label="Hero"] .hero-trust,
   section[data-screen-label="Hero"] div[style*="flex-wrap:wrap"][style*="gap:8px 20px"]{
@@ -184,7 +219,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
 
 @media (max-width:380px){
   .nav-scan{padding:8px 10px !important;font-size:12.5px !important}
-  .nav-inner > a[href="#top"] img{height:24px !important}
+  .nav-inner > a[href="#top"] img{height:30px !important;max-width:min(140px,46vw) !important}
 }
 </style>
 
@@ -262,7 +297,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
               <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6E8C">/100</span>
             </div>
           </div>
-          <div class="hero-spend-card" style="flex:1 1 210px;background:linear-gradient(155deg,rgba(0,87,255,0.16),rgba(0,87,255,0.04));border:1px solid rgba(0,87,255,0.3);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:9px">
+          <div class="hero-spend-tile"  class="hero-spend-card" style="flex:1 1 210px;background:linear-gradient(155deg,rgba(0,87,255,0.16),rgba(0,87,255,0.04));border:1px solid rgba(0,87,255,0.3);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:9px">
             <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4C5F82">RECOVERABLE SPEND</span>
             <div style="display:flex;align-items:baseline;gap:5px">
               <span id="hb-spend" style="font-size:34px;font-weight:700;letter-spacing:-.02em;color:#10203C;line-height:1">$1,240</span>
