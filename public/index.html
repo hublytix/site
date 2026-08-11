@@ -36,7 +36,6 @@ a:hover{color:#2E77FF}
 
 
 
-.nav-login-mobile{display:none !important}
 .nav-toggle{
   display:none;align-items:center;justify-content:center;
   width:42px;height:42px;border-radius:12px;
@@ -96,8 +95,7 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     align-items:center !important;
     gap:8px !important;
   }
-  .nav-login{display:none !important}
-  .nav-login-mobile{display:block !important}
+  .nav-login{display:inline !important}
   .nav-scan{
     padding:8px 12px !important;
     font-size:13px !important;
@@ -134,10 +132,6 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
     transition:background .15s ease, color .15s ease;
   }
   .nav-links a:hover,.nav-links a:active{background:rgba(0,87,255,0.08);color:#0057FF !important}
-  .nav-links a.nav-login-mobile{
-    margin-top:4px;border-top:1px solid rgba(16,42,92,0.08);
-    padding-top:14px !important;color:#5F6E8C !important;
-  }
 
   /* Hero: stack cleanly, product card full width */
   section[data-screen-label="Hero"]{
@@ -245,7 +239,6 @@ header.nav-open .nav-toggle-lines span:nth-child(3){top:6px;transform:rotate(-45
       <a href="#pricing" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">Pricing</a>
       <a href="#faq" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">FAQ</a>
       <a href="/blog/" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px;transition:color .16s ease">Blog</a>
-      <a class="nav-login-mobile" href="https://app.hublytix.ai/auth/signin" style="color:#3C5077;font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px">Log in</a>
     </nav>
     <div class="nav-actions" style="display:flex;align-items:center;gap:10px;flex:none">
       <a class="nav-login" href="https://app.hublytix.ai/auth/signin" style="color:#3C5077;font-size:14.5px;font-weight:500;transition:color .16s ease">Log in</a>
