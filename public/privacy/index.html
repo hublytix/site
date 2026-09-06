@@ -65,7 +65,7 @@ a:hover{color:#2E77FF}
       <p style="margin:0 0 12px"><strong>Account &amp; contact data</strong><br>
       When you create an account or request a scan we may collect your name, email address, and company name.</p>
       <p style="margin:0 0 12px"><strong>HubSpot portal data</strong><br>
-      When you connect a portal we read metadata and record identifiers needed to calculate the health score and recoverable-spend figures (e.g. contact counts, property usage, duplicate signals, engagement flags). We store findings as record IDs and aggregated metrics — not full contact names or email addresses.</p>
+      When you connect a portal we read contact records to find duplicates, and store record identifiers only (e.g. contact counts, duplicate signals, engagement flags). We store findings as record IDs and aggregated metrics — not full contact names or email addresses.</p>
       <p style="margin:0"><strong>Usage data</strong><br>
       We collect standard technical logs (IP address, browser type, pages viewed, timestamps) to operate and improve the Service.</p>
     </section>
@@ -73,8 +73,8 @@ a:hover{color:#2E77FF}
     <section>
       <h2 style="font-size:18px;font-weight:700;color:#10203C;margin:0 0 10px">3. How We Use Data</h2>
       <ul style="margin:0;padding-left:20px">
-        <li>To run scans, generate health scores, and show recoverable-spend estimates</li>
-        <li>To provide optional one-at-a-time confirmed duplicate merges when you enable write access</li>
+        <li>To scan your contacts for duplicates and show you the counts</li>
+        <li>To generate the CSV export of duplicate groups for paying customers</li>
         <li>To operate accounts, billing, and customer support</li>
         <li>To improve the Service and detect abuse</li>
         <li>To send product and transactional emails (you can unsubscribe from non-essential messages)</li>
@@ -88,7 +88,7 @@ a:hover{color:#2E77FF}
 
     <section>
       <h2 style="font-size:18px;font-weight:700;color:#10203C;margin:0 0 10px">5. HubSpot Tokens &amp; Permissions</h2>
-      <p style="margin:0 0 12px">OAuth tokens are encrypted at rest. By default the connection is read-only. Write access is granted only when you explicitly enable it for a specific action (currently limited to confirmed single-pair duplicate merges). You can revoke access at any time from your HubSpot account or inside Hublytix.</p>
+      <p style="margin:0 0 12px">OAuth tokens are encrypted at rest. The connection is read-only: Hublytix requests contact read access and nothing else, so it cannot create, edit, merge or delete anything in your HubSpot account. You can revoke access at any time from your HubSpot account.</p>
     </section>
 
     <section>
@@ -103,7 +103,7 @@ a:hover{color:#2E77FF}
 
     <section>
       <h2 style="font-size:18px;font-weight:700;color:#10203C;margin:0 0 10px">8. Security</h2>
-      <p style="margin:0">We use industry-standard measures including encryption in transit and at rest, access controls, and audit logging of merge actions. No method of transmission or storage is 100% secure; we continuously improve our protections.</p>
+      <p style="margin:0">We use industry-standard measures including encryption in transit and at rest, access controls, and audit logging. No method of transmission or storage is 100% secure; we continuously improve our protections.</p>
     </section>
 
     <section>
