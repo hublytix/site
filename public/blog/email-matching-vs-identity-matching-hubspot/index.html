@@ -14,10 +14,38 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Email matching vs identity matching in HubSpot | Hublytix">
 <meta name="twitter:description" content="HubSpot auto-dedupes on email at create time. Identity matching finds the same person across emails — before you merge.">
-<style>html{background:#F8F7F4}body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,sans-serif;line-height:1.7}a{color:#0057FF;text-decoration:none}.wrap{max-width:720px;margin:0 auto;padding:40px 20px}.eyebrow{font-size:12px;text-transform:uppercase;color:#0057FF}h1{line-height:1.15;color:#10203C}h2{color:#10203C;margin-top:40px}p,li{font-size:16.5px;color:#44577C}.lede{font-size:18px}.meta{font-size:13.5px;color:#5F6E8C}strong{color:#24365A}table{width:100%;border-collapse:collapse;margin:18px 0}th,td{border:1px solid #ccd3df;padding:8px;text-align:left;vertical-align:top}th{color:#10203C;background:#fff}.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px}header,footer{border-bottom:1px solid #ccd3df;padding:18px 20px}.nav-links{float:right;display:flex;gap:12px}footer{border-top:1px solid #ccd3df;border-bottom:0;margin-top:40px}ul{padding-left:1.2em}</style>
+<style>
+html{background:#F8F7F4}
+body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,-apple-system,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#0057FF;text-decoration:none}
+a:hover{color:#2E77FF}
+header{border-bottom:1px solid #ccd3df;background:rgba(255,255,255,.85);backdrop-filter:blur(12px)}
+.nav-inner{max-width:920px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;align-items:center;margin:0;padding:0;list-style:none}
+.wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px;box-sizing:border-box}
+.wrap.is-wide{max-width:920px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#0057FF;margin:0 0 10px}
+h1{line-height:1.15;color:#10203C;margin:0 0 12px;font-size:clamp(28px,4vw,40px)}
+h2{color:#10203C;margin-top:40px}
+p,li{font-size:16.5px;color:#44577C}
+.lede{font-size:18px}
+.meta{font-size:13.5px;color:#5F6E8C;margin:0 0 24px}
+strong{color:#24365A}
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;border:1px solid #ccd3df;border-radius:10px;background:#fff}
+table{width:100%;min-width:640px;border-collapse:collapse;margin:0;font-size:13.5px}
+th,td{border-bottom:1px solid #e3e8f0;border-right:1px solid #eef1f6;padding:10px 12px;text-align:left;vertical-align:top}
+th{color:#10203C;background:#f7f9fc;font-weight:600}
+tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{border-right:0}
+.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px;margin:8px 0}
+footer{border-top:1px solid #ccd3df;margin-top:40px;padding:24px 20px}
+.footer-inner{max-width:920px;margin:0 auto}
+.fn{font-size:14px;color:#5F6E8C}
+ul,ol{padding-left:1.2em}
+</style>
 </head>
 <body>
-<header><nav class="nav-links"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></header>
+<header><div class="nav-inner"><nav class="nav-links" aria-label="Primary"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></div></header>
 <article class="wrap">
 <p class="eyebrow">Data quality</p>
 <h1>Email matching vs identity matching in HubSpot</h1>
@@ -30,7 +58,7 @@
 <p>At create time, HubSpot is trying to avoid two records with the <em>same</em> email — not to prove two different emails are one human. So a job change, a second inbox, or an enrichment list with a fresh address often lands as a brand-new contact on your billable count.</p>
 
 <h2>How HubSpot creates the second contact</h2>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Create path</th><th>What happens</th><th>Why email matching misses it</th></tr></thead>
 <tbody>
 <tr><td>Form / new work email</td><td>New primary email → new contact</td><td>Different address = “new person” (HubSpot can also match on cookie when tracking is accepted — still not identity across emails)</td></tr>
@@ -39,7 +67,7 @@
 <tr><td>Import set to create new</td><td>Rows without a matching Email create contacts</td><td>Skip unique ID / wrong match key → extras</td></tr>
 <tr><td>Enrichment lists (Apollo, Clay, Clearbit, ZoomInfo, etc.)</td><td>Fresh emails land as new contacts</td><td>Job-change and multi-email data is the product</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>Manage Duplicates (Pro+) can <em>later</em> suggest pairs using name, email, phone, and more. Useful — and a different job from blocking the create. It’s paid-tier, plan-capped on how many pairs you see, and contacts/companies only. Ops Hub’s ML layer is the nearest <em>native</em> identity-ish tool; it still doesn’t replace “don’t create the second contact when the email is new.”</p>
 
 <h2>What identity matching actually checks</h2>
@@ -56,6 +84,6 @@
 <p><a class="cta" href="https://hublytix.ai/">Scan my portal free →</a></p>
 <p>Related reading: <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a> · <a href="/blog/hubspot-duplicate-tools-different-email">HubSpot duplicate tools for different-email contacts</a> · <a href="/blog/cost-of-messy-hubspot-portal">The real cost of a messy HubSpot portal</a> · <a href="/#how">How Hublytix works</a></p>
 </article>
-<footer><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></footer>
+<footer><div class="footer-inner"><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></div></footer>
 </body>
 </html>
