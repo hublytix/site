@@ -13,19 +13,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Find Duplicate Contacts in HubSpot | Hublytix</title>
-<meta name="description" content="HubSpot's duplicate tool matches on email address. The same person at a new employer has a new email. Hublytix finds those — free to see the count (3 scans), $9.42 one-time for the list (15 scans). Read-only.">
-<link rel="canonical" href="https://hublytix.ai/">
-<meta property="og:url" content="https://hublytix.ai/">
-<meta property="og:title" content="Find Duplicate Contacts in HubSpot | Hublytix">
-<meta property="og:description" content="HubSpot's duplicate tool matches on email address. The same person at a new employer has a new email. Hublytix finds those. Read-only, free to scan.">
-<meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
+<title>HubSpot Portal Health Blog | Hublytix</title>
+<meta name="description" content="Practical writing on HubSpot data quality and duplicate contacts — for RevOps and Marketing Ops who own the CRM.">
+<link rel="canonical" href="https://hublytix.ai/blog">
+
 <meta property="og:type" content="website">
+<meta property="og:title" content="HubSpot Portal Health Blog | Hublytix">
+<meta property="og:description" content="Practical writing on HubSpot data quality and duplicate contacts — for RevOps and Marketing Ops who own the CRM.">
+<meta property="og:url" content="https://hublytix.ai/blog/">
+<meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/svg+xml" href="assets/favicon-blue.svg">
+
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-blue.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -34,9 +36,7 @@
   --ink:#24365A; --ink-2:#3C5077; --muted:#728096;
   --line:#E4E7EC; --tint:#EDF2FE; --green:#13846B;
 }
-*{box-sizing:border-box}
 html{background:var(--paper)}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{
   margin:0;background:var(--paper);color:var(--ink);
   font-family:'Space Grotesk',system-ui,sans-serif;
@@ -44,515 +44,139 @@ body{
   overflow-x:hidden;line-height:1.6;
 }
 a{color:var(--blue);text-decoration:none}
-a:hover{color:#2E77FF}
-::selection{background:rgba(0,87,255,.16);color:var(--ink)}
-img{max-width:100%}
-h1,h2,h3,p,ul,ol{margin:0}
-ul,ol{padding:0;list-style:none}
-:focus-visible{outline:3px solid #82ACFF;outline-offset:3px;border-radius:4px}
-
+a:hover{color:var(--blue-hover)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,32px)}
-.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--muted)}
-
-h1{font-size:clamp(34px,5vw,56px);line-height:1.08;letter-spacing:-1.8px;font-weight:500;text-wrap:balance}
-h2{font-size:clamp(26px,3.2vw,36px);line-height:1.16;letter-spacing:-1px;font-weight:500;text-wrap:balance}
-h3{font-size:18px;line-height:1.35;letter-spacing:-.3px;font-weight:500}
-.lead{font-size:clamp(16px,1.7vw,19px);line-height:1.65;color:var(--ink-2);max-width:62ch}
-.small{font-size:14px;line-height:1.65;color:var(--muted)}
-
-/* ── nav ── */
 header{position:sticky;top:0;z-index:60;background:rgba(248,247,244,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:14px 20px;padding:12px 0}
 .nav img{height:44px;width:auto;display:block}
 .nav-links{display:flex;gap:2px;margin-left:auto;align-items:center}
 .nav-links a{color:var(--ink-2);font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px}
 .nav-links a:hover{color:var(--blue);background:rgba(0,87,255,.06)}
+.nav-links a.is-active{color:var(--blue);font-weight:600}
 .nav-cta{background:var(--blue);color:#fff !important;font-size:14.5px;font-weight:500;padding:9px 16px;border-radius:9px;flex:none}
 .nav-cta:hover{background:var(--blue-hover)}
 .nav-toggle{display:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--white);cursor:pointer;padding:0;align-items:center;justify-content:center}
 .nav-toggle span{display:block;width:17px;height:2px;background:var(--ink);border-radius:2px;position:relative}
 .nav-toggle span::before,.nav-toggle span::after{content:'';position:absolute;left:0;width:17px;height:2px;background:var(--ink);border-radius:2px}
-.nav-toggle span::before{top:-5px}.nav-toggle span::after{top:5px}
-@media(max-width:840px){
+.nav-toggle span::before{top:-5px}
+.nav-toggle span::after{top:5px}
+@media (max-width:820px){
   .nav-links{display:none;order:3;width:100%;flex-direction:column;align-items:stretch;gap:2px;padding-bottom:8px}
   header.open .nav-links{display:flex}
   .nav-toggle{display:flex;margin-left:auto}
   .nav-cta{order:2}
 }
-
-/* ── sections ── */
-section{padding:clamp(56px,7vw,92px) 0;position:relative}
-.hero{padding-top:clamp(44px,5vw,72px);padding-bottom:clamp(40px,5vw,64px)}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,60px);align-items:center}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
-.hero-vis{background:var(--tint);border:1px solid #E4EAFA;border-radius:16px;padding:26px 24px;
-  background-image:radial-gradient(rgba(175,194,229,.4) .8px,transparent .8px);background-size:16px 16px}
-.rec{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #DCE5F3;border-radius:10px;padding:12px 14px;box-shadow:0 6px 15px rgba(56,83,128,.04)}
-.rec.off{margin-left:26px;margin-top:10px;opacity:.9}
-.rec .av{flex:none;width:34px;height:34px;border-radius:50%;background:#ECEDFF;color:#7372B0;display:grid;place-items:center;font-size:12px;font-family:'IBM Plex Mono',monospace}
-.rec b,.match b{display:block;font-size:13px;font-weight:500;letter-spacing:-.1px}
-.rec small,.match small{display:block;font-size:12px;color:#8A96A9;margin-top:3px}
-.rec .id{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#9DA7B6}
-.join{height:34px;display:grid;place-items:center;position:relative}
-.join span{width:1px;height:34px;background:#ACC2EE;display:block}
-.match{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #BDD0FA;border-radius:10px;padding:13px 14px;box-shadow:0 8px 20px rgba(72,113,169,.06)}
-.match .mk{flex:none;width:30px;height:30px;border-radius:8px;background:#EAF0FF;color:var(--blue);display:grid;place-items:center}
-.match .pill{margin-left:auto;flex:none;background:#EAF2FF;color:var(--blue);border-radius:6px;padding:5px 9px;font-size:11.5px;font-family:'IBM Plex Mono',monospace}
-.vis-cap{margin-top:18px;text-align:center;font-size:12.5px;color:#6681A6;line-height:1.6}
-@media(max-width:420px){.rec .id,.match .pill{display:none}.rec.off{margin-left:14px}}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--tint);color:var(--blue);border-radius:100px;padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;margin-bottom:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff !important;font-size:15px;font-weight:500;padding:14px 24px;border-radius:10px;transition:background .2s,transform .2s}
-.btn:hover{background:var(--blue-hover);transform:translateY(-1px)}
-.btn-ghost{background:var(--white);color:var(--ink) !important;border:1px solid var(--line)}
-.btn-ghost:hover{background:#fff;border-color:#B9CFFF;transform:translateY(-1px)}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;align-items:center}
-.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px}
-.grid{display:grid;gap:16px}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
-
-/* ── proof ── */
-.proof{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--white);margin-top:30px}
-.proof>div{padding:26px}
-.proof>div+div{border-left:1px solid var(--line)}
-.proof .n{font-size:44px;line-height:1;letter-spacing:-2px;font-weight:500;font-family:'IBM Plex Mono',monospace}
-.proof .miss .n{color:#9C3617}
-.proof .hit .n{color:var(--green)}
-.proof .lbl{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.6}
-@media(max-width:640px){.proof{grid-template-columns:1fr}.proof>div+div{border-left:0;border-top:1px solid var(--line)}}
-
-/* ── tiers ── */
-.tier{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
-.tier:first-of-type{border-top:0}
-.tier b{font-weight:500;font-size:16px}
-.tier .t-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
-@media(max-width:640px){.tier{grid-template-columns:1fr;gap:6px}}
-
-/* ── steps ── */
-.step{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
-.step:first-of-type{border-top:0}
-.step .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--blue);border:1px solid #DCE7FE;background:var(--tint);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}
-
-/* ── pricing ── */
-.price{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px}
-@media(max-width:820px){.price{grid-template-columns:1fr}}
-.plan{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column}
-.plan.hi{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,87,255,.08)}
-.plan .amt{font-size:44px;letter-spacing:-2px;font-weight:500;line-height:1.1;margin:14px 0 4px}
-.plan .amt small{font-size:14px;letter-spacing:0;color:var(--muted)}
-.plan ul{margin:20px 0 24px;display:grid;gap:11px}
-.plan li{font-size:14px;color:var(--ink-2);display:flex;gap:10px;line-height:1.55}
-.plan li::before{content:'';flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:var(--tint);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230057FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E");
-  background-size:12px;background-position:center;background-repeat:no-repeat}
-.plan .btn{margin-top:auto}
-
-/* ── faq ── */
-details{border-top:1px solid var(--line);padding:18px 0}
-details:first-of-type{border-top:0}
-summary{cursor:pointer;list-style:none;font-size:16.5px;font-weight:500;display:flex;gap:14px;align-items:flex-start}
-summary::-webkit-details-marker{display:none}
-summary::after{content:'+';margin-left:auto;color:var(--blue);font-size:20px;line-height:1;flex:none}
-details[open] summary::after{content:'–'}
-details p{margin-top:12px;color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:66ch}
-
-/* ── footer ── */
-footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:13.5px}
+footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:13.5px;margin-top:56px}
 .f-row{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
 .f-row a{color:var(--muted)}
 .f-row a:hover{color:var(--blue)}
-.note{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;padding:20px 22px;margin-top:28px}
-</style>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      "name": "Hublytix",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "url": "https://hublytix.ai/",
-      "description": "Find HubSpot duplicate contacts that email matching misses — same person, new job email. Read-only scan; export when ready.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "description": "Free portal scan"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "HubSpot already has a duplicate tool. Why this?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "HubSpot's tool matches on the email address. It cannot catch the same human at a new employer. Hublytix finds those identity matches."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Will it merge my contacts?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Hublytix is read-only. You merge in HubSpot using the list we give you."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I need admin rights to install it?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Read-only install can be approved by any HubSpot user with portal access."
-          }
-        }
-      ]
-    }
-  ]
+.page{padding:48px 0 24px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 12px}
+h1{font-size:clamp(32px,4.5vw,44px);line-height:1.12;letter-spacing:-.03em;color:#10203C;margin:0 0 14px}
+.lede{font-size:18px;color:#44577C;margin:0 0 36px;line-height:1.65;max-width:62ch}
+.post-list{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 48px}
+@media (min-width:900px){.post-list{grid-template-columns:1fr 1fr}}
+.post-card{
+  display:flex;flex-direction:column;height:100%;box-sizing:border-box;
+  background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(255,255,255,.78));
+  border:1px solid rgba(16,42,92,.12);border-radius:16px;padding:22px 24px;
+  box-shadow:0 8px 28px rgba(16,42,92,.05);color:inherit;
+  transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease
 }
-</script>
+.post-card:hover{border-color:rgba(0,87,255,.28);box-shadow:0 12px 32px rgba(16,42,92,.08);transform:translateY(-1px);color:inherit}
+.post-card .tag{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin:0 0 8px}
+.post-card h2{font-size:20px;line-height:1.3;letter-spacing:-.02em;color:#10203C;margin:0 0 8px;font-weight:700}
+.post-card:hover h2{color:var(--blue)}
+.post-card .excerpt{font-size:15.5px;color:#44577C;margin:0 0 12px;line-height:1.6;flex:1}
+.post-card .meta{font-size:13px;color:var(--muted);margin:0}
+.post-card .read{display:inline-block;margin-top:12px;font-size:14.5px;font-weight:600;color:var(--blue)}
+.cta-block{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px 24px;margin:0 0 24px}
+.cta-block h2{margin:0 0 10px;font-size:22px;color:#10203C}
+.cta-block p{font-size:15.5px;color:#44577C;margin:0 0 16px;max-width:52ch}
+</style>
 </head>
-<body id="top">
+<body>
 
 <header id="hdr">
   <div class="wrap nav">
-    <a href="#top" aria-label="Hublytix home"><img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix"></a>
+    <a href="/" aria-label="Hublytix home"><img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix"></a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#problem">Why duplicates hide</a>
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="/blog">Blog</a>
+      <a href="/#problem">Why duplicates hide</a>
+      <a href="/#how">How it works</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#faq">FAQ</a>
+      <a class="is-active" href="/blog">Blog</a>
     </nav>
     <a class="nav-cta" href="https://app.hublytix.ai/auth/signin">Scan free</a>
-    <button class="nav-toggle" id="tgl" aria-label="Menu" aria-expanded="false"><span></span></button>
+    <button class="nav-toggle" type="button" id="tgl" aria-label="Menu" aria-expanded="false"><span></span></button>
   </div>
 </header>
 
-<!-- ══ HERO ══ -->
-<section class="hero">
-  <div class="wrap hero-grid">
-   <div>
-    <span class="eyebrow">Built for HubSpot</span>
-    <h1>The duplicate contacts<br>HubSpot can't see.</h1>
-    <p class="lead" style="margin-top:20px">
-      HubSpot matches duplicates on email address. But the same person at a new employer has a
-      new email — so the copies that matter most never get flagged. Hublytix finds those.
-    </p>
-    <div class="cta-row">
-      <a class="btn" href="https://app.hublytix.ai/auth/signin">Scan my portal free</a>
-      <a class="btn btn-ghost" href="#how">See how it works</a>
-    </div>
-    <p class="small" style="margin-top:16px">
-      Sign in with HubSpot · read-only · no credit card
-    </p>
-   </div>
+<main class="wrap page">
+  <p class="eyebrow">HubSpot portal health</p>
+  <h1>Practical writing on portal cost and data quality</h1>
+  <p class="lede">For RevOps, Marketing Ops, and anyone who owns the HubSpot database. We write about duplicate contacts, data quality, and how to treat “savings” honestly — only after a fix is verified.</p>
 
-   <!-- The claim, shown. Two records that any email match reads as two
-        different people, and the one person they actually are. -->
-   <div class="hero-vis" aria-hidden="true">
-     <div class="rec">
-       <span class="av">DB</span>
-       <span><b>Dale Breault</b><small>dbreault@fehb.org</small></span>
-       <span class="id">#10482</span>
-     </div>
-     <div class="rec off">
-       <span class="av">DB</span>
-       <span><b>Dale Breault</b><small>dbreault@mail.fehb.org</small></span>
-       <span class="id">#20831</span>
-     </div>
-     <div class="join"><span></span></div>
-     <div class="match">
-       <span class="mk">
-         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="3" width="12" height="13" rx="2"/><path d="M9 16v3a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4"/></svg>
-       </span>
-       <span><b>Same person.</b><small>Different domain. One duplicate group.</small></span>
-       <span class="pill">Confirmed</span>
-     </div>
-     <p class="vis-cap">HubSpot sees two contacts. We see one Dale.</p>
-   </div>
-  </div>
-</section>
+  <section class="post-list" aria-label="Articles">
 
-<!-- ══ PROBLEM / PROOF ══ -->
-<section id="problem" style="padding-top:0">
-  <div class="wrap">
-    <span class="mono">The blind spot</span>
-    <h2 style="margin-top:14px">One person. Three email addresses.<br>Three contact records.</h2>
-    <p class="lead" style="margin-top:16px">
-      People change jobs. Companies get acquired. Domains migrate. Every time, your CRM quietly
-      gains another copy of someone you already know — and because the email address is different,
-      an email-matching tool sees two unrelated people.
-    </p>
+    <!-- Published: Spoke 1 -->
+    <a class="post-card" href="/blog/cost-of-messy-hubspot-portal">
+      <p class="tag">Commercial · Portal cost</p>
+      <h2>The real cost of a messy HubSpot portal</h2>
+      <p class="excerpt">Most teams know the portal is messy. Fewer can say what that mess is costing them — in billable contacts, reporting trust, and team time. A practical way to see where cost hides before you clean anything.</p>
+      <p class="meta">~6 min read · For RevOps &amp; Marketing Ops</p>
+      <span class="read">Read article →</span>
+    </a>
 
-    <div class="proof">
-      <div class="miss">
-        <div class="n">0 / 50</div>
-        <div class="lbl">found by matching on the email address</div>
-      </div>
-      <div class="hit">
-        <div class="n">40 / 50</div>
-        <div class="lbl">found by matching the name and email local part, then corroborating</div>
-      </div>
-    </div>
-    <p class="small" style="margin-top:14px">
-      Measured against 50 HubSpot-confirmed duplicate pairs in our own regression fixture.
-      <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px">dbreault@fehb.org</code>
-      and
-      <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px">dbreault@mail.fehb.org</code>
-      are the same Dale Breault. Nothing matching on the full address will ever tell you that.
-    </p>
-    <p class="small" style="margin-top:18px">
-      More on the blind spot:
-      <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a>
-      — why email matching misses them.
-    </p>
-  </div>
-</section>
+    <!-- Published: Spoke 2 -->
+    <a class="post-card" href="/blog/how-to-audit-hubspot-portal-health">
+      <p class="tag">Checklist · Audit</p>
+      <h2>How to audit HubSpot portal health</h2>
+      <p class="excerpt">A practical sequence for RevOps and HubSpot admins: baseline read-only, prioritise high-cost problems, separate detect from done, and stop the machines that recreate the mess.</p>
+      <p class="meta">~7 min read · Checklist</p>
+      <span class="read">Read article →</span>
+    </a>
 
-<!-- ══ TIERS ══ -->
-<section style="background:var(--white);border-block:1px solid var(--line)">
-  <div class="wrap">
-    <span class="mono">Graded, not guessed</span>
-    <h2 style="margin-top:14px">Every match tells you how sure we are.</h2>
-    <p class="lead" style="margin-top:16px;margin-bottom:30px">
-      A merge in HubSpot cannot be undone, so a tool that hands you one undifferentiated list is
-      handing you the risk. Every group is graded by how much evidence supports it.
-    </p>
+    <!-- Published: Spoke 3 -->
+    <a class="post-card" href="/blog/hubspot-duplicate-contacts">
+      <p class="tag">Explainer · Duplicates</p>
+      <h2>HubSpot duplicate contacts with different emails: why email matching misses them</h2>
+      <p class="excerpt">HubSpot auto-dedupes by email. Same person, new job email still creates a second contact — and those are the duplicates that cost you. Email ≠ identity.</p>
+      <p class="meta">~6 min read · Explainer</p>
+      <span class="read">Read article →</span>
+    </a>
 
-    <div class="tier">
-      <div><b>Confirmed</b><span class="t-tag">Two signals</span></div>
-      <p class="small" style="color:var(--ink-2)">
-        The name and email local part match, <em>and</em> something independent agrees — related
-        domains, a shared company, or the same phone number. Strong enough to act on without
-        reading every pair.
-      </p>
-    </div>
-    <div class="tier">
-      <div><b>Likely</b><span class="t-tag">One signal</span></div>
-      <p class="small" style="color:var(--ink-2)">
-        A hard identifier matches — last name and phone, or full name and company — but nothing
-        corroborates the identity. Usually right. Worth a human on each pair.
-      </p>
-    </div>
-    <div class="tier">
-      <div><b>Name only</b><span class="t-tag">Context</span></div>
-      <p class="small" style="color:var(--ink-2)">
-        Same full name, nothing else agreeing. On a large database these are mostly different
-        people who share a name. Shown so you know we looked, not so you act on them.
-      </p>
-    </div>
+  
 
-    <div class="note">
-      <p class="small" style="color:var(--ink-2)">
-        <strong style="color:var(--ink);font-weight:500">We'd rather show you a smaller number.</strong>
-        Grading like this means the headline figure is lower than a tool that counts every
-        name collision as a duplicate. That's the point — the number you see is the number
-        you can trust.
-      </p>
-    </div>
-  </div>
-</section>
+    <!-- Spoke 7 -->
+    <a class="post-card" href="/blog/email-matching-vs-identity-matching-hubspot">
+      <p class="tag">Explainer · Duplicates</p>
+      <h2>Email matching vs identity matching in HubSpot</h2>
+      <p class="excerpt">HubSpot auto-dedupes on email at create time. Identity matching finds the same person across emails — before you merge.</p>
+      <p class="meta">~6 min read · Explainer</p>
+      <span class="read">Read article →</span>
+    </a>
 
-<!-- ══ HOW ══ -->
-<section id="how">
-  <div class="wrap">
-    <span class="mono">How it works</span>
-    <h2 style="margin-top:14px">Four steps. About two minutes.</h2>
+    <a class="post-card" href="/blog/hubspot-duplicate-tools-different-email">
+      <p class="tag">Comparison · Duplicates</p>
+      <h2>HubSpot duplicate tools for different-email contacts</h2>
+      <p class="excerpt">Compare Manage Duplicates, Koalify, Insycle, Dedupely, and Hublytix on different-email catch, scan-only, and export — not “best merge tool.”</p>
+      <p class="meta">~7 min read · Comparison</p>
+      <span class="read">Read article →</span>
+    </a>
 
-    <div style="margin-top:26px">
-      <div class="step">
-        <span class="num">01</span>
-        <div>
-          <h3>Sign in with HubSpot</h3>
-          <p class="small" style="margin-top:5px">
-            No separate password. Read-only access to contacts — that's the entire permission ask,
-            so you don't need an admin to approve it.
-          </p>
-        </div>
-      </div>
-      <div class="step">
-        <span class="num">02</span>
-        <div>
-          <h3>We read every contact</h3>
-          <p class="small" style="margin-top:5px">
-            Not a sample. A 137,000-contact portal takes a little over two minutes, and you can
-            close the tab while it runs.
-          </p>
-        </div>
-      </div>
-      <div class="step">
-        <span class="num">03</span>
-        <div>
-          <h3>See your number — free</h3>
-          <p class="small" style="margin-top:5px">
-            How many confirmed duplicate groups, how many records they hold, and how much of your
-            database is entangled. No payment to find out.
-          </p>
-        </div>
-      </div>
-      <div class="step">
-        <span class="num">04</span>
-        <div>
-          <h3>Export the list when it's worth it</h3>
-          <p class="small" style="margin-top:5px">
-            A CSV with every group, the record IDs behind it, and which record we'd keep — shaped
-            so you can work it in a spreadsheet and import it straight back into HubSpot.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ READ-ONLY ══ -->
-<section style="background:var(--white);border-block:1px solid var(--line)">
-  <div class="wrap">
-    <div class="grid g2" style="align-items:center;gap:34px">
-      <div>
-        <span class="mono">Your data stays yours</span>
-        <h2 style="margin-top:14px">Hublytix never changes anything.</h2>
-        <p class="lead" style="margin-top:16px">
-          We ask for read access to contacts and nothing else. Hublytix cannot edit, merge or
-          delete a record in your account — not because we promise not to, but because we never
-          request the permission that would let us.
-        </p>
-        <p class="small" style="margin-top:14px">
-          You do the merging in HubSpot's own tool, where your team already has the audit trail
-          and the habits. We find them; you decide.
-        </p>
-      </div>
-      <div class="card">
-        <ul style="display:grid;gap:14px">
-          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Two scopes.</strong> Contact read, and the token check that tells us which portal signed in.</li>
-          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Record IDs only at rest.</strong> Names and emails are fetched live from HubSpot while you look, never stored.</li>
-          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Tokens encrypted.</strong> Your connection is encrypted at rest and bound to your account.</li>
-          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">No admin needed.</strong> A read-only install is something any HubSpot user can approve.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ PRICING ══ -->
-<section id="pricing">
-  <div class="wrap">
-    <span class="mono">Pricing</span>
-    <h2 style="margin-top:14px">See the number free.<br>Pay only for the list.</h2>
-    <p class="lead" style="margin-top:16px">
-      You shouldn't have to pay to find out whether you have a problem.
-    </p>
-
-    <div class="price">
-      <div class="plan">
-        <h3>Free</h3>
-        <div class="amt">$0</div>
-        <p class="small">Enough to know where you stand.</p>
-        <ul>
-          <li>Scan every contact in your portal</li>
-          <li>Confirmed, Likely and Name-only counts</li>
-          <li>How much of your database is affected</li>
-          <li>3 scans per HubSpot account</li>
-        </ul>
-        <a class="btn btn-ghost" href="https://app.hublytix.ai/auth/signin">Scan free</a>
-      </div>
-
-      <div class="plan hi">
-        <h3>Full Export</h3>
-        <div class="amt">$9.42 <small>one-time</small></div>
-        <p class="small">The list + 15 scans. Pay once.</p>
-        <ul>
-          <li>Every duplicate group as a CSV</li>
-          <li>Record IDs, emails and match signals</li>
-          <li>Which record to keep, per group</li>
-          <li>Formatted for HubSpot import</li>
-          <li>15 scans included (re-scan as data changes)</li>
-          <li>One-time purchase — no subscription</li>
-        </ul>
-        <a class="btn" href="https://app.hublytix.ai/auth/signin">Get started</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FAQ ══ -->
-<section id="faq" style="background:var(--white);border-block:1px solid var(--line)">
-  <div class="wrap" style="max-width:840px">
-    <span class="mono">Fair questions</span>
-    <h2 style="margin-top:14px;margin-bottom:26px">Things worth asking first.</h2>
-
-    <details>
-      <summary>HubSpot already has a duplicate tool. Why this?</summary>
-      <p>HubSpot's tool matches on the email address, which catches the easy cases — the same
-      address entered twice. It cannot catch the same human at a new employer, which is the
-      version that quietly grows for years. Against our own fixture of 50 confirmed pairs,
-      email matching found none of them.</p>
-    </details>
-
-    <details>
-      <summary>Will it merge my contacts?</summary>
-      <p>No, and it can't. Hublytix requests read-only access, so it has no ability to change
-      anything in your HubSpot account. You merge in HubSpot's own tool, using the list we give
-      you. A merge is permanent, and we'd rather that decision — and the audit trail — stayed
-      where your team already works.</p>
-    </details>
-
-    <details>
-      <summary>What do you store?</summary>
-      <p>Record IDs and the groups they belong to. Names, emails, job titles and companies are
-      fetched live from HubSpot each time you look and are never written to our database. Your
-      HubSpot tokens are encrypted at rest.</p>
-    </details>
-
-    <details>
-      <summary>Do I need admin rights to install it?</summary>
-      <p>No. Installing an app that asks for write access requires a HubSpot Super Admin. Ours
-      is read-only, so any user with access to the portal can approve it.</p>
-    </details>
-
-    <details>
-      <summary>How big a portal can it handle?</summary>
-      <p>It reads every contact, not a sample. A 137,000-contact portal completes in a little
-      over two minutes. Larger portals take proportionally longer and you can close the tab —
-      the scan keeps running.</p>
-    </details>
-
-    <details>
-      <summary>What does the export actually contain?</summary>
-      <p>One row per contact in a duplicate group, with its HubSpot Record ID, name, email, job
-      title and company, the group it belongs to, its confidence tier, which record we'd keep,
-      and a blank column for your decision. The columns are named so you can map them straight
-      into a HubSpot import.</p>
-    </details>
-
-    <details>
-      <summary>Is Full Export a subscription?</summary>
-      <p>No. Full Export is <strong>$9.42 one-time</strong> and includes <strong>15 scans</strong>. Free stays at 3 scans per HubSpot account. No monthly plan.</p>
-    </details>
-  </div>
-</section>
-
-<!-- ══ CTA ══ -->
-<section>
-  <div class="wrap" style="text-align:center">
-    <h2>Find out in two minutes.</h2>
-    <p class="lead" style="margin:16px auto 0">
-      Sign in with HubSpot, scan your portal, and see the number. Nothing changes in your account.
-    </p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn" href="https://app.hublytix.ai/auth/signin">Scan my portal free</a>
-    </div>
-  </div>
-</section>
+  </section><section class="cta-block">
+    <h2>See it in your portal</h2>
+    <p>Hublytix runs a read-only scan of every contact and finds the duplicates an email match misses — graded by how much evidence supports each one. Free to see the count.</p>
+    <a class="cta" href="https://app.hublytix.ai/auth/signin">Scan your portal free →</a>
+  </section>
+</main>
 
 <footer>
   <div class="wrap">
     <div class="f-row">
-      <img src="assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:34px;width:auto">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:34px;width:auto">
       <span style="margin-left:auto">&copy; 2026 Hublytix</span>
     </div>
     <div class="f-row" style="margin-top:16px">
@@ -570,14 +194,14 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
 </footer>
 
 <script>
-  var h=document.getElementById('hdr'),t=document.getElementById('tgl');
-  t.addEventListener('click',function(){
+(function(){
+  var b=document.getElementById('tgl'), h=document.getElementById('hdr');
+  if(!b||!h) return;
+  b.addEventListener('click', function(){
     var open=h.classList.toggle('open');
-    t.setAttribute('aria-expanded',open?'true':'false');
+    b.setAttribute('aria-expanded', open?'true':'false');
   });
-  h.querySelectorAll('.nav-links a').forEach(function(a){
-    a.addEventListener('click',function(){h.classList.remove('open');t.setAttribute('aria-expanded','false')});
-  });
+})();
 </script>
 </body>
 </html>
