@@ -14,10 +14,38 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HubSpot duplicate contacts with different emails: why email matching misses them | Hublytix">
 <meta name="twitter:description" content="HubSpot auto-dedupes by email. Same person, new job email still creates a second contact.">
-<style>html{background:#F8F7F4}body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,sans-serif;line-height:1.7}a{color:#0057FF;text-decoration:none}.wrap{max-width:720px;margin:0 auto;padding:40px 20px}.eyebrow{font-size:12px;text-transform:uppercase;color:#0057FF}h1{line-height:1.15;color:#10203C}h2{color:#10203C;margin-top:40px}p,li{font-size:16.5px;color:#44577C}.lede{font-size:18px}.meta{font-size:13.5px;color:#5F6E8C}strong{color:#24365A}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccd3df;padding:8px;text-align:left;vertical-align:top}th{color:#10203C;background:#fff}.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px}header,footer{border-bottom:1px solid #ccd3df;padding:18px 20px}.nav-links{float:right;display:flex;gap:12px}footer{border-top:1px solid #ccd3df;border-bottom:0;margin-top:40px}</style>
+<style>
+html{background:#F8F7F4}
+body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,-apple-system,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#0057FF;text-decoration:none}
+a:hover{color:#2E77FF}
+header{border-bottom:1px solid #ccd3df;background:rgba(255,255,255,.85);backdrop-filter:blur(12px)}
+.nav-inner{max-width:920px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;align-items:center;margin:0;padding:0;list-style:none}
+.wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px;box-sizing:border-box}
+.wrap.is-wide{max-width:920px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#0057FF;margin:0 0 10px}
+h1{line-height:1.15;color:#10203C;margin:0 0 12px;font-size:clamp(28px,4vw,40px)}
+h2{color:#10203C;margin-top:40px}
+p,li{font-size:16.5px;color:#44577C}
+.lede{font-size:18px}
+.meta{font-size:13.5px;color:#5F6E8C;margin:0 0 24px}
+strong{color:#24365A}
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;border:1px solid #ccd3df;border-radius:10px;background:#fff}
+table{width:100%;min-width:640px;border-collapse:collapse;margin:0;font-size:13.5px}
+th,td{border-bottom:1px solid #e3e8f0;border-right:1px solid #eef1f6;padding:10px 12px;text-align:left;vertical-align:top}
+th{color:#10203C;background:#f7f9fc;font-weight:600}
+tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{border-right:0}
+.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px;margin:8px 0}
+footer{border-top:1px solid #ccd3df;margin-top:40px;padding:24px 20px}
+.footer-inner{max-width:920px;margin:0 auto}
+.fn{font-size:14px;color:#5F6E8C}
+ul,ol{padding-left:1.2em}
+</style>
 </head>
 <body>
-<header><nav class="nav-links"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></header>
+<header><div class="nav-inner"><nav class="nav-links" aria-label="Primary"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></div></header>
 <article class="wrap">
 <p class="eyebrow">Data quality</p>
 <h1>HubSpot duplicate contacts with different emails: why email matching misses them</h1>
@@ -29,13 +57,13 @@
 <p>HubSpot treats a new email as a new person at create time (forms, imports, and similar paths). That works when the address is truly new. It fails when the same person shows up under a new work domain after a job change, acquisition, or company rebrand.</p>
 <p>HubSpot's <strong>Manage Duplicates</strong> tool (Pro+) can still suggest pairs later using name, email, phone, and more. Useful — and a different job from “don't create a second contact when the email changed.” Auto-create still runs on email. Job-changers still land as extras on your contact count.</p>
 <h2>Email matching vs identity matching</h2>
-<table><thead><tr><th></th><th>HubSpot auto-dedupe (create / forms / import)</th><th>Identity matching (what Hublytix looks for)</th></tr></thead><tbody>
+<div class="table-wrap"><table><thead><tr><th></th><th>HubSpot auto-dedupe (create / forms / import)</th><th>Identity matching (what Hublytix looks for)</th></tr></thead><tbody>
 <tr><th>Main key</th><td>Email address</td><td>Same person across emails</td></tr>
 <tr><th>Same email twice</th><td>Blocks / updates existing</td><td>—</td></tr>
 <tr><th>Same person, new work email</th><td>Creates a second contact</td><td>Flags as a likely duplicate group</td></tr>
 <tr><th>Job change / new domain</th><td>Easy to miss</td><td>Built for this case</td></tr>
 <tr><th>What you do next</th><td>You may never see a warning</td><td>You review, then merge in HubSpot</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p>The short version: <strong>email ≠ identity</strong>.</p>
 <h2>A concrete example</h2>
 <p>Dale is in your CRM as <code>dale@oldco.com</code> with two years of deal history. He joins NewCo and fills a form as <code>dale@newco.com</code>.</p>
@@ -44,9 +72,9 @@
 <p>A merge in HubSpot can't be undone, so don't treat every name collision as safe. When you review matches, look for confidence tiers — <strong>Confirmed</strong>, <strong>Likely</strong>, and <strong>Name only</strong> — and start with the strong ones. (We'll cover grading in a later post.)</p>
 <h2>See how many you're carrying</h2>
 <p>Want a quick read on how many same-person groups are hiding behind different emails? Run a free, read-only scan of your HubSpot portal. Nothing gets merged for you. You decide in HubSpot.</p>
-<p>Related reading: <a href="/blog/hubspot-duplicate-tools-different-email">HubSpot duplicate tools for different-email contacts</a> · <a href="/blog/cost-of-messy-hubspot-portal">The real cost of a messy HubSpot portal</a> · <a href="/blog/how-to-audit-hubspot-portal-health">How to audit HubSpot portal health</a> · <a href="/#how">How Hublytix works</a> · <a href="/#pricing">Pricing</a></p>
+<p>Related reading: <a href="/blog/email-matching-vs-identity-matching-hubspot">Email matching vs identity matching in HubSpot</a> · <a href="/blog/hubspot-duplicate-tools-different-email">HubSpot duplicate tools for different-email contacts</a> · <a href="/blog/cost-of-messy-hubspot-portal">The real cost of a messy HubSpot portal</a> · <a href="/blog/how-to-audit-hubspot-portal-health">How to audit HubSpot portal health</a> · <a href="/#how">How Hublytix works</a> · <a href="/#pricing">Pricing</a></p>
 <p><a class="cta" href="https://hublytix.ai/">Scan my portal free →</a></p>
 </article>
-<footer><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></footer>
+<footer><div class="footer-inner"><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></div></footer>
 </body>
 </html>
