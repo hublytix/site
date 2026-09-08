@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HubSpot duplicate tools for different-email contacts | Hublytix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="description" content="Compare HubSpot Manage Duplicates, Koalify, Insycle, Dedupely, and Hublytix on different-email catch, scan-only, and export — not “best merge tool.”">
 <link rel="canonical" href="https://hublytix.ai/blog/hubspot-duplicate-tools-different-email">
 <meta property="og:type" content="article">
@@ -14,11 +15,87 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HubSpot duplicate tools for different-email contacts | Hublytix">
 <meta name="twitter:description" content="Compare HubSpot Manage Duplicates, Koalify, Insycle, Dedupely, and Hublytix on different-email catch, scan-only, and export — not “best merge tool.”">
-<style>html{background:#F8F7F4}body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,sans-serif;line-height:1.7}a{color:#0057FF;text-decoration:none}.wrap{max-width:720px;margin:0 auto;padding:40px 20px}.eyebrow{font-size:12px;text-transform:uppercase;color:#0057FF}h1{line-height:1.15;color:#10203C}h2{color:#10203C;margin-top:40px}p,li{font-size:16.5px;color:#44577C}.lede{font-size:18px}.meta{font-size:13.5px;color:#5F6E8C}strong{color:#24365A}table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}th,td{border:1px solid #ccd3df;padding:8px;text-align:left;vertical-align:top}th{color:#10203C;background:#fff}.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px}header,footer{border-bottom:1px solid #ccd3df;padding:18px 20px}.nav-links{float:right;display:flex;gap:12px}footer{border-top:1px solid #ccd3df;border-bottom:0;margin-top:40px}ul{padding-left:1.2em}.fn{font-size:14px;color:#5F6E8C}</style>
+<style>
+  html{background:#F8F7F4}
+  body{margin:0;background:#F8F7F4;color:#24365A;font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:#0057FF;text-decoration:none}
+  a:hover{color:#2E77FF}
+  .wrap{max-width:720px;margin:0 auto;padding:48px 20px 40px;box-sizing:border-box}
+  .wrap.is-wide{max-width:920px}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#0057FF;margin:0 0 10px;font-weight:600}
+  h1{line-height:1.15;color:#10203C;margin:0 0 12px;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
+  h2{color:#10203C;margin-top:40px}
+  p,li{font-size:16.5px;color:#44577C}
+  .lede{font-size:18px}
+  .meta{font-size:13.5px;color:#5F6E8C;margin:0 0 24px}
+  strong{color:#24365A}
+  .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;border:1px solid #ccd3df;border-radius:10px;background:#fff}
+  table{width:100%;min-width:640px;border-collapse:collapse;margin:0;font-size:13.5px}
+  th,td{border-bottom:1px solid #e3e8f0;border-right:1px solid #eef1f6;padding:10px 12px;text-align:left;vertical-align:top}
+  th{color:#10203C;background:#f7f9fc;font-weight:600}
+  tr:last-child td{border-bottom:0}
+  td:last-child,th:last-child{border-right:0}
+  .cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px;margin:8px 0}
+  .fn{font-size:14px;color:#5F6E8C}
+  ul,ol{padding-left:1.2em}
+
+  /* Shared site chrome (match /blog index) */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,255,255,0.72);
+    backdrop-filter:blur(20px) saturate(1.8);
+    -webkit-backdrop-filter:blur(20px) saturate(1.8);
+    border-bottom:1px solid rgba(16,42,92,0.10)
+  }
+  .nav-inner{
+    max-width:1160px;margin:0 auto;
+    padding:12px clamp(16px,4vw,28px);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap
+  }
+  .nav-links{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center}
+  .nav-links a{
+    color:#3C5077;font-size:14.5px;font-weight:500;
+    padding:7px 11px;border-radius:8px;transition:color .16s ease
+  }
+  .nav-links a:hover{color:#0057FF}
+  .nav-links a.is-active{color:#0057FF;font-weight:600}
+  .nav-cta{
+    background:#0057FF!important;color:#fff!important;font-weight:600;
+    padding:9px 16px!important;border-radius:10px;margin-left:6px
+  }
+  .nav-cta:hover{background:#2E77FF!important;color:#fff!important}
+  footer{
+    border-top:1px solid rgba(16,42,92,0.10);
+    margin-top:56px;padding:28px clamp(16px,4vw,28px) 40px;
+    background:#fff
+  }
+  .footer-inner{
+    max-width:1160px;margin:0 auto;
+    display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center
+  }
+  .footer-brand{display:flex;align-items:center;gap:14px;color:#5F6E8C;font-size:13.5px}
+  .footer-nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin-left:auto;align-items:center}
+  .footer-nav a{color:#3C5077;font-size:14px}
+  .footer-nav a:hover{color:#0057FF}
+  .footer-note{width:100%;font-size:12.5px;line-height:1.7;color:#5F6E8C;max-width:70ch;margin:0}
+</style>
 </head>
 <body>
-<header><nav class="nav-links"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></header>
-<article class="wrap">
+<header>
+  <div class="nav-inner">
+    <a href="/" style="display:flex;align-items:center;flex:none" aria-label="Hublytix home">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="183" height="44" style="height:44px;width:auto;display:block">
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#how">How it works</a>
+      <a href="/#problem">What it checks</a>
+      <a href="/#pricing">Pricing</a>
+      <a class="is-active" href="/blog">Blog</a>
+      <a class="nav-cta" href="https://app.hublytix.ai/auth/signin">Free scan</a>
+    </nav>
+  </div>
+</header>
+<article class="wrap is-wide">
 <p class="eyebrow">Data quality</p>
 <h1>HubSpot duplicate tools for different-email contacts</h1>
 <p class="meta">Compare HubSpot Manage Duplicates, Koalify, Insycle, Dedupely, and Hublytix on different-email catch, scan-only, and export — not “best merge tool.”</p>
@@ -31,7 +108,7 @@
 <li><strong>Export</strong> a work queue?</li>
 </ol>
 <h2>Quick comparison</h2>
-<table>
+<div class="table-wrap"><table>
 <thead><tr><th>Tool</th><th>Best at</th><th>Different-email / identity</th><th>Scan-only</th><th>Export / work queue</th><th>Notes</th></tr></thead>
 <tbody>
 <tr><td><strong>HubSpot Manage Duplicates</strong></td><td>Native pair review (Pro+)</td><td>Can surface similar pairs — not a create-time block</td><td>You merge in HubSpot</td><td>What the tool surfaces; plan caps</td><td>Contacts + companies; paid tier</td></tr>
@@ -39,9 +116,9 @@
 <tr><td><strong>Koalify</strong></td><td>Ongoing native-style dedupe</td><td>Can support continuous cleanup</td><td>Merge-oriented</td><td>HubSpot-native workflows</td><td>Often wins “always-on merge” stories</td></tr>
 <tr><td><strong>Insycle</strong></td><td>Broad HubSpot data ops</td><td>Flexible rules can hit identity cases</td><td>Depends on workflow</td><td>Strong ops toolkit</td><td>Bigger than duplicates-only</td></tr>
 <tr><td><strong>Dedupely</strong></td><td>Cluster merge at scale</td><td>Can work when you want clusters merged</td><td>Merge-first</td><td>Cluster-oriented</td><td>Built to combine records</td></tr>
-<tr><td><strong>Hublytix</strong></td><td>Different-email blind spot</td><td>Built for same-person across emails</td><td><strong>Yes — read-only</strong></td><td>CSV of graded groups</td><td>You merge in HubSpot; free count, paid list</td></tr>
+<tr><td><strong>Hublytix</strong></td><td>Different-email blind spot</td><td>Built for same-person across emails</td><td><strong>Yes — read-only</strong></td><td>CSV of graded groups</td><td>You merge in HubSpot; free scans + one-time export (15 scans)</td></tr>
 </tbody>
-</table>
+</table></div>
 <p class="fn"><em>Also named in assistant answers: Dropcontact (in-HubSpot enrichment / cleanup). Left out of the grid because it isn’t a like-for-like different-email scan tool — but roundups often cite it.</em></p>
 <h2>How to choose</h2>
 <ul>
@@ -53,6 +130,22 @@
 <p><a class="cta" href="https://hublytix.ai/">Scan my portal free →</a></p>
 <p>Related reading: <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a> · <a href="/blog/email-matching-vs-identity-matching-hubspot">Email matching vs identity matching in HubSpot</a></p>
 </article>
-<footer><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></footer>
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 260px">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:34px;width:auto;display:block;align-self:flex-start">
+      <span style="font-size:12.5px;color:#5F6E8C">HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</span>
+    </div>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a>
+      <a href="https://app.hublytix.ai/auth/signin">Log in</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/blog">Blog</a>
+      <a href="mailto:hello@hublytix.ai">Contact</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
+  </div>
+</footer>
 </body>
 </html>
