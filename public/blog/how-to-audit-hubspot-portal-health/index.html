@@ -32,114 +32,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet">
 
 <style>
-  html{background:#F8F7F4}
-  @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
-  body{margin:0;background:#F8F7F4;color:#24365A;font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.7}
-  a{color:#0057FF;text-decoration:none}
-  a:hover{color:#2E77FF}
-  ::selection{background:rgba(0,87,255,.35);color:#10203C}
-
-  .wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px}
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#0057FF;margin:0 0 12px}
-  h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.03em;color:#10203C;margin:0 0 14px;font-weight:700}
-  .lede{font-size:18px;color:#44577C;margin:0 0 28px;line-height:1.65}
-  .meta{font-size:13.5px;color:#5F6E8C;margin:0 0 28px}
-  h2{font-size:22px;color:#10203C;margin:40px 0 12px;letter-spacing:-.02em;font-weight:700}
-  h3{font-size:17px;color:#10203C;margin:28px 0 8px;font-weight:700}
-  p,li{font-size:16.5px;color:#44577C}
-  ul,ol{padding-left:1.25em;margin:12px 0 20px}
-  li{margin:7px 0}
-  strong{color:#24365A;font-weight:600}
-
-  .callout{
-    background:linear-gradient(155deg,rgba(255,255,255,.92),rgba(255,255,255,.7));
-    border:1px solid rgba(16,42,92,.12);
-    border-radius:14px;
-    padding:20px 22px;
-    margin:28px 0;
-    box-shadow:0 8px 28px rgba(16,42,92,.06)
-  }
-  .callout p{margin:0}
-
-  .cta{
-    display:inline-block;
-    background:#0057FF;
-    color:#fff!important;
-    font-weight:700;
-    font-size:16px;
-    padding:14px 24px;
-    border-radius:11px;
-    margin-top:10px;
-    box-shadow:0 8px 24px rgba(0,87,255,.28);
-    transition:background .18s ease, box-shadow .18s ease
-  }
-  .cta:hover{background:#0046D1;color:#fff!important;box-shadow:0 10px 28px rgba(0,87,255,.34)}
-
-  hr{border:none;border-top:1px solid rgba(16,42,92,.1);margin:40px 0}
-  .related{font-size:14.5px;color:#5F6E8C}
-
-  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15px}
-  th,td{text-align:left;padding:10px 12px;border:1px solid rgba(16,42,92,.12)}
-  th{background:rgba(0,87,255,.06);color:#10203C;font-weight:600}
-  td{color:#44577C;background:rgba(255,255,255,.55)}
-
-  /* Nav */
-  header{
-    position:sticky;top:0;z-index:60;
-    background:rgba(255,255,255,0.72);
-    backdrop-filter:blur(20px) saturate(1.8);
-    -webkit-backdrop-filter:blur(20px) saturate(1.8);
-    border-bottom:1px solid rgba(16,42,92,0.10)
-  }
-  .nav-inner{
-    max-width:1160px;margin:0 auto;
-    padding:12px clamp(16px,4vw,28px);
-    display:flex;align-items:center;gap:16px;flex-wrap:wrap
-  }
-  .nav-links{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;align-items:center}
-  .nav-links a{
-    color:#3C5077;font-size:14.5px;font-weight:500;
-    padding:7px 11px;border-radius:8px;transition:color .16s ease
-  }
-  .nav-links a:hover{color:#0057FF}
-  .nav-cta{
-    background:#0057FF!important;color:#fff!important;
-    font-weight:700!important;padding:9px 16px!important;border-radius:10px!important;
-    box-shadow:0 6px 18px rgba(0,87,255,.25)
-  }
-  .nav-cta:hover{background:#0046D1!important;color:#fff!important}
-
-  /* Footer */
-  footer{
-    border-top:1px solid rgba(16,42,92,0.10);
-    padding:32px clamp(18px,4vw,28px) 40px;
-    background:#F8F7F4
-  }
-  .footer-inner{
-    max-width:1160px;margin:0 auto;
-    display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center
-  }
-  .footer-nav{display:flex;flex-wrap:wrap;gap:8px 22px;margin-left:auto;align-items:center}
-  .footer-nav a{color:#4C5F82;font-size:13.5px;transition:color .16s ease}
-  .footer-nav a:hover{color:#0057FF}
+html{background:#F8F7F4}
+body{margin:0;background:#F8F7F4;color:#24365A;font-family:system-ui,-apple-system,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:#0057FF;text-decoration:none}
+a:hover{color:#2E77FF}
+header{border-bottom:1px solid #ccd3df;background:rgba(255,255,255,.85);backdrop-filter:blur(12px)}
+.nav-inner{max-width:920px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}
+.nav-links{display:flex;gap:12px;align-items:center;margin:0;padding:0;list-style:none}
+.wrap{max-width:720px;margin:0 auto;padding:40px 20px 72px;box-sizing:border-box}
+.wrap.is-wide{max-width:920px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#0057FF;margin:0 0 10px}
+h1{line-height:1.15;color:#10203C;margin:0 0 12px;font-size:clamp(28px,4vw,40px)}
+h2{color:#10203C;margin-top:40px}
+p,li{font-size:16.5px;color:#44577C}
+.lede{font-size:18px}
+.meta{font-size:13.5px;color:#5F6E8C;margin:0 0 24px}
+strong{color:#24365A}
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:18px 0;border:1px solid #ccd3df;border-radius:10px;background:#fff}
+table{width:100%;min-width:640px;border-collapse:collapse;margin:0;font-size:13.5px}
+th,td{border-bottom:1px solid #e3e8f0;border-right:1px solid #eef1f6;padding:10px 12px;text-align:left;vertical-align:top}
+th{color:#10203C;background:#f7f9fc;font-weight:600}
+tr:last-child td{border-bottom:0}
+td:last-child,th:last-child{border-right:0}
+.cta{display:inline-block;background:#0057FF;color:#fff!important;font-weight:700;padding:14px 24px;border-radius:11px;margin:8px 0}
+footer{border-top:1px solid #ccd3df;margin-top:40px;padding:24px 20px}
+.footer-inner{max-width:920px;margin:0 auto}
+.fn{font-size:14px;color:#5F6E8C}
+ul,ol{padding-left:1.2em}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="nav-inner">
-    <a href="/" style="display:flex;align-items:center;flex:none" aria-label="Hublytix home">
-      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="183" height="44" style="height:44px;width:auto;display:block">
-    </a>
-    <nav class="nav-links" aria-label="Main">
-      <a href="/#how">How it works</a>
-      <a href="/#problem">What it checks</a>
-      <a href="/#pricing">Pricing</a>
-      <a href="/blog">Blog</a>
-      <a class="nav-cta" href="https://app.hublytix.ai/auth/signin">Free scan</a>
-    </nav>
-  </div>
-</header>
+<header><div class="nav-inner"><nav class="nav-links" aria-label="Primary"><a href="/">Hublytix</a><a href="/blog">Blog</a><a href="https://app.hublytix.ai/auth/signin">Free scan</a></nav></div></header>
 
 <article class="wrap">
   <p class="eyebrow">Checklist</p>
@@ -200,7 +124,7 @@
   <p>Contact cleanup without process cleanup is temporary.</p>
 
   <h2>Portal health checklist (copy this)</h2>
-  <table>
+  <div class="table-wrap"><table>
     <thead>
       <tr><th>Area</th><th>What to check</th><th>Priority signal</th></tr>
     </thead>
@@ -213,7 +137,7 @@
       <tr><td>Lists</td><td>Static lists gone stale; filters too wide</td><td>Campaign waste</td></tr>
       <tr><td>Integrations / imports</td><td>Sources creating duplicates or junk</td><td>Root cause</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h2>How long should this take?</h2>
   <p>A focused first-pass audit for a mid-sized portal is measured in hours, not months — if you stay in prioritisation mode. The months-long projects are usually “clean everything” programmes without a ranked backlog.</p>
@@ -229,23 +153,7 @@
   <p class="related">Related: <a href="/blog/cost-of-messy-hubspot-portal">The real cost of a messy HubSpot portal</a> · <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a></p>
 </article>
 
-<footer>
-  <div class="footer-inner">
-    <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 260px">
-      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" style="height:34px;width:auto;display:block;align-self:flex-start">
-      <span style="font-size:12.5px;color:#5F6E8C">HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</span>
-    </div>
-    <nav class="footer-nav" aria-label="Footer">
-      <a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a>
-      <a href="https://app.hublytix.ai/auth/signin">Log in</a>
-      <a href="/#pricing">Pricing</a>
-      <a href="/blog">Blog</a>
-      <a href="mailto:hello@hublytix.ai">Contact</a>
-      <a href="/terms">Terms</a>
-      <a href="/privacy">Privacy</a>
-    </nav>
-  </div>
-</footer>
+<footer><div class="footer-inner"><p>HubSpot portal health — scored, priced, verified. © 2026 Hublytix.</p><nav><a href="https://app.hublytix.ai/auth/signin">Scan your portal free</a> · <a href="https://app.hublytix.ai/auth/signin">Log in</a> · <a href="/#pricing">Pricing</a> · <a href="/blog">Blog</a> · <a href="mailto:hello@hublytix.ai">Contact</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></nav></div></footer>
 
 </body>
 </html>
