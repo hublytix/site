@@ -64,13 +64,15 @@
   }
   .nav-cta:hover{background:#0046D1!important;color:#fff!important}
 
-  .wrap{max-width:800px;margin:0 auto;padding:48px 20px 80px}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 20px 80px}
   .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#0057FF;margin:0 0 12px}
   h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.03em;color:#10203C;margin:0 0 14px;font-weight:700}
   .lede{font-size:18px;color:#44577C;margin:0 0 36px;line-height:1.65;max-width:58ch}
 
   /* Post cards */
-  .post-list{display:flex;flex-direction:column;gap:16px;margin:0 0 48px}
+  .post-list{display:grid;grid-template-columns:1fr;gap:16px;margin:0 0 48px}
+  @media (min-width:900px){.post-list{grid-template-columns:1fr 1fr}}
+  .post-card{height:100%;box-sizing:border-box}
   .post-card{
     display:block;
     background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(255,255,255,.78));
@@ -197,7 +199,7 @@
       <span class="read">Read article →</span>
     </a>
 
-  </section>
+  
 
     <!-- Spoke 7 -->
     <a class="post-card" href="/blog/email-matching-vs-identity-matching-hubspot">
@@ -216,7 +218,7 @@
       <span class="read">Read article →</span>
     </a>
 
-  <section class="cta-block">
+  </section><section class="cta-block">
     <h2>See it in your portal</h2>
     <p>Hublytix runs a read-only scan of every contact and finds the duplicates an email match misses — graded by how much evidence supports each one. Free to see the count.</p>
     <a class="cta" href="https://app.hublytix.ai/auth/signin">Scan your portal free →</a>
