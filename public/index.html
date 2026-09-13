@@ -219,7 +219,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
           "name": "Do I need admin rights to install it?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Read-only install can be approved by any HubSpot user with portal access."
+            "text": "HubSpot requires the App Marketplace Access permission to install any app that requests a scope, so Hublytix needs it too. That permission comes with Super Admin and can be granted to any user. What is being approved is read-only contact access \u2014 Hublytix cannot change, merge or delete a record."
           }
         }
       ]
@@ -382,8 +382,8 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
         <div>
           <h3>Sign in with HubSpot</h3>
           <p class="small" style="margin-top:5px">
-            No separate password. Read-only access to contacts — that's the entire permission ask,
-            so you don't need an admin to approve it.
+            No separate password. Read-only access to contacts is the entire permission ask.
+            HubSpot requires app-install permission to approve it — Super Admins have it already.
           </p>
         </div>
       </div>
@@ -443,7 +443,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
           <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Two scopes.</strong> Contact read, and the token check that tells us which portal signed in.</li>
           <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Record IDs only at rest.</strong> Names and emails are fetched live from HubSpot while you look, never stored.</li>
           <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">Tokens encrypted.</strong> Your connection is encrypted at rest and bound to your account.</li>
-          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">No admin needed.</strong> A read-only install is something any HubSpot user can approve.</li>
+          <li class="small" style="color:var(--ink-2)"><strong style="color:var(--ink);font-weight:500">An admin approves it.</strong> HubSpot requires App Marketplace Access to install any app. What they approve here is read-only — nothing that can change a record.</li>
         </ul>
       </div>
     </div>
@@ -534,8 +534,11 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
 
     <details>
       <summary>Do I need admin rights to install it?</summary>
-      <p>No. Installing an app that asks for write access requires a HubSpot Super Admin. Ours
-      is read-only, so any user with access to the portal can approve it.</p>
+      <p>Yes. HubSpot requires the <strong>App Marketplace Access</strong> permission to install any
+      app that requests a scope, and Hublytix requests read-only contact access. That permission is
+      included with Super Admin and can be granted to any user. If you don't have it, forward this to
+      whoever administers your portal — what they're approving is read-only, so Hublytix can never
+      change, merge or delete a record.</p>
     </details>
 
     <details>
