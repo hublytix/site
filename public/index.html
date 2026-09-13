@@ -14,11 +14,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Find Duplicate Contacts in HubSpot | Hublytix</title>
-<meta name="description" content="HubSpot's duplicate tool matches on email address. The same person at a new employer has a new email. Hublytix finds those — free to see the count (3 scans), $49 one-time for the list (15 scans). Read-only.">
+<meta name="description" content="HubSpot exports duplicate pairs. Hublytix returns them grouped — every copy of one person together, graded, with a keeper picked and the Record ID to merge into. Free to see the count (3 scans), $49 one-time for the list (15 scans). Read-only.">
 <link rel="canonical" href="https://hublytix.ai/">
 <meta property="og:url" content="https://hublytix.ai/">
 <meta property="og:title" content="Find Duplicate Contacts in HubSpot | Hublytix">
-<meta property="og:description" content="HubSpot's duplicate tool matches on email address. The same person at a new employer has a new email. Hublytix finds those. Read-only, free to scan.">
+<meta property="og:description" content="HubSpot exports duplicate pairs. Hublytix returns them grouped, graded, with a keeper picked and the Record ID to merge into — keyed to import straight back. Read-only, free to scan.">
 <meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -187,7 +187,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "url": "https://hublytix.ai/",
-      "description": "Find HubSpot duplicate contacts that email matching misses — same person, new job email. Read-only scan; export when ready.",
+      "description": "Export HubSpot duplicate contacts as a worklist — grouped one row-block per person, graded, with a suggested keeper and the Record ID to merge into. Read-only scan; export when ready.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -203,7 +203,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
           "name": "HubSpot already has a duplicate tool. Why this?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "HubSpot's tool matches on the email address. It cannot catch the same human at a new employer. Hublytix finds those identity matches."
+            "text": "It does, and on the tiers that have it, it works: it compares First Name, Last Name, Email address, IP country, Phone number, Zip Code and Company Name, scores each pair for similarity, rescans daily, and lets you export those pairs. What it returns is a finding — pairs, in the order it found them. Hublytix returns the same contacts as a worklist: grouped one row-block per person, graded Confirmed, Likely or Name only, with a suggested keeper, the Record ID to merge into, and a blank column for your decision — keyed on Record ID so the file you have worked imports straight back."
           }
         },
         {
@@ -250,10 +250,11 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
   <div class="wrap hero-grid">
    <div>
     <span class="eyebrow">Built for HubSpot</span>
-    <h1>The duplicate contacts HubSpot can't see.</h1>
+    <h1>HubSpot exports a list. Ours is a worklist.</h1>
     <p class="lead" style="margin-top:20px">
-      HubSpot matches duplicates on email address. But the same person at a new employer has a
-      new email — so the copies that matter most never get flagged. Hublytix finds those.
+      HubSpot&rsquo;s Export duplicates hands you the pairs it found. Hublytix groups them, picks a
+      keeper, carries the Record ID to merge into, and leaves a column for your call — keyed so the
+      worked file imports straight back into HubSpot, where you do the merging.
     </p>
     <div class="cta-row">
       <a class="btn" href="https://app.hublytix.ai/auth/signin">Scan my portal free</a>
@@ -264,8 +265,9 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
     </p>
    </div>
 
-   <!-- The claim, shown. Two records that any email match reads as two
-        different people, and the one person they actually are. -->
+   <!-- The claim, shown. Two records created separately because the second
+        address was one HubSpot had never seen, and the single group they
+        become in the export. -->
    <div class="hero-vis" aria-hidden="true">
      <div class="rec">
        <span class="av">DB</span>
@@ -285,7 +287,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
        <span><b>Same person.</b><small>Different domain. One duplicate group.</small></span>
        <span class="pill">Confirmed</span>
      </div>
-     <p class="vis-cap">HubSpot sees two contacts. We see one Dale.</p>
+     <p class="vis-cap">Two records, one Dale — one group, one keeper.</p>
    </div>
   </div>
 </section>
@@ -293,35 +295,36 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
 <!-- ══ PROBLEM / PROOF ══ -->
 <section id="problem" style="padding-top:0">
   <div class="wrap">
-    <span class="mono">The blind spot</span>
+    <span class="mono">Why the copies exist</span>
     <h2 style="margin-top:14px">One person. Three email addresses.<br>Three contact records.</h2>
     <p class="lead" style="margin-top:16px">
-      People change jobs. Companies get acquired. Domains migrate. Every time, your CRM quietly
-      gains another copy of someone you already know — and because the email address is different,
-      an email-matching tool sees two unrelated people.
+      People change jobs. Companies get acquired. Domains migrate. Each time, the new address is one
+      HubSpot has never seen — and because automatic deduplication matches on the Email property, it
+      creates another record instead of updating the one you already had.
     </p>
 
     <div class="proof">
       <div class="miss">
-        <div class="n">0 / 50</div>
-        <div class="lbl">found by matching on the email address</div>
+        <div class="n">Pairs</div>
+        <div class="lbl">What an export of duplicates gives you: two record IDs at a time, in the
+        order they were found, with nothing said about which one to keep.</div>
       </div>
       <div class="hit">
-        <div class="n">40 / 50</div>
-        <div class="lbl">found by matching the name and email local part, then corroborating</div>
+        <div class="n">Groups</div>
+        <div class="lbl">What Hublytix gives you: every copy of one person on adjacent rows, graded
+        Confirmed, Likely or Name only, with a keeper picked and the Record ID to merge into.</div>
       </div>
     </div>
     <p class="small" style="margin-top:14px">
-      Measured against 50 HubSpot-confirmed duplicate pairs in our own regression fixture.
       <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px">dbreault@fehb.org</code>
       and
       <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px">dbreault@mail.fehb.org</code>
-      are the same Dale Breault. Nothing matching on the full address will ever tell you that.
+      are the same Dale Breault. Both land in one group, the keeper is named, and the other row
+      carries the Record ID to merge it into — so the file you work is the file you import.
     </p>
     <p class="small" style="margin-top:18px">
-      More on the blind spot:
-      <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a>
-      — why email matching misses them.
+      More on how the copies accumulate:
+      <a href="/blog/hubspot-duplicate-contacts">HubSpot duplicate contacts with different emails</a>.
     </p>
   </div>
 </section>
@@ -511,10 +514,18 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
 
     <details>
       <summary>HubSpot already has a duplicate tool. Why this?</summary>
-      <p>HubSpot's tool matches on the email address, which catches the easy cases — the same
-      address entered twice. It cannot catch the same human at a new employer, which is the
-      version that quietly grows for years. Against our own fixture of 50 confirmed pairs,
-      email matching found none of them.</p>
+      <p>It does, and where it&rsquo;s available it works: it compares First Name, Last Name, Email
+      address, IP country, Phone number, Zip Code and Company Name, scores every pair for similarity,
+      rescans daily, and lets you export the pairs it found. We&rsquo;re not going to tell you it
+      can&rsquo;t find these.</p>
+      <p>What it returns is a <em>finding</em> — pairs, in the order it found them, with no grouping,
+      no nominated survivor and no column for your decision. And it never says <em>which</em> of those
+      seven properties produced a given score.</p>
+      <p>Hublytix returns the same contacts as a worklist: every copy of one person on adjacent rows,
+      graded Confirmed, Likely or Name only, with a suggested keeper and the Record ID to merge into,
+      keyed on Record ID so the file you&rsquo;ve worked imports straight back. We never merge anything
+      — HubSpot&rsquo;s merge cannot be undone, so the decision stays with you, in HubSpot&rsquo;s
+      own tool.</p>
     </details>
 
     <details>
