@@ -4,14 +4,14 @@
    Two tags run on this site and they need opposite treatment.
 
    GOOGLE'S TAGS ARE ALWAYS PRESENT. Every page sets consent mode to denied
-   before gtag.js loads, so an unanswered banner still measures — cookielessly,
+   before gtag.js loads, so an unanswered banner still measures, cookielessly,
    with no identifier written and no cross-site profile. Accepting calls
    'consent'/'update' and storage turns on. That is why the default lives
    inline in the head rather than here: it has to run before gtag.js, and a
    deferred file cannot.
 
-   FACTORS HAS NO SUCH MODE. Its script IS the identification — it resolves a
-   visit to the company behind it — so the only way to honour "Essential only"
+   FACTORS HAS NO SUCH MODE. Its script IS the identification: it resolves a
+   visit to the company behind it, so the only way to honour "Essential only"
    is not to load it at all. It is injected from here, after a yes, and never
    otherwise.
 
@@ -20,7 +20,7 @@
    who accepted here would arrive at app.hublytix.ai denied and be asked a
    second time, which is how the app's own banner behaves today. A cookie on
    the parent domain is readable by both, so the app can adopt this same choice
-   without asking again. Nothing reads it there yet — that is the follow-up —
+   without asking again. Nothing reads it there yet (that is the follow-up),
    but storing it any other way would close the door on it.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
@@ -43,7 +43,7 @@
 
   function write(v) {
     try {
-      // Host-wide on purpose — see the note above. Lax is correct for a
+      // Host-wide on purpose: see the note above. Lax is correct for a
       // preference read on normal navigation; it is never sent cross-site.
       document.cookie =
         NAME + "=" + v + "; Max-Age=" + DAYS * 86400 +
@@ -93,7 +93,7 @@
         return this;
         // ⚠ .call(window), NOT (). This file is strict-mode, where a plain
         // call gets `this === undefined` and the first line of the shim throws
-        // — into the catch below, silently, leaving Factors unloaded while
+        // into the catch below, silently, leaving Factors unloaded while
         // every other part of accepting appears to work. Factors ship this
         // snippet for a sloppy-mode <script>, where `this` IS window, and the
         // shim genuinely means window: it hangs q/init/call/message off it.
@@ -145,7 +145,7 @@
     document.body.appendChild(wrap);
 
     // The banner is fixed, so without this it can sit over the footer on a
-    // document only slightly taller than the viewport — the same bug the app's
+    // document only slightly taller than the viewport, the same bug the app's
     // banner solves with a measured spacer.
     var pad = document.body.style.paddingBottom;
     document.body.style.paddingBottom = wrap.offsetHeight + "px";
@@ -164,7 +164,7 @@
   if (stored === "granted") {
     // ⚠ THE RETURNING VISITOR. Consent mode defaults to denied on EVERY page
     // load, so a stored yes must be re-applied here or it is granted exactly
-    // once — on the click — and silently lost on every visit afterwards.
+    // once, on the click, and silently lost on every visit afterwards.
     apply(true);
   } else if (stored === "denied") {
     apply(false);
