@@ -242,13 +242,23 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);f
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,5vw,60px);align-items:start}
 @media(max-width:820px){.about{grid-template-columns:1fr}}
 .book{display:flex;gap:16px;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:24px}
-.book .cover{flex:none;width:58px;height:80px;border-radius:4px;background:linear-gradient(160deg,#0057FF,#24365A);color:#fff;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:center;line-height:1.3;padding:4px}
+.book .cover{flex:none;width:58px;height:92px;border-radius:3px;object-fit:cover;display:block;background:var(--tint)}
 .book b{display:block;font-weight:500}
 .book small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
-.fit{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
-@media(max-width:820px){.fit{grid-template-columns:1fr}}
-.fit .card h3{font-size:16px}
-.fit .no li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239C3617' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 5l6 6M11 5l-6 6'/%3E%3C/svg%3E");background-color:#FBEDE8}
+.book-feature{display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.book-cover{position:relative;max-width:280px}
+.book-cover::before{content:'';position:absolute;inset:14% -10% -12% 8%;background:radial-gradient(ellipse at center,rgba(36,54,90,.2),transparent 70%);filter:blur(18px);z-index:-1;pointer-events:none}
+.book-cover img{width:100%;height:auto;display:block;border-radius:3px 8px 8px 3px;background:var(--tint);box-shadow:0 28px 50px -18px rgba(36,54,90,.45),6px 0 18px -10px rgba(0,0,0,.18)}
+.book-feature .by{color:var(--muted);margin-top:8px;font-size:15.5px}
+.book-feature .lead{margin-top:18px}
+.book-price{font-size:28px;letter-spacing:-.8px;font-weight:500;margin:22px 0 20px;line-height:1}
+.book-price small{margin-left:8px;font-size:13.5px;letter-spacing:0;color:var(--muted);font-weight:400}
+@media(max-width:720px){
+  .book-feature{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .book-cover{width:min(200px,58vw)}
+  .book-feature .lead{margin-left:auto;margin-right:auto}
+  .book-feature .btn{width:100%;max-width:320px}
+}
 .final{background:var(--ink);color:#fff;border-radius:18px;padding:clamp(30px,5vw,56px);display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:center}
 .final h2{color:#fff}
 .final p{color:#C9D3E6;margin-top:12px;max-width:56ch}
@@ -320,6 +330,10 @@ header.scrolled{background:rgba(248,247,244,.72);box-shadow:0 10px 30px -12px rg
 .book:hover{transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(36,54,90,.3)}
 .book .cover{animation:float 5s ease-in-out infinite;box-shadow:0 10px 20px -8px rgba(0,40,140,.45)}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(-1deg)}}
+.book-cover img{animation:bookFloat 5.5s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes bookFloat{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-8px) rotate(.4deg)}}
+.book-cover{transition:transform .45s var(--ease)}
+.book-cover:hover{transform:translateY(-4px)}
 .chips span{transition:transform .35s var(--ease),border-color .3s,color .3s}
 .chips span:hover{transform:translateY(-2px);border-color:#B9CFFF;color:var(--blue)}
 
@@ -367,7 +381,7 @@ details:not([open]) p{opacity:0;transform:translateY(-6px)}
 .js .reveal.in{opacity:1;transform:none}
 .stats .n{font-variant-numeric:tabular-nums}
 
-@media (hover:none){.card:hover,.pkg:hover,.ladder li:hover,.hero-card:hover,.book:hover{transform:none}}
+@media (hover:none){.card:hover,.pkg:hover,.ladder li:hover,.hero-card:hover,.book:hover,.book-cover:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
   .js .reveal{opacity:1;transform:none}
@@ -437,8 +451,11 @@ details:not([open]) p{opacity:0;transform:translateY(-6px)}
    "author": {
     "@id": "https://hublytix.ai/#gowtham"
    },
-   "url": "https://www.amazon.com/dp/B0DZG7GV6W",
-   "bookFormat": "https://schema.org/EBook"
+   "url": "https://www.amazon.in/dp/B0DZG7GV6W",
+   "image": "https://hublytix.ai/assets/meta-ads-reimagined-cover.jpg",
+   "bookFormat": "https://schema.org/EBook",
+   "inLanguage": "en",
+   "datePublished": "2025-03-05"
   },
   {
    "@type": "FAQPage",
@@ -667,34 +684,42 @@ details:not([open]) p{opacity:0;transform:translateY(-6px)}
       <li><span class="num">02</span><b>AI Growth Audit</b><span class="when">₹15–25k · 7 days</span><p>A deeper review with a recorded walkthrough and a 90-day roadmap ranked by payback. Your call fee is credited if you book within 14 days.</p></li>
       <li><span class="num">03</span><b>Sprint or retainer</b><span class="when">From ₹25k sprint · ₹40–75k/mo</span><p>I build the highest-payback piece first, then, if you want, run your creative engine and AI flows every month with reporting.</p></li>
     </ol>
-    <div class="fit">
-      <div class="card"><h3>A good fit if you</h3><ul class="ticks">
-        <li>Run a D2C brand doing roughly ₹1–20 Cr a year, usually on Shopify</li>
-        <li>Spend on Meta ads and feel CAC rising or creatives fatiguing</li>
-        <li>Have a team of 3–25 and no in-house AI person</li>
-        <li>Deal with COD returns or a support backlog at sale time</li>
-      </ul></div>
-      <div class="card"><h3>Probably not a fit if you</h3><ul class="ticks no">
-        <li>Are under about ₹50 lakh a year in revenue</li>
-        <li>Are above ₹150 Cr with an in-house team and big agencies</li>
-        <li>Want "AI" for its own sake rather than a business result</li>
-      </ul></div>
+  </div>
+</section>
+
+<section class="alt" id="book">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="mono">From the founder</span>
+      <h2>Meta Ads Reimagined</h2>
+    </div>
+    <div class="book-feature" style="margin-top:36px">
+      <div class="book-cover">
+        <img src="/assets/meta-ads-reimagined-cover.jpg" alt="Cover of Meta Ads Reimagined: A Playbook for DTC Visionaries by Gowtham Ravishankar" width="940" height="1500">
+      </div>
+      <div>
+        <p class="mono">Kindle ebook</p>
+        <p class="by">A Playbook for DTC Visionaries · by Gowtham Ravishankar</p>
+        <p class="lead">Ever dumped cash into an ad campaign and felt like you just paid for crickets to chirp louder? We’ve all been there—sweating over pixels, praying for a click, only to get a shrug from the universe. This isn’t your grandpa’s ad guide or some robotic checklist. It’s a playbook for the bold, the restless, the D2C trailblazers who don’t just want customers—they want fans.</p>
+        <p class="book-price">₹449<small>on Kindle</small></p>
+        <a class="btn" href="https://www.amazon.in/dp/B0DZG7GV6W" target="_blank" rel="noopener">Get it on Kindle</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="alt" id="about">
+<section id="about">
   <div class="wrap about">
     <div>
       <span class="mono">About</span>
       <h2 style="margin-top:10px">Hi, I'm Gowtham.</h2>
-      <a class="book" href="https://www.amazon.com/dp/B0DZG7GV6W" rel="noopener" target="_blank">
-        <span class="cover" aria-hidden="true">META ADS RE&shy;IMAGINED</span>
+      <a class="book" href="https://www.amazon.in/dp/B0DZG7GV6W" rel="noopener" target="_blank">
+        <img class="cover" src="/assets/meta-ads-reimagined-cover.jpg" alt="" width="58" height="92">
         <span><b>Meta Ads Reimagined</b><small>A Playbook for DTC Visionaries · Kindle</small></span>
       </a>
     </div>
     <div>
-      <p class="lead">I work in marketing operations and growth, and I wrote <a href="https://www.amazon.com/dp/B0DZG7GV6W" rel="noopener" target="_blank">Meta Ads Reimagined: A Playbook for DTC Visionaries</a>, a playbook for running Meta ads for direct-to-consumer brands.</p>
+      <p class="lead">I work in marketing operations and growth, and I wrote <a href="https://www.amazon.in/dp/B0DZG7GV6W" rel="noopener" target="_blank">Meta Ads Reimagined: A Playbook for DTC Visionaries</a>, a playbook for running Meta ads for direct-to-consumer brands.</p>
       <p class="lead" style="margin-top:16px">I also build AI products. Hublytix started as a tool I built and shipped for HubSpot users. That mix is the point: I can tell you which AI play is worth it, and then build the funnel, automation or creative workflow myself instead of handing you a slide deck.</p>
       <ul class="ticks">
         <li>Marketing ops and growth: funnels, landing pages, automation, CRM</li>
@@ -818,7 +843,7 @@ var BOOKING_URL = "https://rzp.io/rzp/lCbVSYV";
   if(reduce||!('IntersectionObserver' in window)) return;
 
   /* reveal: section heads, then grid children staggered */
-  var groups=[['.sec-head',0],['.stats>div',.12],['.grid>.card',.1],['.pkgs>.pkg',.08],['.ladder>li',.12],['.fit>.card',.12],['.about>div',.15],['#faq details',.05],['.final',0],['#problem .small',0]];
+  var groups=[['.sec-head',0],['.stats>div',.12],['.grid>.card',.1],['.pkgs>.pkg',.08],['.ladder>li',.12],['.book-feature>div',.12],['.about>div',.15],['#faq details',.05],['.final',0],['#problem .small',0]];
   var els=[];
   groups.forEach(function(g){
     var parents=new Map();
