@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    Cookie consent for hublytix.ai
    ═══════════════════════════════════════════════════════════════════
-   Two tags run on this site and they need opposite treatment.
+   Three tags run on this site and they need two kinds of treatment.
 
    GOOGLE'S TAGS ARE ALWAYS PRESENT. Every page sets consent mode to denied
    before gtag.js loads, so an unanswered banner still measures, cookielessly,
@@ -9,6 +9,11 @@
    'consent'/'update' and storage turns on. That is why the default lives
    inline in the head rather than here: it has to run before gtag.js, and a
    deferred file cannot.
+
+   THE META PIXEL IS THE SAME SHAPE. Every page loads fbevents.js and calls
+   fbq('consent','revoke') before init, so nothing is sent until Accept. This
+   file grants (or keeps revoked) that consent. The stub has to live in the
+   head with init, which is why the pixel snippet is not injected from here.
 
    FACTORS HAS NO SUCH MODE. Its script IS the identification: it resolves a
    visit to the company behind it, so the only way to honour "Essential only"
@@ -62,6 +67,14 @@
     } catch (e) { /* as above */ }
   }
 
+  function tellMeta(granted) {
+    try {
+      // fbq is defined inline in the head (consent starts revoked there),
+      // so this is safe even if fbevents.js has not finished loading.
+      if (window.fbq) window.fbq("consent", granted ? "grant" : "revoke");
+    } catch (e) { /* as above */ }
+  }
+
   var factorsLoaded = false;
   function loadFactors() {
     if (factorsLoaded || window.faitracker) return;
@@ -108,6 +121,7 @@
 
   function apply(granted) {
     tellGoogle(granted);
+    tellMeta(granted);
     if (granted) loadFactors();
   }
 
@@ -137,7 +151,7 @@
     wrap.setAttribute("aria-label", "Cookie choices");
     wrap.innerHTML =
       '<div class="hx-cc-in"><p>We use cookies to keep this site working. With your ' +
-      'consent we also use Google Analytics, Google Ads and Factors.ai to see how ' +
+      'consent we also use Google Analytics, Google Ads, the Meta Pixel and Factors.ai to see how ' +
       'people find us and which adverts lead to a purchase. Choose Essential only ' +
       'and none of them is set. See our <a href="' + POLICY + '">Cookie Policy</a>.</p>' +
       '<div class="hx-cc-btns"><button type="button" class="hx-ok">Accept</button>' +
@@ -160,6 +174,32 @@
     wrap.querySelector(".hx-no").addEventListener("click", function () { choose(false); });
   }
 
+  // ── Meta Pixel events ────────────────────────────────────────────
+  // Standard events for the actions this site actually has. There is no
+  // on-site form and no payment thank-you page, so Lead-on-submit and
+  // Purchase are not fired here.
+  function bindPixelEvents() {
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if (!a || !window.fbq) return;
+      var href = a.href || "";
+      // ₹249 founding-call CTAs go to the Razorpay payment page (js-book
+      // hrefs are rewritten in the homepage script; mailto is the fallback).
+      if ((a.classList && a.classList.contains("js-book")) || /rzp\.io\//i.test(href)) {
+        window.fbq("track", "InitiateCheckout", { value: 249, currency: "INR", content_name: "Founding AI call" });
+        return;
+      }
+      var raw = a.getAttribute("href") || "";
+      if (/^mailto:/i.test(raw) || /^mailto:/i.test(href)) {
+        window.fbq("track", "Contact");
+        return;
+      }
+      if (/app\.hublytix\.ai\/auth\/signin/i.test(href)) {
+        window.fbq("track", "Lead", { content_name: "Portal scan signup" });
+      }
+    });
+  }
+
   var stored = read();
   if (stored === "granted") {
     // ⚠ THE RETURNING VISITOR. Consent mode defaults to denied on EVERY page
@@ -172,5 +212,11 @@
     banner();
   } else {
     document.addEventListener("DOMContentLoaded", banner);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindPixelEvents);
+  } else {
+    bindPixelEvents();
   }
 })();
