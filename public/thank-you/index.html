@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- CONSENT MODE FIRST, AND IT MUST RUN BEFORE gtag.js LOADS
+     Everything denied by default, so a visitor who has not answered the
+     banner is still measured, cookielessly, with no identifier written and
+     no cross-site profile built. A default that arrives after gtag.js has
+     already initialised is a default that never applied.
+     /consent.js lifts this when they accept, and is the only thing that ever
+     loads Factors.ai. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted'});
+  gtag('set','url_passthrough',true);
+</script>
+
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-16PXYCNETK"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-16PXYCNETK');
+</script>
+
+<!-- Meta Pixel. Consent starts revoked, matching the Google default
+     above; /consent.js grants it on Accept. No events are sent until then. -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('consent', 'revoke');
+  fbq('init', '1903002924464029');
+  fbq('track', 'PageView');
+</script>
+<script>
+/* Purchase fires once per Razorpay payment id. The call is queued while
+   consent is revoked, then sent when /consent.js grants it, same as PageView.
+   localStorage is written only after consent is granted, so a refresh before
+   Accept does not drop the event, and a refresh after Accept does not send it
+   twice. Bare visits with no payment id are not counted as a purchase. */
+(function () {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var paymentId = (params.get('razorpay_payment_id') || '').trim();
+    if (!paymentId || paymentId.length > 80) return;
+    var key = 'hublytix_fb_purchase:' + paymentId;
+    function consentValue() {
+      try {
+        var m = document.cookie.match(/(?:^|; )hublytix_consent_v1=([^;]*)/);
+        return m ? decodeURIComponent(m[1]) : null;
+      } catch (e) { return null; }
+    }
+    function alreadyFired() {
+      try { return window.localStorage.getItem(key) === '1'; } catch (e) { return false; }
+    }
+    function markFired() {
+      try { window.localStorage.setItem(key, '1'); } catch (e) {}
+    }
+    if (alreadyFired()) return;
+    if (typeof fbq !== 'function') return;
+    fbq('track', 'Purchase', {
+      value: 249,
+      currency: 'INR',
+      content_name: 'Founding AI call'
+    }, { eventID: paymentId });
+    if (consentValue() === 'granted') {
+      markFired();
+    } else if (consentValue() !== 'denied') {
+      var started = Date.now();
+      var timer = setInterval(function () {
+        var v = consentValue();
+        if (v === 'granted') { markFired(); clearInterval(timer); }
+        else if (v === 'denied' || Date.now() - started > 30 * 60 * 1000) { clearInterval(timer); }
+      }, 200);
+    }
+  } catch (e) { /* tracking must never break the page */ }
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1903002924464029&ev=PageView&noscript=1"
+/></noscript>
+
+<!-- Cookie banner, and the consent-gated Factors.ai loader. Deferred because
+     it renders into <body>; the consent DEFAULT above cannot be deferred. -->
+<script src="/consent.js" defer></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Payment received | Hublytix</title>
+<meta name="description" content="Your ₹249 founding AI call is confirmed. Pick a time for the 30-minute session.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Payment received | Hublytix">
+<meta property="og:description" content="Your ₹249 founding AI call is confirmed. Pick a time for the 30-minute session.">
+<meta property="og:url" content="https://hublytix.ai/thank-you">
+<meta property="og:image" content="https://hublytix.ai/assets/og-image-1200x630.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon-blue.svg">
+<link rel="apple-touch-icon" href="/assets/favicon-blue-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --paper:#F8F7F4; --white:#FFFFFF;
+  --blue:#0057FF; --blue-hover:#0049D9;
+  --ink:#24365A; --ink-2:#3C5077; --muted:#728096;
+  --line:#E4E7EC; --tint:#EDF2FE; --green:#13846B;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;line-height:1.6;
+}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:#2E77FF}
+::selection{background:rgba(0,87,255,.16);color:var(--ink)}
+img{max-width:100%}
+h1,h2,h3,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+:focus-visible{outline:3px solid #82ACFF;outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,36px)}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+
+h1{font-size:clamp(34px,5vw,56px);line-height:1.08;letter-spacing:-1.8px;font-weight:500;text-wrap:balance}
+h2{font-size:clamp(26px,3.2vw,36px);line-height:1.16;letter-spacing:-1px;font-weight:500;text-wrap:balance}
+h3{font-size:18px;line-height:1.35;letter-spacing:-.3px;font-weight:500}
+.lead{font-size:clamp(16px,1.7vw,19px);line-height:1.65;color:var(--ink-2);max-width:62ch}
+.small{font-size:14px;line-height:1.65;color:var(--muted);max-width:70ch}
+
+/* ── nav ── */
+header{position:sticky;top:0;z-index:60;background:rgba(248,247,244,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;padding-block:12px}
+.nav > a:first-child{flex:none;display:flex;align-items:center;min-height:44px}.nav img{height:44px;width:auto;display:block}
+.nav-links{display:flex;gap:2px;margin-left:auto;align-items:center}
+.nav-links a{color:var(--ink-2);font-size:14.5px;font-weight:500;padding:7px 11px;border-radius:8px}
+.nav-links a:hover{color:var(--blue);background:rgba(0,87,255,.06)}
+.nav-cta{background:var(--blue);color:#fff !important;font-size:14.5px;font-weight:500;padding:11px 16px;border-radius:9px;flex:none}
+.nav-cta:hover{background:var(--blue-hover)}
+.nav-toggle{display:none;width:44px;height:44px;flex:none;border-radius:10px;border:1px solid var(--line);background:var(--white);cursor:pointer;padding:0;align-items:center;justify-content:center}
+.nav-toggle span{display:block;width:17px;height:2px;background:var(--ink);border-radius:2px;position:relative}
+.nav-toggle span::before,.nav-toggle span::after{content:'';position:absolute;left:0;width:17px;height:2px;background:var(--ink);border-radius:2px}
+.nav-toggle span::before{top:-5px}.nav-toggle span::after{top:5px}
+@media (max-width:900px){.nav{row-gap:0}
+  .nav-links{display:none;order:4;flex:1 0 100%;width:100%;margin-left:0;flex-direction:column;align-items:stretch;gap:4px;padding:12px 0 14px;border-top:1px solid var(--line)}
+  header.open .nav-links{display:flex}
+  .nav-links a{padding:12px 2px;font-size:15px}
+  .nav-cta{order:2;margin-left:auto}
+  .nav-toggle{display:flex;order:3;margin-left:8px}
+  .nav img{height:36px}
+}
+@media (max-width:379px){
+  .nav{gap:10px 12px}
+  .nav img{height:28px}
+  .nav-cta{padding:11px 12px;font-size:13.5px}
+  .nav-toggle{margin-left:4px}
+}
+
+/* ── sections ── */
+section{padding:clamp(56px,7vw,92px) 0;position:relative}
+.hero{padding-top:clamp(44px,5vw,72px);padding-bottom:clamp(40px,5vw,64px)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(30px,5vw,60px);align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.hero-vis{background:var(--tint);border:1px solid #E4EAFA;border-radius:16px;padding:26px 24px;
+  background-image:radial-gradient(rgba(175,194,229,.4) .8px,transparent .8px);background-size:16px 16px}
+.rec{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #DCE5F3;border-radius:10px;padding:12px 14px;box-shadow:0 6px 15px rgba(56,83,128,.04)}
+.rec.off{margin-left:26px;margin-top:10px;opacity:.9}
+.rec .av{flex:none;width:34px;height:34px;border-radius:50%;background:#ECEDFF;color:#7372B0;display:grid;place-items:center;font-size:12px;font-family:'IBM Plex Mono',monospace}
+.rec b,.match b{display:block;font-size:13px;font-weight:500;letter-spacing:-.1px}
+.rec small,.match small{display:block;font-size:12px;color:#8A96A9;margin-top:3px}
+.rec .id{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#9DA7B6}
+.join{height:34px;display:grid;place-items:center;position:relative}
+.join span{width:1px;height:34px;background:#ACC2EE;display:block}
+.match{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #BDD0FA;border-radius:10px;padding:13px 14px;box-shadow:0 8px 20px rgba(72,113,169,.06)}
+.match .mk{flex:none;width:30px;height:30px;border-radius:8px;background:#EAF0FF;color:var(--blue);display:grid;place-items:center}
+.match .pill{margin-left:auto;flex:none;background:#EAF2FF;color:var(--blue);border-radius:6px;padding:5px 9px;font-size:11.5px;font-family:'IBM Plex Mono',monospace}
+.vis-cap{margin-top:18px;text-align:center;font-size:12.5px;color:#6681A6;line-height:1.6}
+@media(max-width:420px){.rec .id,.match .pill{display:none}.rec.off{margin-left:14px}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--tint);color:var(--blue);border-radius:100px;padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;margin-bottom:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff !important;font-size:15px;font-weight:500;padding:14px 24px;border-radius:10px;transition:background .2s,transform .2s}
+.btn:hover{background:var(--blue-hover);transform:translateY(-1px)}
+.btn-ghost{background:var(--white);color:var(--ink) !important;border:1px solid var(--line)}
+.btn-ghost:hover{background:#fff;border-color:#B9CFFF;transform:translateY(-1px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;align-items:center}
+.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+
+/* ── proof ── */
+.proof{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--white);margin-top:30px}
+.proof>div{padding:26px}
+.proof>div+div{border-left:1px solid var(--line)}
+.proof .n{font-size:44px;line-height:1;letter-spacing:-2px;font-weight:500;font-family:'IBM Plex Mono',monospace}
+.proof .miss .n{color:#9C3617}
+.proof .hit .n{color:var(--green)}
+.proof .lbl{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+@media(max-width:640px){.proof{grid-template-columns:1fr}.proof>div+div{border-left:0;border-top:1px solid var(--line)}}
+
+/* ── tiers ── */
+.tier{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+.tier:first-of-type{border-top:0}
+.tier b{font-weight:500;font-size:16px}
+.tier .t-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
+@media(max-width:640px){.tier{grid-template-columns:1fr;gap:6px}}
+
+/* ── steps ── */
+.step{display:grid;grid-template-columns:38px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.step:first-of-type{border-top:0}
+.step .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--blue);border:1px solid #DCE7FE;background:var(--tint);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}
+
+/* ── pricing ── */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+@media(max-width:960px){.price{grid-template-columns:1fr}}
+.plan{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column}
+.plan.hi{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,87,255,.08)}
+.plan .amt{font-size:44px;letter-spacing:-2px;font-weight:500;line-height:1.1;margin:14px 0 4px}
+.plan .amt small{font-size:14px;letter-spacing:0;color:var(--muted)}
+.plan ul{margin:20px 0 24px;display:grid;gap:11px}
+.plan li{font-size:14px;color:var(--ink-2);display:flex;gap:10px;line-height:1.55}
+.plan li::before{content:'';flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;background:var(--tint);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230057FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E");
+  background-size:12px;background-position:center;background-repeat:no-repeat}
+.plan .btn{margin-top:auto}
+
+/* ── faq ── */
+details{border-top:1px solid var(--line)}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;list-style:none;font-size:16.5px;font-weight:500;display:flex;gap:14px;align-items:flex-start;padding:18px 0}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';margin-left:auto;color:var(--blue);font-size:20px;line-height:1;flex:none}
+details[open] summary::after{content:'–'}
+details p{margin-top:0;padding-bottom:18px;color:var(--ink-2);font-size:14.5px;line-height:1.7;max-width:66ch}
+
+/* ── footer ── */
+footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:13.5px}
+.f-row{display:flex;flex-wrap:wrap;gap:2px 26px;align-items:center}
+.f-row a{color:var(--muted);display:inline-block;padding:11px 0}
+.f-row a:hover{color:var(--blue)}
+.note{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;padding:20px 22px;margin-top:28px}
+
+
+.page{padding:48px 0 80px;max-width:720px}
+.page .eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.page h1{font-size:clamp(28px,5vw,40px);margin:0 0 8px;letter-spacing:-.02em;color:var(--ink)}
+.page .updated{font-size:14.5px;color:var(--muted);margin:0 0 40px}
+.legal{display:flex;flex-direction:column;gap:28px;font-size:15.5px;color:var(--ink)}
+/* The global `section` rule is for the landing page's full-bleed bands and
+   puts ~92px of padding on every one. Inside a legal document that stacks 17
+   of them, it reads as a gap rather than a rhythm; the flex gap above is the
+   only spacing these need. */
+.legal section{padding:0}
+/* The header is sticky, so a bare #refunds jump lands the heading underneath
+   it. /legal/terms#refunds is the link Razorpay and the app's own footer use;
+   it has to land ON the heading. */
+.legal [id]{scroll-margin-top:84px}
+.legal h2{font-size:18px;font-weight:700;color:#10203C;margin:0 0 10px;letter-spacing:0;line-height:1.3}
+.legal h3{font-size:16px;font-weight:700;color:#10203C;margin:22px 0 8px}
+.legal p{margin:0 0 12px}.legal p:last-child{margin-bottom:0}
+.legal ul{margin:0 0 12px;padding-left:20px;list-style:disc}
+.legal ul:last-child{margin-bottom:0}
+.legal ul ul{margin:8px 0 0}
+.legal li{margin:0 0 8px;line-height:1.65}
+.legal li:last-child{margin-bottom:0}
+.legal .lead{font-size:16.5px}
+
+@media (hover:none){.btn:hover,.btn-ghost:hover,.post-card:hover,.card:hover{transform:none}}
+/* touch spacing */
+.rel a,.related a,.fn a{display:inline-block;padding:6px 0}
+p a,li a{padding:2px 0}
+
+/* ── thank-you ── */
+.thankyou{padding:clamp(44px,5vw,72px) 0 clamp(56px,7vw,96px);max-width:860px}
+.thankyou .eyebrow{margin-bottom:18px}
+.thankyou h1{margin:0 0 16px}
+.thankyou .lead{margin:0}
+.calendar-card{margin-top:32px;background:var(--white);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:560px;overflow:hidden}
+.calendar-card .tidycal-embed{width:100%;min-height:700px}
+.thankyou .cta-row{margin-top:22px}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="/" aria-label="Hublytix home"><img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="300" height="72"></a>
+    <nav class="nav-links" id="navmenu" aria-label="Main">
+      <a href="/hubspot-duplicates#problem">Why duplicates hide</a>
+      <a href="/hubspot-duplicates#how">How it works</a>
+      <a href="/hubspot-duplicates#pricing">Pricing</a>
+      <a href="/hubspot-duplicates#faq">FAQ</a>
+      <a href="/blog">Blog</a>
+    </nav>
+    <a class="nav-cta" href="https://app.hublytix.ai/auth/signin">Scan free</a>
+    <button class="nav-toggle" type="button" id="tgl" aria-label="Menu" aria-controls="navmenu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap thankyou">
+    <p class="eyebrow">Founding AI call</p>
+    <h1>Payment received. Now pick your slot.</h1>
+    <p class="lead">Your payment of ₹249 is confirmed. Choose a time below. After you book, you will get a calendar invite with the meeting link.</p>
+    <div class="calendar-card">
+      <div class="tidycal-embed" data-path="1vke2j6/ai-strategy-call"></div>
+      <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
+    </div>
+    <div class="cta-row">
+      <a class="btn" href="https://tidycal.com/1vke2j6/ai-strategy-call">Pick your slot on TidyCal</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-row">
+      <img src="/assets/hublytix-wordmark-blue.svg" alt="Hublytix" width="300" height="72" style="height:34px;width:auto">
+      <span style="margin-left:auto">&copy; 2026 Hublytix</span>
+    </div>
+    <div class="f-row" style="margin-top:16px">
+      <a href="/blog">Blog</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:hello@hublytix.ai">hello@hublytix.ai</a>
+      <a href="https://app.hublytix.ai/auth/signin">Sign in</a>
+    </div>
+    <p style="margin-top:18px;font-size:12.5px;line-height:1.7;max-width:70ch">
+      Hublytix is an independent product and is not affiliated with or endorsed by HubSpot, Inc.
+      HubSpot is a trademark of HubSpot, Inc.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var h=document.getElementById('hdr'), t=document.getElementById('tgl');
+  if(!h||!t) return;
+  var menu=h.querySelector('.nav-links');
+  function set(open){
+    h.classList.toggle('open',open);
+    t.setAttribute('aria-expanded',open?'true':'false');
+  }
+  t.addEventListener('click',function(){
+    var open=!h.classList.contains('open');
+    set(open);
+    if(open&&menu){var a=menu.querySelector('a'); if(a) a.focus();}
+  });
+  if(menu) menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){set(false)});
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&h.classList.contains('open')){set(false);t.focus();}
+  });
+  document.addEventListener('click',function(e){
+    if(h.classList.contains('open')&&!h.contains(e.target)) set(false);
+  });
+})();
+</script>
+</body>
+</html>
