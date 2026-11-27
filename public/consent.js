@@ -176,8 +176,8 @@
 
   // ── Meta Pixel events ────────────────────────────────────────────
   // Standard events for the actions this site actually has. There is no
-  // on-site form and no payment thank-you page, so Lead-on-submit and
-  // Purchase are not fired here.
+  // on-site form, so Lead-on-submit is not fired here. Purchase is fired
+  // from /thank-you after payment, not from this click handler.
   function bindPixelEvents() {
     document.addEventListener("click", function (e) {
       var a = e.target && e.target.closest ? e.target.closest("a") : null;
