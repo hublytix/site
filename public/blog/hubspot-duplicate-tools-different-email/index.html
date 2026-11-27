@@ -22,6 +22,25 @@
   gtag('config', 'G-16PXYCNETK');
 </script>
 
+<!-- Meta Pixel. Consent starts revoked, matching the Google default
+     above; /consent.js grants it on Accept. No events are sent until then. -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('consent', 'revoke');
+  fbq('init', '1903002924464029');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1903002924464029&ev=PageView&noscript=1"
+/></noscript>
+
 <!-- Cookie banner, and the consent-gated Factors.ai loader. Deferred because
      it renders into <body>; the consent DEFAULT above cannot be deferred. -->
 <script src="/consent.js" defer></script>
