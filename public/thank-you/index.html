@@ -38,17 +38,34 @@
   fbq('track', 'PageView');
 </script>
 <script>
-/* Purchase fires once per Razorpay payment id. The call is queued while
-   consent is revoked, then sent when /consent.js grants it, same as PageView.
+/* Purchase fires once per payment. The call is queued while consent is
+   revoked, then sent when /consent.js grants it, same as PageView.
    localStorage is written only after consent is granted, so a refresh before
    Accept does not drop the event, and a refresh after Accept does not send it
-   twice. Bare visits with no payment id are not counted as a purchase. */
+   twice. A Razorpay payment id in the query string is used as the eventID
+   and the storage key. If none is present (Payment Pages may omit it), a
+   ty- id is generated and the event is stored once per browser. */
 (function () {
   try {
     var params = new URLSearchParams(window.location.search);
-    var paymentId = (params.get('razorpay_payment_id') || '').trim();
-    if (!paymentId || paymentId.length > 80) return;
-    var key = 'hublytix_fb_purchase:' + paymentId;
+    function readPaymentId() {
+      var order = ['razorpay_payment_id', 'payment_id'];
+      params.forEach(function (_, name) {
+        if (/^razorpay_/i.test(name) && /id/i.test(name) && order.indexOf(name) === -1) {
+          order.push(name);
+        }
+      });
+      for (var i = 0; i < order.length; i++) {
+        var v = (params.get(order[i]) || '').trim();
+        if (v && v.length <= 80) return v;
+      }
+      return '';
+    }
+    var paymentId = readPaymentId();
+    var key = 'hublytix_fb_purchase:' + (paymentId || 'once');
+    if (!paymentId) {
+      paymentId = 'ty-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+    }
     function consentValue() {
       try {
         var m = document.cookie.match(/(?:^|; )hublytix_consent_v1=([^;]*)/);
