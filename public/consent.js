@@ -10,23 +10,26 @@
    inline in the head rather than here: it has to run before gtag.js, and a
    deferred file cannot.
 
-   THE META PIXEL IS THE SAME SHAPE. Every page loads fbevents.js and calls
-   fbq('consent','revoke') before init, so nothing is sent until Accept. This
-   file grants (or keeps revoked) that consent. The stub has to live in the
-   head with init, which is why the pixel snippet is not injected from here.
+   THE META PIXEL IS GRANTED BY DEFAULT. Every page still loads fbevents.js
+   and calls fbq('consent','revoke') before init, so the head snippet itself
+   sends nothing. This file then grants consent on load, which lets the queued
+   PageView (and any other queued event, such as Purchase on /thank-you) fire
+   without a click. Opting out calls revoke and is remembered. The stub has
+   to live in the head with init, which is why the pixel snippet is not
+   injected from here.
 
    FACTORS HAS NO SUCH MODE. Its script IS the identification: it resolves a
    visit to the company behind it, so the only way to honour "Essential only"
    is not to load it at all. It is injected from here, after a yes, and never
    otherwise.
 
-   ⚠ THE CHOICE IS A COOKIE ON .hublytix.ai, NOT localStorage, and that is the
-   whole point of storing it this way. localStorage is per-ORIGIN: a visitor
-   who accepted here would arrive at app.hublytix.ai denied and be asked a
-   second time, which is how the app's own banner behaves today. A cookie on
-   the parent domain is readable by both, so the app can adopt this same choice
-   without asking again. Nothing reads it there yet (that is the follow-up),
-   but storing it any other way would close the door on it.
+   THE CHOICE IS WRITTEN TWO WAYS. A cookie on .hublytix.ai is readable by
+   the marketing site and by app.hublytix.ai, so the app can adopt this same
+   choice without asking again. Nothing reads it there yet (that is the
+   follow-up). localStorage on this origin is also written, and is checked
+   first, so an opt-out is honoured on later visits even when the domain
+   cookie cannot be set (for example on localhost). A stored cookie is still
+   honoured if localStorage has no value yet.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
@@ -39,14 +42,31 @@
   var FACTORS_HOST = "https://api.factors.ai";
   var FACTORS_SDK = "https://app.factors.ai/assets/factors.js";
 
-  function read() {
+  function readStorage() {
+    try {
+      var v = window.localStorage.getItem(NAME);
+      if (v === "granted" || v === "denied") return v;
+    } catch (e) { /* fall through to the cookie */ }
+    return null;
+  }
+
+  function readCookie() {
     try {
       var m = document.cookie.match(new RegExp("(?:^|; )" + NAME + "=([^;]*)"));
-      return m ? decodeURIComponent(m[1]) : null;
-    } catch (e) { return null; }
+      var v = m ? decodeURIComponent(m[1]) : null;
+      if (v === "granted" || v === "denied") return v;
+    } catch (e) { /* a preference must never break the page */ }
+    return null;
+  }
+
+  function read() {
+    return readStorage() || readCookie();
   }
 
   function write(v) {
+    try {
+      window.localStorage.setItem(NAME, v);
+    } catch (e) { /* a preference must never break the page */ }
     try {
       // Host-wide on purpose: see the note above. Lax is correct for a
       // preference read on normal navigation; it is never sent cross-site.
@@ -69,7 +89,8 @@
 
   function tellMeta(granted) {
     try {
-      // fbq is defined inline in the head (consent starts revoked there),
+      // fbq is defined inline in the head (consent starts revoked there,
+      // then this file grants it unless the visitor has opted out),
       // so this is safe even if fbevents.js has not finished loading.
       if (window.fbq) window.fbq("consent", granted ? "grant" : "revoke");
     } catch (e) { /* as above */ }
@@ -148,14 +169,12 @@
     var wrap = document.createElement("div");
     wrap.className = "hx-cc";
     wrap.setAttribute("role", "region");
-    wrap.setAttribute("aria-label", "Cookie choices");
+    wrap.setAttribute("aria-label", "Cookie notice");
     wrap.innerHTML =
-      '<div class="hx-cc-in"><p>We use cookies to keep this site working. With your ' +
-      'consent we also use Google Analytics, Google Ads, the Meta Pixel and Factors.ai to see how ' +
-      'people find us and which adverts lead to a purchase. Choose Essential only ' +
-      'and none of them is set. See our <a href="' + POLICY + '">Cookie Policy</a>.</p>' +
-      '<div class="hx-cc-btns"><button type="button" class="hx-ok">Accept</button>' +
-      '<button type="button" class="hx-no">Essential only</button></div></div>';
+      '<div class="hx-cc-in"><p>We use cookies and the Meta pixel to measure our ads. ' +
+      'You can opt out anytime. See our <a href="' + POLICY + '">Cookie Policy</a>.</p>' +
+      '<div class="hx-cc-btns"><button type="button" class="hx-ok">OK</button>' +
+      '<button type="button" class="hx-no">Opt out</button></div></div>';
     document.body.appendChild(wrap);
 
     // The banner is fixed, so without this it can sit over the footer on a
@@ -202,16 +221,19 @@
 
   var stored = read();
   if (stored === "granted") {
-    // ⚠ THE RETURNING VISITOR. Consent mode defaults to denied on EVERY page
-    // load, so a stored yes must be re-applied here or it is granted exactly
-    // once, on the click, and silently lost on every visit afterwards.
+    // THE RETURNING VISITOR. The head snippet revokes Meta, and Google
+    // consent mode defaults to denied, on EVERY page load, so a stored yes
+    // must be re-applied here or it is granted exactly once and silently
+    // lost on every visit afterwards.
     apply(true);
   } else if (stored === "denied") {
     apply(false);
-  } else if (document.body) {
-    banner();
   } else {
-    document.addEventListener("DOMContentLoaded", banner);
+    // No stored choice: grant the Meta pixel at once so PageView fires
+    // without a click. Google and Factors still wait for OK.
+    tellMeta(true);
+    if (document.body) banner();
+    else document.addEventListener("DOMContentLoaded", banner);
   }
 
   if (document.readyState === "loading") {
